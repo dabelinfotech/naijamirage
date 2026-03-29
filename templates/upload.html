@@ -1,0 +1,259 @@
+{% extends "base.html" %}
+{% block title %}Upload Content{% endblock %}
+
+{% block content %}
+
+<section class="hero" style="padding:48px 20px 40px;">
+  <div class="hero-content">
+    <div class="hero-tagline">Admin Panel</div>
+    <h1 class="hero-title">Upload <span>Content</span></h1>
+    <p class="hero-sub">Publish news articles, upload music tracks, and add music videos.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container" style="max-width:860px;">
+
+    <!-- Tabs -->
+    <div class="upload-tabs">
+      <div class="upload-tab active" data-tab="news">📰 News Article</div>
+      <div class="upload-tab" data-tab="audio">🎵 Audio / Music</div>
+      <div class="upload-tab" data-tab="video">🎬 Music Video</div>
+    </div>
+
+    <!-- ─── News Panel ─────────────────────────────────────────────────────── -->
+    <div class="upload-panel active" id="panel-news">
+      <form class="upload-form" action="{{ url_for('upload_news') }}" method="POST"
+            enctype="multipart/form-data" data-upload-form>
+
+        <div class="form-group">
+          <label class="form-label">Article Title <span>*</span></label>
+          <input type="text" name="title" class="form-input" placeholder="Enter article headline…" required />
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+          <div class="form-group">
+            <label class="form-label">Category <span>*</span></label>
+            <select name="category" class="form-select">
+              <option value="General">General</option>
+              <option value="Politics">Politics</option>
+              <option value="Business">Business</option>
+              <option value="Sports">Sports</option>
+              <option value="Technology">Technology</option>
+              <option value="Health">Health</option>
+              <option value="Entertainment">Entertainment</option>
+              <option value="Celebrity">Celebrity</option>
+              <option value="Lifestyle">Lifestyle</option>
+              <option value="Culture">Culture</option>
+              <option value="Education">Education</option>
+              <option value="International">International</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Author Name</label>
+            <input type="text" name="author" class="form-input"
+                   placeholder="Naijamirage Staff" value="Naijamirage Staff" />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Summary / Excerpt</label>
+          <textarea name="summary" class="form-textarea" rows="3"
+                    placeholder="Brief summary shown on listing pages (optional — auto-generated if empty)…"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Article Content <span>*</span></label>
+          <textarea name="content" class="form-textarea" rows="12"
+                    placeholder="Write the full article here…" required></textarea>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Featured Image</label>
+          <div class="file-drop">
+            <input type="file" name="image" accept="image/*" />
+            <div class="file-drop-icon">🖼️</div>
+            <div class="file-drop-text">
+              <strong>Click to browse</strong> or drag &amp; drop<br />
+              JPG, PNG, GIF, WEBP accepted
+            </div>
+            <div class="file-name-display"></div>
+          </div>
+        </div>
+
+        <div class="progress-container">
+          <div class="upload-progress-bar-wrap">
+            <div class="upload-progress-bar"></div>
+          </div>
+          <div class="upload-progress-text">Preparing upload…</div>
+        </div>
+
+        <button type="submit" class="btn btn-green" style="width:100%;justify-content:center;padding:14px;font-size:1rem;margin-top:8px;">
+          📰 Publish Article
+        </button>
+      </form>
+    </div>
+
+    <!-- ─── Audio Panel ────────────────────────────────────────────────────── -->
+    <div class="upload-panel" id="panel-audio">
+      <form class="upload-form" action="{{ url_for('upload_audio') }}" method="POST"
+            enctype="multipart/form-data" data-upload-form>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+          <div class="form-group">
+            <label class="form-label">Track Title <span>*</span></label>
+            <input type="text" name="title" class="form-input" placeholder="Song title…" required />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Artist Name <span>*</span></label>
+            <input type="text" name="artist" class="form-input" placeholder="Artist / band name…" required />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Genre</label>
+          <select name="genre" class="form-select">
+            <option value="Afrobeats">Afrobeats</option>
+            <option value="Afropop">Afropop</option>
+            <option value="Highlife">Highlife</option>
+            <option value="Fuji">Fuji</option>
+            <option value="Jùjú">Jùjú</option>
+            <option value="Gospel">Gospel</option>
+            <option value="R&B">R&amp;B</option>
+            <option value="Hip-Hop">Hip-Hop (Naija)</option>
+            <option value="Reggae">Reggae</option>
+            <option value="Amapiano">Amapiano</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Description</label>
+          <textarea name="description" class="form-textarea" rows="3"
+                    placeholder="Short description about the track (optional)…"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Audio File <span>*</span></label>
+          <div class="file-drop">
+            <input type="file" name="audio_file" accept=".mp3,.wav,.ogg,.aac,.m4a,.flac" required />
+            <div class="file-drop-icon">🎵</div>
+            <div class="file-drop-text">
+              <strong>Click to browse</strong> or drag &amp; drop<br />
+              MP3, WAV, OGG, AAC, M4A, FLAC — max 500 MB
+            </div>
+            <div class="file-name-display"></div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Cover Art (optional)</label>
+          <div class="file-drop">
+            <input type="file" name="cover_image" accept="image/*" />
+            <div class="file-drop-icon">🎨</div>
+            <div class="file-drop-text">
+              <strong>Click to browse</strong> or drag &amp; drop<br />
+              JPG, PNG, WEBP — album cover / artwork
+            </div>
+            <div class="file-name-display"></div>
+          </div>
+        </div>
+
+        <div class="progress-container">
+          <div class="upload-progress-bar-wrap">
+            <div class="upload-progress-bar"></div>
+          </div>
+          <div class="upload-progress-text">Uploading…</div>
+        </div>
+
+        <button type="submit" class="btn btn-green" style="width:100%;justify-content:center;padding:14px;font-size:1rem;margin-top:8px;">
+          🎵 Upload Track
+        </button>
+      </form>
+    </div>
+
+    <!-- ─── Video Panel ────────────────────────────────────────────────────── -->
+    <div class="upload-panel" id="panel-video">
+      <form class="upload-form" action="{{ url_for('upload_video') }}" method="POST"
+            enctype="multipart/form-data" data-upload-form>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+          <div class="form-group">
+            <label class="form-label">Video Title <span>*</span></label>
+            <input type="text" name="title" class="form-input" placeholder="Video title…" required />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Artist Name <span>*</span></label>
+            <input type="text" name="artist" class="form-input" placeholder="Artist / band name…" required />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Genre</label>
+          <select name="genre" class="form-select">
+            <option value="Afrobeats">Afrobeats</option>
+            <option value="Afropop">Afropop</option>
+            <option value="Highlife">Highlife</option>
+            <option value="Fuji">Fuji</option>
+            <option value="Jùjú">Jùjú</option>
+            <option value="Gospel">Gospel</option>
+            <option value="R&B">R&amp;B</option>
+            <option value="Hip-Hop">Hip-Hop (Naija)</option>
+            <option value="Reggae">Reggae</option>
+            <option value="Amapiano">Amapiano</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Description</label>
+          <textarea name="description" class="form-textarea" rows="3"
+                    placeholder="Short description about the video (optional)…"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Video File <span>*</span></label>
+          <div class="file-drop">
+            <input type="file" name="video_file" accept=".mp4,.webm,.mkv,.avi,.mov" required />
+            <div class="file-drop-icon">🎬</div>
+            <div class="file-drop-text">
+              <strong>Click to browse</strong> or drag &amp; drop<br />
+              MP4, WEBM, MKV, AVI, MOV — max 500 MB
+            </div>
+            <div class="file-name-display"></div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Thumbnail Image (optional)</label>
+          <div class="file-drop">
+            <input type="file" name="thumbnail" accept="image/*" />
+            <div class="file-drop-icon">🖼️</div>
+            <div class="file-drop-text">
+              <strong>Click to browse</strong> or drag &amp; drop<br />
+              JPG, PNG, WEBP — video thumbnail / poster
+            </div>
+            <div class="file-name-display"></div>
+          </div>
+        </div>
+
+        <div class="progress-container">
+          <div class="upload-progress-bar-wrap">
+            <div class="upload-progress-bar"></div>
+          </div>
+          <div class="upload-progress-text">Uploading video…</div>
+        </div>
+
+        <button type="submit" class="btn btn-gold" style="width:100%;justify-content:center;padding:14px;font-size:1rem;margin-top:8px;color:#111;">
+          🎬 Upload Video
+        </button>
+      </form>
+    </div>
+
+  </div>
+</section>
+
+{% endblock %}

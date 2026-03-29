@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+{% block title %}Music Videos{% endblock %}
+
+{% block content %}
+
+<section class="hero" style="padding:48px 20px 40px;">
+  <div class="hero-content">
+    <div class="hero-tagline">Watch &amp; Download</div>
+    <h1 class="hero-title">🎬 Music <span>Videos</span></h1>
+    <p class="hero-sub">The latest Naija music videos — stream instantly or download for offline viewing.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+
+    <!-- Genre filter -->
+    <div class="filter-bar">
+      <a href="{{ url_for('videos') }}" class="{{ 'active' if not selected_genre }}">All Genres</a>
+      {% for genre in genres %}
+        <a href="{{ url_for('videos', genre=genre) }}"
+           class="{{ 'active' if selected_genre == genre }}">{{ genre }}</a>
+      {% endfor %}
+    </div>
+
+    {% if videos.items %}
+    <div class="cards-grid cards-grid-4">
+      {% for vid in videos.items %}
+      <div class="video-card">
+
+        <!-- Thumbnail / play trigger -->
+        <div class="video-thumb-wrap"
+             data-video-thumb
+             data-stream-url="{{ url_for('stream_video', video_id=vid.id) }}">
+          {% if vid.thumbnail_path %}
+            <img src="{{ url_for('serve_thumbnail', filename=vid.thumbnail_path) }}" alt="{{ vid.title }}" />
+          {% else %}
+            <div class="video-thumb-placeholder">🎬</div>
+          {% endif %}
+          <div class="video-play-overlay">
+            <div class="video-play-icon">&#9654;</div>
+          </div>
+        </div>
+
+        <div class="video-info">
+          <div class="video-title">{{ vid.title }}</div>
+          <div class="video-artist">{{ vid.artist }}</div>
+          <span class="badge badge-gold">{{ vid.genre }}</span>
+          {% if vid.description %}
+          <p style="font-size:.82rem;color:var(--text-muted);margin-top:8px;line-height:1.5;">
+            {{ vid.description[:100] }}{% if vid.description|length > 100 %}…{% endif %}
+          </p>
+          {% endif %}
+        </div>
+
+        <div class="video-actions">
+          <a href="{{ url_for('download_video', video_id=vid.id) }}" class="btn btn-green btn-sm" style="flex:1;justify-content:center;">
+            ⬇ Download
+          </a>
+        </div>
+
+        <div class="video-stats">
+          <span>▶ {{ vid.play_count }}</span>
+          <span>⬇ {{ vid.download_count }}</span>
+          <span>{{ vid.file_size | filesize }}</span>
+          <span>{{ vid.created_at.strftime('%d %b') }}</span>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+    <!-- Pagination -->
+    {% if videos.pages > 1 %}
+    <div class="pagination">
+      {% if videos.has_prev %}
+        <a href="{{ url_for('videos', page=videos.prev_num, genre=selected_genre) }}">&laquo;</a>
+      {% endif %}
+      {% for p in videos.iter_pages(left_edge=1, right_edge=1, left_current=2, right_current=2) %}
+        {% if p %}
+          {% if p == videos.page %}
+            <span class="current">{{ p }}</span>
+          {% else %}
+            <a href="{{ url_for('videos', page=p, genre=selected_genre) }}">{{ p }}</a>
+          {% endif %}
+        {% else %}
+          <span>…</span>
+        {% endif %}
+      {% endfor %}
+      {% if videos.has_next %}
+        <a href="{{ url_for('videos', page=videos.next_num, genre=selected_genre) }}">&raquo;</a>
+      {% endif %}
+    </div>
+    {% endif %}
+
+    {% else %}
+      <div class="empty-state">
+        <div class="empty-state-icon">🎬</div>
+        <h3>No videos found</h3>
+        <p>{{ 'No videos in this genre yet.' if selected_genre else 'No music videos have been uploaded yet.' }}</p>
+        <a href="{{ url_for('upload') }}" class="btn btn-gold" style="margin-top:16px;">Upload a Video</a>
+      </div>
+    {% endif %}
+
+  </div>
+</section>
+
+<!-- Video Modal -->
+<div class="video-modal" id="videoModal">
+  <div class="video-modal-inner">
+    <button class="video-modal-close" id="modalClose">&times;</button>
+    <video id="modalVideo" controls preload="metadata"></video>
+  </div>
+</div>
+
+{% endblock %}

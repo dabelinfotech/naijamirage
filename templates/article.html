@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+{% block title %}{{ article.title }}{% endblock %}
+
+{% block content %}
+
+<!-- Article Hero Image -->
+{% if article.image_path %}
+<div class="article-hero">
+  <img src="{{ url_for('serve_news_image', filename=article.image_path) }}" alt="{{ article.title }}" />
+</div>
+{% else %}
+<div class="article-hero-placeholder">📰</div>
+{% endif %}
+
+<!-- Article Content -->
+<div class="article-container">
+  <div class="article-header">
+    <div class="article-category">
+      <span class="badge badge-green">{{ article.category }}</span>
+    </div>
+    <h1 class="article-title">{{ article.title }}</h1>
+    <div class="article-meta">
+      <span>✍ {{ article.author }}</span>
+      <span>📅 {{ article.created_at.strftime('%A, %d %B %Y') }}</span>
+      <span>🕐 {{ article.created_at.strftime('%H:%M') }} WAT</span>
+    </div>
+  </div>
+
+  <div class="article-divider"></div>
+
+  <!-- Summary -->
+  <p style="font-size:1.1rem;font-weight:500;color:var(--text-muted);margin-bottom:28px;line-height:1.7;">
+    {{ article.summary }}
+  </p>
+
+  <div class="article-divider"></div>
+
+  <!-- Body -->
+  <div class="article-body">
+    {{ article.content | replace('\n', '<br>') | safe }}
+  </div>
+
+  <div class="article-divider" style="margin-top:40px;"></div>
+
+  <!-- Share -->
+  <div style="margin-top:24px;">
+    <p style="font-weight:600;margin-bottom:12px;color:var(--text-muted);">Share this article:</p>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;">
+      <a href="#" class="btn btn-outline btn-sm">𝕏 Twitter</a>
+      <a href="#" class="btn btn-outline btn-sm">f Facebook</a>
+      <a href="#" class="btn btn-outline btn-sm">📱 WhatsApp</a>
+    </div>
+  </div>
+</div>
+
+<!-- Related Articles -->
+{% if related %}
+<section class="section section-alt">
+  <div class="container">
+    <h2 class="section-title">Related Articles</h2>
+    <div class="cards-grid">
+      {% for art in related %}
+      <div class="card">
+        {% if art.image_path %}
+          <img class="card-img" src="{{ url_for('serve_news_image', filename=art.image_path) }}" alt="{{ art.title }}" />
+        {% else %}
+          <div class="card-img-placeholder">📰</div>
+        {% endif %}
+        <div class="card-body">
+          <div class="card-category"><span class="badge badge-green">{{ art.category }}</span></div>
+          <h3 class="card-title">
+            <a href="{{ url_for('article', article_id=art.id) }}">{{ art.title }}</a>
+          </h3>
+          <p class="card-summary">{{ art.summary[:120] }}…</p>
+          <div class="card-meta">
+            <span>{{ art.author }}</span>
+            <span>{{ art.created_at.strftime('%d %b %Y') }}</span>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+{% endblock %}

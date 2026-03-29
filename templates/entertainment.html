@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+{% block title %}Entertainment{% endblock %}
+
+{% block content %}
+
+<section class="ent-hero">
+  <div class="hero-content" style="position:relative;">
+    <div class="hero-tagline">Celebrity • Lifestyle • Culture</div>
+    <h1 class="hero-title">Entertainment <span>Gist</span></h1>
+    <p class="hero-sub">
+      The hottest celebrity news, lifestyle content, and cultural stories from Nigeria and beyond.
+    </p>
+    <div class="hero-cta">
+      <a href="{{ url_for('music') }}" class="btn btn-gold">🎵 Stream Music</a>
+      <a href="{{ url_for('videos') }}" class="btn btn-green">🎬 Watch Videos</a>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+
+    {% if articles %}
+
+      <!-- First article big feature -->
+      {% if articles %}
+      <div style="margin-bottom:40px;">
+        <div class="featured-card" style="max-width:100%;">
+          {% if articles[0].image_path %}
+            <img class="card-img" style="aspect-ratio:21/9;object-fit:cover;"
+                 src="{{ url_for('serve_news_image', filename=articles[0].image_path) }}"
+                 alt="{{ articles[0].title }}" />
+          {% else %}
+            <div class="card-img-placeholder" style="aspect-ratio:21/9;">🎭</div>
+          {% endif %}
+          <div class="featured-card-body" style="padding:28px;">
+            <span class="badge badge-gold">{{ articles[0].category }}</span>
+            <h2 class="featured-card-title" style="font-size:1.8rem;margin-top:12px;">
+              <a href="{{ url_for('article', article_id=articles[0].id) }}">{{ articles[0].title }}</a>
+            </h2>
+            <p style="color:var(--text-muted);font-size:1rem;margin:12px 0;">{{ articles[0].summary[:240] }}…</p>
+            <div style="display:flex;align-items:center;gap:20px;margin-top:16px;">
+              <span style="font-size:.85rem;color:var(--text-muted);">By {{ articles[0].author }}</span>
+              <span style="font-size:.85rem;color:var(--text-muted);">{{ articles[0].created_at.strftime('%d %b %Y') }}</span>
+              <a href="{{ url_for('article', article_id=articles[0].id) }}" class="btn btn-gold btn-sm">Read More</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endif %}
+
+      <!-- Remaining articles grid -->
+      {% if articles|length > 1 %}
+      <h2 class="section-title">More Entertainment</h2>
+      <div class="cards-grid">
+        {% for art in articles[1:] %}
+        <div class="card">
+          {% if art.image_path %}
+            <img class="card-img" src="{{ url_for('serve_news_image', filename=art.image_path) }}" alt="{{ art.title }}" />
+          {% else %}
+            <div class="card-img-placeholder">🎭</div>
+          {% endif %}
+          <div class="card-body">
+            <div class="card-category"><span class="badge badge-gold">{{ art.category }}</span></div>
+            <h3 class="card-title">
+              <a href="{{ url_for('article', article_id=art.id) }}">{{ art.title }}</a>
+            </h3>
+            <p class="card-summary">{{ art.summary[:130] }}…</p>
+            <div class="card-meta">
+              <span>{{ art.author }}</span>
+              <span>{{ art.created_at.strftime('%d %b %Y') }}</span>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      {% endif %}
+
+    {% else %}
+      <div class="empty-state">
+        <div class="empty-state-icon">🎭</div>
+        <h3>No entertainment stories yet</h3>
+        <p>Publish articles under the Entertainment, Celebrity, Lifestyle or Culture categories.</p>
+        <a href="{{ url_for('upload') }}" class="btn btn-gold" style="margin-top:16px;">Add Entertainment Story</a>
+      </div>
+    {% endif %}
+
+  </div>
+</section>
+
+<!-- Media promo strip -->
+<section class="section section-alt">
+  <div class="container" style="text-align:center;">
+    <h2 class="section-title" style="justify-content:center;">Explore More on Naijamirage</h2>
+    <div style="display:flex;gap:20px;justify-content:center;flex-wrap:wrap;margin-top:16px;">
+      <a href="{{ url_for('music') }}" class="btn btn-green" style="font-size:1rem;padding:14px 30px;">🎵 Stream Music</a>
+      <a href="{{ url_for('videos') }}" class="btn btn-gold" style="font-size:1rem;padding:14px 30px;">🎬 Watch Videos</a>
+      <a href="{{ url_for('news') }}" class="btn btn-outline" style="font-size:1rem;padding:14px 30px;">📰 Read News</a>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

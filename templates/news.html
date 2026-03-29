@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% block title %}News{% endblock %}
+
+{% block content %}
+
+<section class="hero" style="padding:48px 20px 40px;">
+  <div class="hero-content">
+    <div class="hero-tagline">Stay Informed</div>
+    <h1 class="hero-title">Nigerian <span>News</span></h1>
+    <p class="hero-sub">Breaking news, politics, business, sports and more.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+
+    <!-- Category filter -->
+    <div class="filter-bar">
+      <a href="{{ url_for('news') }}" class="{{ 'active' if not selected_category }}">All</a>
+      {% for cat in categories %}
+        <a href="{{ url_for('news', category=cat) }}"
+           class="{{ 'active' if selected_category == cat }}">{{ cat }}</a>
+      {% endfor %}
+    </div>
+
+    {% if articles.items %}
+    <div class="cards-grid">
+      {% for article in articles.items %}
+      <div class="card">
+        {% if article.image_path %}
+          <img class="card-img" src="{{ url_for('serve_news_image', filename=article.image_path) }}" alt="{{ article.title }}" />
+        {% else %}
+          <div class="card-img-placeholder">📰</div>
+        {% endif %}
+        <div class="card-body">
+          <div class="card-category"><span class="badge badge-green">{{ article.category }}</span></div>
+          <h3 class="card-title">
+            <a href="{{ url_for('article', article_id=article.id) }}">{{ article.title }}</a>
+          </h3>
+          <p class="card-summary">{{ article.summary[:140] }}…</p>
+          <div class="card-meta">
+            <span>✍ {{ article.author }}</span>
+            <span>{{ article.created_at.strftime('%d %b %Y') }}</span>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+    <!-- Pagination -->
+    {% if articles.pages > 1 %}
+    <div class="pagination">
+      {% if articles.has_prev %}
+        <a href="{{ url_for('news', page=articles.prev_num, category=selected_category) }}">&laquo;</a>
+      {% endif %}
+      {% for p in articles.iter_pages(left_edge=1, right_edge=1, left_current=2, right_current=2) %}
+        {% if p %}
+          {% if p == articles.page %}
+            <span class="current">{{ p }}</span>
+          {% else %}
+            <a href="{{ url_for('news', page=p, category=selected_category) }}">{{ p }}</a>
+          {% endif %}
+        {% else %}
+          <span>…</span>
+        {% endif %}
+      {% endfor %}
+      {% if articles.has_next %}
+        <a href="{{ url_for('news', page=articles.next_num, category=selected_category) }}">&raquo;</a>
+      {% endif %}
+    </div>
+    {% endif %}
+
+    {% else %}
+      <div class="empty-state">
+        <div class="empty-state-icon">📰</div>
+        <h3>No articles found</h3>
+        <p>{{ 'No articles in this category yet.' if selected_category else 'No news articles have been published yet.' }}</p>
+        <a href="{{ url_for('upload') }}" class="btn btn-green" style="margin-top:16px;">Publish an Article</a>
+      </div>
+    {% endif %}
+
+  </div>
+</section>
+
+{% endblock %}

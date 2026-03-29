@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Naijamirage — Your #1 Nigerian news, entertainment, music and video hub." />
+  <title>{% block title %}Naijamirage{% endblock %} | Nigerian News &amp; Entertainment</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌊</text></svg>" />
+  {% block extra_head %}{% endblock %}
+</head>
+<body>
+
+<!-- ─── Navbar ──────────────────────────────────────────────────────────────── -->
+<nav class="navbar">
+  <div class="navbar-inner">
+    <a href="{{ url_for('index') }}" class="navbar-brand">
+      <span class="brand-naija">Naija</span><span class="brand-mirage">mirage</span>
+    </a>
+
+    <ul class="navbar-links">
+      <li><a href="{{ url_for('index') }}">Home</a></li>
+      <li><a href="{{ url_for('news') }}">News</a></li>
+      <li><a href="{{ url_for('entertainment') }}">Entertainment</a></li>
+      <li><a href="{{ url_for('music') }}">Music</a></li>
+      <li><a href="{{ url_for('videos') }}">Videos</a></li>
+    </ul>
+
+    <div class="navbar-right">
+      <a href="{{ url_for('upload') }}" class="navbar-upload-btn">+ Upload</a>
+      <button class="hamburger" id="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile menu -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="{{ url_for('index') }}">🏠 Home</a>
+    <a href="{{ url_for('news') }}">📰 News</a>
+    <a href="{{ url_for('entertainment') }}">🎭 Entertainment</a>
+    <a href="{{ url_for('music') }}">🎵 Music</a>
+    <a href="{{ url_for('videos') }}">🎬 Videos</a>
+    <a href="{{ url_for('upload') }}">⬆️ Upload Content</a>
+  </div>
+</nav>
+
+<!-- ─── Flash Messages ──────────────────────────────────────────────────────── -->
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <div class="flash-container">
+      {% for category, message in messages %}
+        <div class="flash flash-{{ 'success' if category == 'success' else 'error' }}">
+          {{ '✅' if category == 'success' else '❌' }} {{ message }}
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endwith %}
+
+<!-- ─── Page Content ────────────────────────────────────────────────────────── -->
+{% block content %}{% endblock %}
+
+<!-- ─── Footer ──────────────────────────────────────────────────────────────── -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-brand">
+        <span class="brand-naija">Naija</span><span class="brand-mirage">mirage</span>
+      </div>
+      <p class="footer-about">
+        Your number one destination for Nigerian news, entertainment, music, and music videos.
+        Stay connected with the latest happenings across Nigeria and the diaspora.
+      </p>
+    </div>
+    <div>
+      <div class="footer-heading">Quick Links</div>
+      <ul class="footer-links">
+        <li><a href="{{ url_for('index') }}">Home</a></li>
+        <li><a href="{{ url_for('news') }}">News</a></li>
+        <li><a href="{{ url_for('entertainment') }}">Entertainment</a></li>
+        <li><a href="{{ url_for('music') }}">Music</a></li>
+        <li><a href="{{ url_for('videos') }}">Music Videos</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-heading">Categories</div>
+      <ul class="footer-links">
+        <li><a href="{{ url_for('news', category='Politics') }}">Politics</a></li>
+        <li><a href="{{ url_for('news', category='Business') }}">Business</a></li>
+        <li><a href="{{ url_for('news', category='Sports') }}">Sports</a></li>
+        <li><a href="{{ url_for('news', category='Technology') }}">Technology</a></li>
+        <li><a href="{{ url_for('news', category='Health') }}">Health</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-heading">Music Genres</div>
+      <ul class="footer-links">
+        <li><a href="{{ url_for('music', genre='Afrobeats') }}">Afrobeats</a></li>
+        <li><a href="{{ url_for('music', genre='Afropop') }}">Afropop</a></li>
+        <li><a href="{{ url_for('music', genre='Highlife') }}">Highlife</a></li>
+        <li><a href="{{ url_for('music', genre='Fuji') }}">Fuji</a></li>
+        <li><a href="{{ url_for('music', genre='Gospel') }}">Gospel</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <span>&copy; {{ 2024 }} Naijamirage. All rights reserved. Made with ❤️ for Nigeria.</span>
+    <div class="footer-social">
+      <a href="#" title="Twitter/X">𝕏</a>
+      <a href="#" title="Instagram">📷</a>
+      <a href="#" title="Facebook">f</a>
+      <a href="#" title="YouTube">▶</a>
+    </div>
+  </div>
+</footer>
+
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+{% block extra_scripts %}{% endblock %}
+</body>
+</html>
