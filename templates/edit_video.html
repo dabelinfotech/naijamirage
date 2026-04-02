@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+{% block title %}Edit Video — {{ video.title }}{% endblock %}
+
+{% block content %}
+<section class="section">
+  <div class="container" style="max-width:860px;">
+
+    <div style="display:flex;align-items:center;gap:16px;margin-bottom:32px;flex-wrap:wrap;">
+      <a href="{{ url_for('admin_dashboard') }}" class="btn btn-outline btn-sm">&larr; Back to Admin</a>
+      <div>
+        <h1 style="font-size:1.6rem;font-weight:800;">Edit Music Video</h1>
+        <p style="color:var(--text-muted);font-size:.9rem;margin-top:4px;">
+          ID #{{ video.id }} &bull; Uploaded {{ video.created_at.strftime('%d %b %Y') }}
+          &bull; ▶ {{ video.play_count }} plays &bull; ⬇ {{ video.download_count }} downloads
+        </p>
+      </div>
+    </div>
+
+    <form class="upload-form" method="POST"
+          action="{{ url_for('admin_edit_video', video_id=video.id) }}"
+          enctype="multipart/form-data">
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+        <div class="form-group">
+          <label class="form-label">Video Title <span>*</span></label>
+          <input type="text" name="title" class="form-input"
+                 value="{{ video.title }}" required />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Artist Name <span>*</span></label>
+          <input type="text" name="artist" class="form-input"
+                 value="{{ video.artist }}" required />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Genre</label>
+        <select name="genre" class="form-select">
+          {% for g in ['Afrobeats','Afropop','Highlife','Fuji','Jùjú','Gospel','R&B','Hip-Hop','Reggae','Amapiano','Other'] %}
+            <option value="{{ g }}" {{ 'selected' if video.genre == g }}>{{ g }}</option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Description</label>
+        <textarea name="description" class="form-textarea" rows="3">{{ video.description or '' }}</textarea>
+      </div>
+
+      <!-- Current video preview -->
+      <div class="form-group">
+        <label class="form-label">Current Video File</label>
+        <div style="background:var(--card2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:14px;">
+          <div style="display:flex;align-items:center;gap:14px;margin-bottom:14px;">
+            <span style="font-size:1.8rem;">🎬</span>
+            <div>
+              <div style="font-weight:600;">{{ video.file_path.rsplit('_',1)[0] if '_' in video.file_path else video.file_path }}</div>
+              <div style="color:var(--text-muted);font-size:.82rem;">{{ video.file_size | filesize }}</div>
+            </div>
+          </div>
+          <video controls style="width:100%;max-height:300px;border-radius:var(--radius-sm);background:#000;"
+                 src="{{ url_for('stream_video', video_id=video.id) }}"
+                 preload="metadata"></video>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Replace Video File <span style="color:var(--text-muted);font-weight:400;">(leave empty to keep current)</span></label>
+        <div class="file-drop">
+          <input type="file" name="video_file" accept=".mp4,.webm,.mkv,.avi,.mov" />
+          <div class="file-drop-icon">🎬</div>
+          <div class="file-drop-text">
+            <strong>Click to browse</strong> or drag &amp; drop<br />
+            MP4, WEBM, MKV, AVI, MOV — max 500 MB
+          </div>
+          <div class="file-name-display"></div>
+        </div>
+      </div>
+
+      <!-- Thumbnail -->
+      {% if video.thumbnail_path %}
+      <div class="form-group">
+        <label class="form-label">Current Thumbnail</label>
+        <img src="{{ url_for('serve_thumbnail', filename=video.thumbnail_path) }}"
+             alt="Thumbnail"
+             style="height:120px;border-radius:var(--radius);border:1px solid var(--border);margin-bottom:12px;" />
+      </div>
+      {% endif %}
+
+      <div class="form-group">
+        <label class="form-label">Replace Thumbnail <span style="color:var(--text-muted);font-weight:400;">(leave empty to keep current)</span></label>
+        <div class="file-drop">
+          <input type="file" name="thumbnail" accept="image/*" />
+          <div class="file-drop-icon">🖼️</div>
+          <div class="file-drop-text">
+            <strong>Click to browse</strong> or drag &amp; drop<br />
+            JPG, PNG, WEBP
+          </div>
+          <div class="file-name-display"></div>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:12px;margin-top:8px;flex-wrap:wrap;">
+        <button type="submit" class="btn btn-green" style="flex:1;justify-content:center;padding:14px;font-size:1rem;">
+          💾 Save Changes
+        </button>
+        <a href="{{ url_for('admin_dashboard') }}" class="btn btn-outline" style="padding:14px 24px;">
+          Cancel
+        </a>
+      </div>
+    </form>
+
+  </div>
+</section>
+{% endblock %}

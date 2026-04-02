@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+{% block title %}Edit Article — {{ article.title }}{% endblock %}
+
+{% block content %}
+<section class="section">
+  <div class="container" style="max-width:860px;">
+
+    <div style="display:flex;align-items:center;gap:16px;margin-bottom:32px;flex-wrap:wrap;">
+      <a href="{{ url_for('admin_dashboard') }}" class="btn btn-outline btn-sm">&larr; Back to Admin</a>
+      <div>
+        <h1 style="font-size:1.6rem;font-weight:800;">Edit Article</h1>
+        <p style="color:var(--text-muted);font-size:.9rem;margin-top:4px;">ID #{{ article.id }} &bull; Published {{ article.created_at.strftime('%d %b %Y') }}</p>
+      </div>
+    </div>
+
+    <form class="upload-form" method="POST"
+          action="{{ url_for('admin_edit_news', article_id=article.id) }}"
+          enctype="multipart/form-data">
+
+      <div class="form-group">
+        <label class="form-label">Article Title <span>*</span></label>
+        <input type="text" name="title" class="form-input"
+               value="{{ article.title }}" required />
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+        <div class="form-group">
+          <label class="form-label">Category <span>*</span></label>
+          <select name="category" class="form-select">
+            {% for cat in ['General','Politics','Business','Sports','Technology',
+                           'Health','Entertainment','Celebrity','Lifestyle','Culture',
+                           'Education','International'] %}
+              <option value="{{ cat }}" {{ 'selected' if article.category == cat }}>{{ cat }}</option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Author</label>
+          <input type="text" name="author" class="form-input"
+                 value="{{ article.author }}" />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Summary / Excerpt</label>
+        <textarea name="summary" class="form-textarea" rows="3">{{ article.summary }}</textarea>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Article Content <span>*</span></label>
+        <textarea name="content" class="form-textarea" rows="14" required>{{ article.content }}</textarea>
+      </div>
+
+      <!-- Current image preview -->
+      {% if article.image_path %}
+      <div class="form-group">
+        <label class="form-label">Current Featured Image</label>
+        <div style="margin-bottom:12px;">
+          <img src="{{ url_for('serve_news_image', filename=article.image_path) }}"
+               alt="Current image"
+               style="max-height:180px;border-radius:var(--radius);border:1px solid var(--border);" />
+        </div>
+      </div>
+      {% endif %}
+
+      <div class="form-group">
+        <label class="form-label">Replace Featured Image <span style="color:var(--text-muted);font-weight:400;">(leave empty to keep current)</span></label>
+        <div class="file-drop">
+          <input type="file" name="image" accept="image/*" />
+          <div class="file-drop-icon">🖼️</div>
+          <div class="file-drop-text">
+            <strong>Click to browse</strong> or drag &amp; drop a new image<br />
+            JPG, PNG, GIF, WEBP
+          </div>
+          <div class="file-name-display"></div>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:12px;margin-top:8px;flex-wrap:wrap;">
+        <button type="submit" class="btn btn-green" style="flex:1;justify-content:center;padding:14px;font-size:1rem;">
+          💾 Save Changes
+        </button>
+        <a href="{{ url_for('admin_dashboard') }}" class="btn btn-outline" style="padding:14px 24px;">
+          Cancel
+        </a>
+      </div>
+    </form>
+
+  </div>
+</section>
+{% endblock %}

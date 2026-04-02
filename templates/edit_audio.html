@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+{% block title %}Edit Track — {{ track.title }}{% endblock %}
+
+{% block content %}
+<section class="section">
+  <div class="container" style="max-width:860px;">
+
+    <div style="display:flex;align-items:center;gap:16px;margin-bottom:32px;flex-wrap:wrap;">
+      <a href="{{ url_for('admin_dashboard') }}" class="btn btn-outline btn-sm">&larr; Back to Admin</a>
+      <div>
+        <h1 style="font-size:1.6rem;font-weight:800;">Edit Audio Track</h1>
+        <p style="color:var(--text-muted);font-size:.9rem;margin-top:4px;">
+          ID #{{ track.id }} &bull; Uploaded {{ track.created_at.strftime('%d %b %Y') }}
+          &bull; ▶ {{ track.play_count }} plays &bull; ⬇ {{ track.download_count }} downloads
+        </p>
+      </div>
+    </div>
+
+    <form class="upload-form" method="POST"
+          action="{{ url_for('admin_edit_audio', track_id=track.id) }}"
+          enctype="multipart/form-data">
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+        <div class="form-group">
+          <label class="form-label">Track Title <span>*</span></label>
+          <input type="text" name="title" class="form-input"
+                 value="{{ track.title }}" required />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Artist Name <span>*</span></label>
+          <input type="text" name="artist" class="form-input"
+                 value="{{ track.artist }}" required />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Genre</label>
+        <select name="genre" class="form-select">
+          {% for g in ['Afrobeats','Afropop','Highlife','Fuji','Jùjú','Gospel','R&B','Hip-Hop','Reggae','Amapiano','Other'] %}
+            <option value="{{ g }}" {{ 'selected' if track.genre == g }}>{{ g }}</option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Description</label>
+        <textarea name="description" class="form-textarea" rows="3">{{ track.description or '' }}</textarea>
+      </div>
+
+      <!-- Current audio info -->
+      <div class="form-group">
+        <label class="form-label">Current Audio File</label>
+        <div style="background:var(--card2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:14px;display:flex;align-items:center;gap:14px;">
+          <span style="font-size:1.8rem;">🎵</span>
+          <div>
+            <div style="font-weight:600;">{{ track.file_path.rsplit('_',1)[0] if '_' in track.file_path else track.file_path }}</div>
+            <div style="color:var(--text-muted);font-size:.82rem;">{{ track.file_size | filesize }}</div>
+          </div>
+          <audio controls style="margin-left:auto;max-width:260px;"
+                 src="{{ url_for('stream_audio', track_id=track.id) }}"></audio>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Replace Audio File <span style="color:var(--text-muted);font-weight:400;">(leave empty to keep current)</span></label>
+        <div class="file-drop">
+          <input type="file" name="audio_file" accept=".mp3,.wav,.ogg,.aac,.m4a,.flac" />
+          <div class="file-drop-icon">🎵</div>
+          <div class="file-drop-text">
+            <strong>Click to browse</strong> or drag &amp; drop<br />
+            MP3, WAV, OGG, AAC, M4A, FLAC
+          </div>
+          <div class="file-name-display"></div>
+        </div>
+      </div>
+
+      <!-- Cover art -->
+      {% if track.cover_path %}
+      <div class="form-group">
+        <label class="form-label">Current Cover Art</label>
+        <img src="{{ url_for('serve_cover', filename=track.cover_path) }}"
+             alt="Cover art"
+             style="width:120px;height:120px;object-fit:cover;border-radius:var(--radius);border:1px solid var(--border);margin-bottom:12px;" />
+      </div>
+      {% endif %}
+
+      <div class="form-group">
+        <label class="form-label">Replace Cover Art <span style="color:var(--text-muted);font-weight:400;">(leave empty to keep current)</span></label>
+        <div class="file-drop">
+          <input type="file" name="cover_image" accept="image/*" />
+          <div class="file-drop-icon">🎨</div>
+          <div class="file-drop-text">
+            <strong>Click to browse</strong> or drag &amp; drop<br />
+            JPG, PNG, WEBP
+          </div>
+          <div class="file-name-display"></div>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:12px;margin-top:8px;flex-wrap:wrap;">
+        <button type="submit" class="btn btn-green" style="flex:1;justify-content:center;padding:14px;font-size:1rem;">
+          💾 Save Changes
+        </button>
+        <a href="{{ url_for('admin_dashboard') }}" class="btn btn-outline" style="padding:14px 24px;">
+          Cancel
+        </a>
+      </div>
+    </form>
+
+  </div>
+</section>
+{% endblock %}

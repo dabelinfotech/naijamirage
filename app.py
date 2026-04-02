@@ -405,6 +405,152 @@ def serve_news_image(filename):
     return send_file(os.path.join(UPLOAD_BASE, 'news_images', filename))
 
 
+# ─── Admin: helpers ───────────────────────────────────────────────────────────
+
+def delete_file(subfolder, filename):
+    """Silently remove a file from an uploads subfolder."""
+    if filename:
+        try:
+            os.remove(os.path.join(UPLOAD_BASE, subfolder, filename))
+        except OSError:
+            pass
+
+
+# ─── Admin: dashboard ─────────────────────────────────────────────────────────
+
+@app.route('/admin')
+def admin_dashboard():
+    articles = NewsArticle.query.order_by(NewsArticle.created_at.desc()).all()
+    tracks   = AudioTrack.query.order_by(AudioTrack.created_at.desc()).all()
+    vids     = MusicVideo.query.order_by(MusicVideo.created_at.desc()).all()
+    return render_template('admin.html',
+                           articles=articles, tracks=tracks, videos=vids)
+
+
+# ─── Admin: news ──────────────────────────────────────────────────────────────
+
+@app.route('/admin/news/<int:article_id>/edit', methods=['GET', 'POST'])
+def admin_edit_news(article_id):
+    art = NewsArticle.query.get_or_404(article_id)
+    if request.method == 'POST':
+        art.title    = request.form.get('title', art.title).strip()
+        art.summary  = request.form.get('summary', art.summary).strip()
+        art.content  = request.form.get('content', art.content).strip()
+        art.category = request.form.get('category', art.category).strip()
+        art.author   = request.form.get('author', art.author).strip()
+
+        if 'image' in request.files and request.files['image'].filename:
+            new_img = save_upload(request.files['image'], 'news_images', ALLOWED_IMAGE)
+            if new_img:
+                delete_file('news_images', art.image_path)
+                art.image_path = new_img
+
+        db.session.commit()
+        flash(f'Article "{art.title}" updated successfully!', 'success')
+        return redirect(url_for('admin_dashboard'))
+
+    return render_template('edit_news.html', article=art)
+
+
+@app.route('/admin/news/<int:article_id>/delete', methods=['POST'])
+def admin_delete_news(article_id):
+    art = NewsArticle.query.get_or_404(article_id)
+    title = art.title
+    delete_file('news_images', art.image_path)
+    db.session.delete(art)
+    db.session.commit()
+    flash(f'Article "{title}" deleted.', 'success')
+    return redirect(url_for('admin_dashboard'))
+
+
+# ─── Admin: audio ─────────────────────────────────────────────────────────────
+
+@app.route('/admin/audio/<int:track_id>/edit', methods=['GET', 'POST'])
+def admin_edit_audio(track_id):
+    track = AudioTrack.query.get_or_404(track_id)
+    if request.method == 'POST':
+        track.title       = request.form.get('title', track.title).strip()
+        track.artist      = request.form.get('artist', track.artist).strip()
+        track.genre       = request.form.get('genre', track.genre).strip()
+        track.description = request.form.get('description', track.description or '').strip()
+
+        if 'audio_file' in request.files and request.files['audio_file'].filename:
+            new_audio = save_upload(request.files['audio_file'], 'audio', ALLOWED_AUDIO)
+            if new_audio:
+                delete_file('audio', track.file_path)
+                track.file_path = new_audio
+                track.file_size = os.path.getsize(
+                    os.path.join(UPLOAD_BASE, 'audio', new_audio))
+
+        if 'cover_image' in request.files and request.files['cover_image'].filename:
+            new_cover = save_upload(request.files['cover_image'], 'covers', ALLOWED_IMAGE)
+            if new_cover:
+                delete_file('covers', track.cover_path)
+                track.cover_path = new_cover
+
+        db.session.commit()
+        flash(f'Track "{track.title}" updated successfully!', 'success')
+        return redirect(url_for('admin_dashboard'))
+
+    return render_template('edit_audio.html', track=track)
+
+
+@app.route('/admin/audio/<int:track_id>/delete', methods=['POST'])
+def admin_delete_audio(track_id):
+    track = AudioTrack.query.get_or_404(track_id)
+    title = track.title
+    delete_file('audio', track.file_path)
+    delete_file('covers', track.cover_path)
+    db.session.delete(track)
+    db.session.commit()
+    flash(f'Track "{title}" deleted.', 'success')
+    return redirect(url_for('admin_dashboard'))
+
+
+# ─── Admin: video ─────────────────────────────────────────────────────────────
+
+@app.route('/admin/video/<int:video_id>/edit', methods=['GET', 'POST'])
+def admin_edit_video(video_id):
+    video = MusicVideo.query.get_or_404(video_id)
+    if request.method == 'POST':
+        video.title       = request.form.get('title', video.title).strip()
+        video.artist      = request.form.get('artist', video.artist).strip()
+        video.genre       = request.form.get('genre', video.genre).strip()
+        video.description = request.form.get('description', video.description or '').strip()
+
+        if 'video_file' in request.files and request.files['video_file'].filename:
+            new_vid = save_upload(request.files['video_file'], 'videos', ALLOWED_VIDEO)
+            if new_vid:
+                delete_file('videos', video.file_path)
+                video.file_path = new_vid
+                video.file_size = os.path.getsize(
+                    os.path.join(UPLOAD_BASE, 'videos', new_vid))
+
+        if 'thumbnail' in request.files and request.files['thumbnail'].filename:
+            new_thumb = save_upload(request.files['thumbnail'], 'thumbnails', ALLOWED_IMAGE)
+            if new_thumb:
+                delete_file('thumbnails', video.thumbnail_path)
+                video.thumbnail_path = new_thumb
+
+        db.session.commit()
+        flash(f'Video "{video.title}" updated successfully!', 'success')
+        return redirect(url_for('admin_dashboard'))
+
+    return render_template('edit_video.html', video=video)
+
+
+@app.route('/admin/video/<int:video_id>/delete', methods=['POST'])
+def admin_delete_video(video_id):
+    video = MusicVideo.query.get_or_404(video_id)
+    title = video.title
+    delete_file('videos', video.file_path)
+    delete_file('thumbnails', video.thumbnail_path)
+    db.session.delete(video)
+    db.session.commit()
+    flash(f'Video "{title}" deleted.', 'success')
+    return redirect(url_for('admin_dashboard'))
+
+
 # ─── Init & Run ───────────────────────────────────────────────────────────────
 
 with app.app_context():
