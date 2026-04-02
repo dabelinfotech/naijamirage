@@ -24,11 +24,9 @@
       <li><a href="{{ url_for('entertainment') }}">Entertainment</a></li>
       <li><a href="{{ url_for('music') }}">Music</a></li>
       <li><a href="{{ url_for('videos') }}">Videos</a></li>
-      <li><a href="{{ url_for('admin_dashboard') }}">Admin</a></li>
     </ul>
 
     <div class="navbar-right">
-      <a href="{{ url_for('upload') }}" class="navbar-upload-btn">+ Upload</a>
       <button class="hamburger" id="hamburger" aria-label="Menu">
         <span></span><span></span><span></span>
       </button>
@@ -42,8 +40,6 @@
     <a href="{{ url_for('entertainment') }}">🎭 Entertainment</a>
     <a href="{{ url_for('music') }}">🎵 Music</a>
     <a href="{{ url_for('videos') }}">🎬 Videos</a>
-    <a href="{{ url_for('upload') }}">⬆️ Upload Content</a>
-    <a href="{{ url_for('admin_dashboard') }}">⚙️ Admin Panel</a>
   </div>
 </nav>
 
@@ -108,7 +104,7 @@
   </div>
 
   <div class="footer-bottom">
-    <span>&copy; {{ 2024 }} Naijamirage. All rights reserved. Made with ❤️ for Nigeria.</span>
+    <span>&copy; {{ 2024 }} Naijamirage. All rights reserved. Made with ❤️ for Nigeria. &nbsp;<a href="{{ url_for('admin_dashboard') }}" style="color:var(--border);font-size:.75rem;" title="Admin">⚙ Admin</a></span>
     <div class="footer-social">
       <a href="#" title="Twitter/X">𝕏</a>
       <a href="#" title="Instagram">📷</a>
