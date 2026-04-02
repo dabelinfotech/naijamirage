@@ -96,8 +96,7 @@
       <div class="empty-state">
         <div class="empty-state-icon">🎬</div>
         <h3>No videos found</h3>
-        <p>{{ 'No videos in this genre yet.' if selected_genre else 'No music videos have been uploaded yet.' }}</p>
-        <a href="{{ url_for('upload') }}" class="btn btn-gold" style="margin-top:16px;">Upload a Video</a>
+        <p>{{ 'No videos in this genre yet.' if selected_genre else 'New music videos dropping soon!' }}</p>
       </div>
     {% endif %}
 
