@@ -14,6 +14,15 @@
 <section class="section">
   <div class="container">
 
+    {% if search_q %}
+    <div style="margin-bottom:20px;">
+      <p style="font-size:1rem;color:var(--text-muted);">
+        Search results for: <span class="logo-text" style="font-weight:700;font-size:1.1rem;">{{ search_q }}</span>
+        &nbsp;<a href="{{ url_for('news') }}" style="font-size:.82rem;color:var(--text-muted);text-decoration:underline;">Clear</a>
+      </p>
+    </div>
+    {% endif %}
+
     <!-- Category filter -->
     <div class="filter-bar">
       <a href="{{ url_for('news') }}" class="{{ 'active' if not selected_category }}">All</a>

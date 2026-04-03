@@ -177,16 +177,28 @@ def index():
 @app.route('/news')
 def news():
     category = request.args.get('category', '')
+    search_q = request.args.get('q', '').strip()
     page = request.args.get('page', 1, type=int)
     query = NewsArticle.query
     if category:
         query = query.filter_by(category=category)
+    if search_q:
+        like = f'%{search_q}%'
+        query = query.filter(
+            db.or_(
+                NewsArticle.title.ilike(like),
+                NewsArticle.summary.ilike(like),
+                NewsArticle.content.ilike(like),
+                NewsArticle.author.ilike(like),
+            )
+        )
     articles = query.order_by(NewsArticle.created_at.desc()).paginate(
         page=page, per_page=12, error_out=False)
     categories = db.session.query(NewsArticle.category).distinct().all()
     categories = [c[0] for c in categories]
     return render_template('news.html', articles=articles,
-                           categories=categories, selected_category=category)
+                           categories=categories, selected_category=category,
+                           search_q=search_q)
 
 
 @app.route('/news/<int:article_id>')

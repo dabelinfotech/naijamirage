@@ -125,13 +125,14 @@ ul { list-style: none; }
 .navbar-inner {
   max-width: 1280px; margin: 0 auto;
   display: flex; align-items: center;
-  height: 68px; gap: 32px;
+  height: 68px; gap: 0;
 }
 .navbar-brand {
   font-family: 'Poppins', sans-serif;
   font-size: 1.6rem; font-weight: 800;
   display: flex; align-items: center; gap: 10px;
   white-space: nowrap;
+  flex-shrink: 0;
 }
 .brand-name {
   background: var(--logo-gradient);
@@ -145,12 +146,16 @@ ul { list-style: none; }
 .brand-mirage { color: var(--gold); }
 .brand-dot { color: var(--text-muted); font-size: 1rem; }
 
+.navbar-right {
+  display: flex; align-items: center; gap: 10px;
+  margin-left: auto;
+}
 .navbar-links {
-  display: flex; gap: 6px; flex: 1;
+  display: flex; gap: 4px;
 }
 .navbar-links a {
-  padding: 8px 14px; border-radius: var(--radius-sm);
-  font-weight: 500; font-size: 0.92rem; color: var(--text-muted);
+  padding: 8px 13px; border-radius: var(--radius-sm);
+  font-weight: 500; font-size: 0.9rem; color: var(--text-muted);
   transition: all var(--transition);
 }
 .navbar-links a:hover,
@@ -158,7 +163,32 @@ ul { list-style: none; }
   background: var(--card);
   color: var(--gold);
 }
-.navbar-right { display: flex; align-items: center; gap: 12px; margin-left: auto; }
+
+/* ─── Navbar Search ──────────────────────────────────────────────────────────── */
+.navbar-search {
+  display: flex; align-items: center;
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 20px; overflow: hidden;
+  transition: border-color var(--transition);
+}
+.navbar-search:focus-within {
+  border-color: #7c3aed;
+}
+.navbar-search-input {
+  background: transparent; border: none; outline: none;
+  color: var(--text); font-family: 'Inter', sans-serif;
+  font-size: 0.88rem; padding: 7px 14px;
+  width: 160px; transition: width var(--transition);
+}
+.navbar-search-input::placeholder { color: var(--text-muted); }
+.navbar-search-input:focus { width: 220px; }
+.navbar-search-btn {
+  background: transparent; border: none; cursor: pointer;
+  color: var(--text-muted); padding: 7px 12px;
+  display: flex; align-items: center;
+  transition: color var(--transition);
+}
+.navbar-search-btn:hover { color: var(--gold); }
 .navbar-upload-btn {
   background: var(--green); color: #fff;
   padding: 8px 18px; border-radius: var(--radius-sm);
