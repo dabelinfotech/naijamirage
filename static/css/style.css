@@ -1,6 +1,33 @@
 /* ─── Google Fonts ─────────────────────────────────────────────────────────── */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&family=Inter:wght@300;400;500;600&display=swap');
 
+/* ─── Logo Gradient (matches NaijaMirage logo colours) ─────────────────────── */
+/* teal → purple → dark-red → orange → yellow → lime-green */
+:root {
+  --logo-gradient: linear-gradient(90deg,
+    #0891b2 0%,
+    #7c3aed 22%,
+    #b91c1c 42%,
+    #ea580c 62%,
+    #ca8a04 80%,
+    #65a30d 100%);
+  --logo-gradient-diag: linear-gradient(135deg,
+    #0891b2 0%,
+    #7c3aed 22%,
+    #b91c1c 42%,
+    #ea580c 62%,
+    #ca8a04 80%,
+    #65a30d 100%);
+}
+
+/* Reusable gradient text utility */
+.logo-text {
+  background: var(--logo-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
 /* ─── CSS Variables ─────────────────────────────────────────────────────────── */
 :root {
   --green:       #008751;
@@ -58,7 +85,7 @@ ul { list-style: none; }
 }
 .section-title::after {
   content: ''; flex: 1; height: 2px;
-  background: linear-gradient(90deg, var(--green), transparent);
+  background: linear-gradient(90deg, #0891b2, #7c3aed, #ea580c, #ca8a04, transparent);
 }
 .badge {
   display: inline-block;
@@ -103,9 +130,17 @@ ul { list-style: none; }
 .navbar-brand {
   font-family: 'Poppins', sans-serif;
   font-size: 1.6rem; font-weight: 800;
-  display: flex; align-items: center; gap: 6px;
+  display: flex; align-items: center; gap: 10px;
   white-space: nowrap;
 }
+.brand-name {
+  background: var(--logo-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: -0.5px;
+}
+/* keep old classes working in footer etc */
 .brand-naija { color: var(--green); }
 .brand-mirage { color: var(--gold); }
 .brand-dot { color: var(--text-muted); font-size: 1rem; }

@@ -16,7 +16,7 @@
   <div class="navbar-inner">
     <a href="{{ url_for('index') }}" class="navbar-brand">
       <img src="{{ url_for('static', filename='images/logo.jpg') }}" alt="Naijamirage" style="height:48px;width:auto;border-radius:6px;" />
-      <span class="brand-naija">Naija</span><span class="brand-mirage">mirage</span>
+      <span class="brand-name">NaijaMirage</span>
     </a>
 
     <ul class="navbar-links">
@@ -64,8 +64,9 @@
 <footer>
   <div class="footer-grid">
     <div>
-      <div class="footer-brand">
-        <img src="{{ url_for('static', filename='images/logo.jpg') }}" alt="Naijamirage" style="height:56px;width:auto;border-radius:6px;" />
+      <div class="footer-brand" style="display:flex;align-items:center;gap:10px;">
+        <img src="{{ url_for('static', filename='images/logo.jpg') }}" alt="Naijamirage" style="height:52px;width:auto;border-radius:6px;" />
+        <span class="brand-name">NaijaMirage</span>
       </div>
       <p class="footer-about">
         Your number one destination for Nigerian news, entertainment, music, and music videos.
@@ -105,7 +106,7 @@
   </div>
 
   <div class="footer-bottom">
-    <span>&copy; {{ 2024 }} Naijamirage. All rights reserved. Made with ❤️ for Nigeria. &nbsp;<a href="{{ url_for('admin_dashboard') }}" style="color:var(--border);font-size:.75rem;" title="Admin">⚙ Admin</a></span>
+    <span>&copy; {{ 2024 }} <span class="brand-name" style="font-size:inherit;font-weight:700;">NaijaMirage</span>. All rights reserved. Made with ❤️ for Nigeria. &nbsp;<a href="{{ url_for('admin_dashboard') }}" style="color:var(--border);font-size:.75rem;" title="Admin">⚙ Admin</a></span>
     <div class="footer-social">
       <a href="#" title="Twitter/X">𝕏</a>
       <a href="#" title="Instagram">📷</a>
