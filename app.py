@@ -14,7 +14,7 @@ ALLOWED_VIDEO = {'mp4', 'webm', 'mkv', 'avi', 'mov'}
 ALLOWED_IMAGE = {'jpg', 'jpeg', 'png', 'gif', 'webp'}
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'naijamirage-secret-2024'
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'naijamirage-secret-2024')
 app.config['SQLALCHEMY_DATABASE_URI'] = f"sqlite:///{os.path.join(BASE_DIR, 'naijamirage.db')}"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['MAX_CONTENT_LENGTH'] = 500 * 1024 * 1024  # 500 MB
