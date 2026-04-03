@@ -6,7 +6,7 @@
   <meta name="description" content="Naijamirage — Your #1 Nigerian news, entertainment, music and video hub." />
   <title>{% block title %}Naijamirage{% endblock %} | Nigerian News &amp; Entertainment</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌊</text></svg>" />
+  <link rel="icon" type="image/jpeg" href="{{ url_for('static', filename='images/logo.jpg') }}" />
   {% block extra_head %}{% endblock %}
 </head>
 <body>
@@ -15,7 +15,7 @@
 <nav class="navbar">
   <div class="navbar-inner">
     <a href="{{ url_for('index') }}" class="navbar-brand">
-      <span class="brand-naija">Naija</span><span class="brand-mirage">mirage</span>
+      <img src="{{ url_for('static', filename='images/logo.jpg') }}" alt="Naijamirage" style="height:48px;width:auto;border-radius:6px;" />
     </a>
 
     <ul class="navbar-links">
@@ -64,7 +64,7 @@
   <div class="footer-grid">
     <div>
       <div class="footer-brand">
-        <span class="brand-naija">Naija</span><span class="brand-mirage">mirage</span>
+        <img src="{{ url_for('static', filename='images/logo.jpg') }}" alt="Naijamirage" style="height:56px;width:auto;border-radius:6px;" />
       </div>
       <p class="footer-about">
         Your number one destination for Nigerian news, entertainment, music, and music videos.
