@@ -1,0 +1,3898 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>NaijaMirage &mdash; Project Code Reference</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:#0d0d1a;color:#f0f0f0;display:flex;min-height:100vh}
+.sidebar{width:260px;flex-shrink:0;background:#13132a;border-right:1px solid #2a2a4a;position:sticky;top:0;height:100vh;overflow-y:auto}
+.sidebar-header{padding:20px 18px 14px;border-bottom:1px solid #2a2a4a}
+.sidebar-title{font-size:1rem;font-weight:800;background:linear-gradient(90deg,#0891b2,#7c3aed,#ea580c,#ca8a04,#65a30d);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.sidebar-sub{font-size:.72rem;color:#9999bb;margin-top:4px}
+.nav-link{display:block;padding:8px 18px;font-size:.78rem;color:#9999bb;text-decoration:none;border-left:3px solid transparent;transition:all .2s;font-family:'Courier New',monospace}
+.nav-link:hover,.nav-link.active{color:#ffd700;border-left-color:#008751;background:rgba(0,135,81,.08)}
+.main{flex:1;overflow-x:hidden;min-width:0}
+.page-hero{background:linear-gradient(135deg,#0d0d1a,#001a0d);padding:40px 40px 32px;border-bottom:1px solid #2a2a4a}
+.page-hero h1{font-size:1.8rem;font-weight:800}
+.page-hero p{color:#9999bb;margin-top:8px;font-size:.9rem}
+.badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:.7rem;font-weight:700;margin:2px;text-transform:uppercase}
+.b-py{background:#3776ab;color:#fff}.b-html{background:#e34c26;color:#fff}
+.b-css{background:#264de4;color:#fff}.b-js{background:#f7df1e;color:#111}
+.b-yaml{background:#cc1f25;color:#fff}
+.stats{display:flex;gap:16px;margin-top:20px;flex-wrap:wrap}
+.stat{background:#1a1a2e;border:1px solid #2a2a4a;border-radius:10px;padding:14px 22px;text-align:center}
+.stat-num{font-size:1.6rem;font-weight:800;color:#ffd700}
+.stat-lbl{font-size:.72rem;color:#9999bb;margin-top:4px}
+.code-section{border-bottom:1px solid #2a2a4a}
+.file-header{display:flex;align-items:center;gap:10px;padding:10px 20px;background:#13132a;border-bottom:1px solid #2a2a4a;position:sticky;top:0;z-index:10;flex-wrap:wrap}
+.file-name{font-family:'Courier New',monospace;font-size:.88rem;font-weight:700;color:#ffd700;flex:1}
+.file-lang{font-size:.7rem;background:#2a2a4a;border-radius:4px;padding:2px 8px;color:#9999bb;text-transform:uppercase}
+.file-lines{font-size:.7rem;color:#9999bb}
+.copy-code-btn{background:#008751;border:none;color:#fff;padding:5px 14px;border-radius:6px;font-size:.75rem;font-weight:600;cursor:pointer;transition:background .2s}
+.copy-code-btn:hover{background:#00a86b}.copy-code-btn.copied{background:#7c3aed}
+pre{margin:0;overflow-x:auto}
+pre code{font-size:.82rem;line-height:1.6;padding:20px 24px!important;display:block}
+.hljs{background:#0d0d1a!important}
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-track{background:#13132a}
+::-webkit-scrollbar-thumb{background:#2a2a4a;border-radius:3px}
+@media(max-width:768px){.sidebar{display:none}.page-hero{padding:24px}pre code{font-size:.75rem}}
+</style>
+</head>
+<body>
+<nav class="sidebar">
+  <div class="sidebar-header">
+    <div class="sidebar-title">NaijaMirage</div>
+    <div class="sidebar-sub">Project Code Reference</div>
+  </div>
+<a href="#app-py" class="nav-link">app.py</a>
+<a href="#requirements-txt" class="nav-link">requirements.txt</a>
+<a href="#render-yaml" class="nav-link">render.yaml</a>
+<a href="#templates-base-html" class="nav-link">templates/base.html</a>
+<a href="#templates-index-html" class="nav-link">templates/index.html</a>
+<a href="#templates-article-html" class="nav-link">templates/article.html</a>
+<a href="#templates-news-html" class="nav-link">templates/news.html</a>
+<a href="#templates-entertainment-html" class="nav-link">templates/entertainment.html</a>
+<a href="#templates-music-html" class="nav-link">templates/music.html</a>
+<a href="#templates-videos-html" class="nav-link">templates/videos.html</a>
+<a href="#templates-upload-html" class="nav-link">templates/upload.html</a>
+<a href="#templates-admin-html" class="nav-link">templates/admin.html</a>
+<a href="#templates-edit_news-html" class="nav-link">templates/edit_news.html</a>
+<a href="#templates-edit_audio-html" class="nav-link">templates/edit_audio.html</a>
+<a href="#templates-edit_video-html" class="nav-link">templates/edit_video.html</a>
+<a href="#static-css-style-css" class="nav-link">static/css/style.css</a>
+<a href="#static-js-main-js" class="nav-link">static/js/main.js</a>
+</nav>
+<main class="main">
+  <div class="page-hero">
+    <h1>NaijaMirage &mdash; Project Code</h1>
+    <p>Complete source code &bull; Location: <code style="background:#2a2a4a;padding:2px 8px;border-radius:4px;font-size:.85rem;">c:\Users\opeye\naijamirage</code></p>
+    <div style="margin-top:14px">
+      <span class="badge b-py">Python / Flask</span>
+      <span class="badge b-html">Jinja2 Templates</span>
+      <span class="badge b-css">CSS</span>
+      <span class="badge b-js">JavaScript</span>
+      <span class="badge b-yaml">Render.com</span>
+    </div>
+    <div class="stats">
+      <div class="stat"><div class="stat-num">17</div><div class="stat-lbl">Files</div></div>
+      <div class="stat"><div class="stat-num">12</div><div class="stat-lbl">Templates</div></div>
+      <div class="stat"><div class="stat-num">30+</div><div class="stat-lbl">Routes</div></div>
+      <div class="stat"><div class="stat-num">3</div><div class="stat-lbl">DB Models</div></div>
+    </div>
+  </div>
+
+<section id="app-py" class="code-section">
+  <div class="file-header">
+    <span class="file-name">app.py</span>
+    <span class="file-lang">python</span>
+    <span class="file-lines">649 lines</span>
+    <button class="copy-code-btn" onclick="copyCode(this)">Copy</button>
+  </div>
+  <pre><code class="language-python">import os
+import mimetypes
+from datetime import datetime
+from flask import (Flask, render_template, request, redirect, url_for,
+                   flash, Response, send_file, abort)
+from flask_sqlalchemy import SQLAlchemy
+from werkzeug.utils import secure_filename
+
+BASE_DIR = os.path.abspath(os.path.dirname(__file__))
+UPLOAD_BASE = os.path.join(BASE_DIR, &#x27;uploads&#x27;)
+
+# ─── Cloudflare R2 / S3 Storage ───────────────────────────────────────────────
+
+R2_ACCOUNT_ID      = os.environ.get(&#x27;R2_ACCOUNT_ID&#x27;, &#x27;&#x27;)
+R2_ACCESS_KEY_ID   = os.environ.get(&#x27;R2_ACCESS_KEY_ID&#x27;, &#x27;&#x27;)
+R2_SECRET_ACCESS_KEY = os.environ.get(&#x27;R2_SECRET_ACCESS_KEY&#x27;, &#x27;&#x27;)
+R2_BUCKET_NAME     = os.environ.get(&#x27;R2_BUCKET_NAME&#x27;, &#x27;naijamirage&#x27;)
+USE_R2 = bool(R2_ACCOUNT_ID and R2_ACCESS_KEY_ID and R2_SECRET_ACCESS_KEY)
+
+
+def _r2():
+    import boto3
+    from botocore.client import Config
+    return boto3.client(
+        &#x27;s3&#x27;,
+        endpoint_url=f&#x27;https://{R2_ACCOUNT_ID}.r2.cloudflarestorage.com&#x27;,
+        aws_access_key_id=R2_ACCESS_KEY_ID,
+        aws_secret_access_key=R2_SECRET_ACCESS_KEY,
+        config=Config(signature_version=&#x27;s3v4&#x27;),
+        region_name=&#x27;auto&#x27;,
+    )
+
+
+def r2_upload(stream, key):
+    _r2().upload_fileobj(stream, R2_BUCKET_NAME, key)
+
+
+def r2_presigned_url(key, download_name=None, expires=3600):
+    params = {&#x27;Bucket&#x27;: R2_BUCKET_NAME, &#x27;Key&#x27;: key}
+    if download_name:
+        params[&#x27;ResponseContentDisposition&#x27;] = f&#x27;attachment; filename=&quot;{download_name}&quot;&#x27;
+    return _r2().generate_presigned_url(&#x27;get_object&#x27;, Params=params, ExpiresIn=expires)
+
+
+def r2_delete(key):
+    try:
+        _r2().delete_object(Bucket=R2_BUCKET_NAME, Key=key)
+    except Exception:
+        pass
+
+ALLOWED_AUDIO = {&#x27;mp3&#x27;, &#x27;wav&#x27;, &#x27;ogg&#x27;, &#x27;aac&#x27;, &#x27;m4a&#x27;, &#x27;flac&#x27;}
+ALLOWED_VIDEO = {&#x27;mp4&#x27;, &#x27;webm&#x27;, &#x27;mkv&#x27;, &#x27;avi&#x27;, &#x27;mov&#x27;}
+ALLOWED_IMAGE = {&#x27;jpg&#x27;, &#x27;jpeg&#x27;, &#x27;png&#x27;, &#x27;gif&#x27;, &#x27;webp&#x27;}
+
+app = Flask(__name__)
+app.config[&#x27;SECRET_KEY&#x27;] = os.environ.get(&#x27;SECRET_KEY&#x27;, &#x27;naijamirage-secret-2024&#x27;)
+app.config[&#x27;SQLALCHEMY_DATABASE_URI&#x27;] = f&quot;sqlite:///{os.path.join(BASE_DIR, &#x27;naijamirage.db&#x27;)}&quot;
+app.config[&#x27;SQLALCHEMY_TRACK_MODIFICATIONS&#x27;] = False
+app.config[&#x27;MAX_CONTENT_LENGTH&#x27;] = 500 * 1024 * 1024  # 500 MB
+
+db = SQLAlchemy(app)
+
+
+# ─── Models ───────────────────────────────────────────────────────────────────
+
+class NewsArticle(db.Model):
+    __tablename__ = &#x27;news_articles&#x27;
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(300), nullable=False)
+    summary = db.Column(db.Text, nullable=False)
+    content = db.Column(db.Text, nullable=False)
+    category = db.Column(db.String(100), default=&#x27;General&#x27;)
+    image_path = db.Column(db.String(500))
+    author = db.Column(db.String(150), default=&#x27;Naijamirage Staff&#x27;)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+
+class AudioTrack(db.Model):
+    __tablename__ = &#x27;audio_tracks&#x27;
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(300), nullable=False)
+    artist = db.Column(db.String(200), nullable=False)
+    description = db.Column(db.Text)
+    genre = db.Column(db.String(100), default=&#x27;Afrobeats&#x27;)
+    file_path = db.Column(db.String(500), nullable=False)
+    cover_path = db.Column(db.String(500))
+    file_size = db.Column(db.Integer, default=0)
+    download_count = db.Column(db.Integer, default=0)
+    play_count = db.Column(db.Integer, default=0)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+
+class MusicVideo(db.Model):
+    __tablename__ = &#x27;music_videos&#x27;
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(300), nullable=False)
+    artist = db.Column(db.String(200), nullable=False)
+    description = db.Column(db.Text)
+    genre = db.Column(db.String(100), default=&#x27;Afrobeats&#x27;)
+    file_path = db.Column(db.String(500), nullable=False)
+    thumbnail_path = db.Column(db.String(500))
+    file_size = db.Column(db.Integer, default=0)
+    download_count = db.Column(db.Integer, default=0)
+    play_count = db.Column(db.Integer, default=0)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+
+# ─── Helpers ──────────────────────────────────────────────────────────────────
+
+def allowed_file(filename, allowed_set):
+    return &#x27;.&#x27; in filename and filename.rsplit(&#x27;.&#x27;, 1)[1].lower() in allowed_set
+
+
+def save_upload(file, subfolder, allowed_set):
+    &quot;&quot;&quot;Save uploaded file to R2 or local disk; return filename or None.&quot;&quot;&quot;
+    if not file or file.filename == &#x27;&#x27;:
+        return None
+    if not allowed_file(file.filename, allowed_set):
+        return None
+    filename = secure_filename(file.filename)
+    base, ext = os.path.splitext(filename)
+    timestamp = datetime.utcnow().strftime(&#x27;%Y%m%d%H%M%S%f&#x27;)
+    filename = f&quot;{base}_{timestamp}{ext}&quot;
+    if USE_R2:
+        file.stream.seek(0)
+        r2_upload(file.stream, f&quot;{subfolder}/{filename}&quot;)
+    else:
+        dest = os.path.join(UPLOAD_BASE, subfolder, filename)
+        file.save(dest)
+    return filename
+
+
+def format_size(size_bytes):
+    if size_bytes &lt; 1024:
+        return f&quot;{size_bytes} B&quot;
+    elif size_bytes &lt; 1024 ** 2:
+        return f&quot;{size_bytes / 1024:.1f} KB&quot;
+    elif size_bytes &lt; 1024 ** 3:
+        return f&quot;{size_bytes / (1024**2):.1f} MB&quot;
+    return f&quot;{size_bytes / (1024**3):.2f} GB&quot;
+
+
+app.jinja_env.filters[&#x27;filesize&#x27;] = format_size
+
+from urllib.parse import quote_plus
+app.jinja_env.filters[&#x27;urlencode&#x27;] = quote_plus
+
+
+def stream_file(filepath, mimetype=None):
+    &quot;&quot;&quot;Stream a file with HTTP range-request support.&quot;&quot;&quot;
+    if not os.path.isfile(filepath):
+        abort(404)
+    file_size = os.path.getsize(filepath)
+    if mimetype is None:
+        mimetype, _ = mimetypes.guess_type(filepath)
+        mimetype = mimetype or &#x27;application/octet-stream&#x27;
+
+    range_header = request.headers.get(&#x27;Range&#x27;)
+    if range_header:
+        try:
+            ranges = range_header.strip().replace(&#x27;bytes=&#x27;, &#x27;&#x27;)
+            start_str, end_str = ranges.split(&#x27;-&#x27;)
+            start = int(start_str)
+            end = int(end_str) if end_str else file_size - 1
+        except (ValueError, AttributeError):
+            abort(416)
+
+        end = min(end, file_size - 1)
+        length = end - start + 1
+
+        def generate():
+            with open(filepath, &#x27;rb&#x27;) as f:
+                f.seek(start)
+                remaining = length
+                chunk = 65536
+                while remaining &gt; 0:
+                    data = f.read(min(chunk, remaining))
+                    if not data:
+                        break
+                    remaining -= len(data)
+                    yield data
+
+        headers = {
+            &#x27;Content-Range&#x27;: f&#x27;bytes {start}-{end}/{file_size}&#x27;,
+            &#x27;Accept-Ranges&#x27;: &#x27;bytes&#x27;,
+            &#x27;Content-Length&#x27;: str(length),
+            &#x27;Content-Type&#x27;: mimetype,
+        }
+        return Response(generate(), status=206, headers=headers)
+
+    # No Range header — serve the whole file
+    headers = {
+        &#x27;Accept-Ranges&#x27;: &#x27;bytes&#x27;,
+        &#x27;Content-Length&#x27;: str(file_size),
+        &#x27;Content-Type&#x27;: mimetype,
+    }
+    def generate_full():
+        with open(filepath, &#x27;rb&#x27;) as f:
+            while True:
+                data = f.read(65536)
+                if not data:
+                    break
+                yield data
+    return Response(generate_full(), status=200, headers=headers)
+
+
+# ─── Routes ───────────────────────────────────────────────────────────────────
+
+@app.route(&#x27;/&#x27;)
+def index():
+    articles = NewsArticle.query.order_by(NewsArticle.created_at.desc()).limit(6).all()
+    audio_tracks = AudioTrack.query.order_by(AudioTrack.created_at.desc()).limit(4).all()
+    music_videos = MusicVideo.query.order_by(MusicVideo.created_at.desc()).limit(4).all()
+    entertainment = NewsArticle.query.filter_by(category=&#x27;Entertainment&#x27;)\
+        .order_by(NewsArticle.created_at.desc()).limit(3).all()
+    return render_template(&#x27;index.html&#x27;, articles=articles,
+                           audio_tracks=audio_tracks,
+                           music_videos=music_videos,
+                           entertainment=entertainment)
+
+
+@app.route(&#x27;/news&#x27;)
+def news():
+    category = request.args.get(&#x27;category&#x27;, &#x27;&#x27;)
+    search_q = request.args.get(&#x27;q&#x27;, &#x27;&#x27;).strip()
+    page = request.args.get(&#x27;page&#x27;, 1, type=int)
+    query = NewsArticle.query
+    if category:
+        query = query.filter_by(category=category)
+    if search_q:
+        like = f&#x27;%{search_q}%&#x27;
+        query = query.filter(
+            db.or_(
+                NewsArticle.title.ilike(like),
+                NewsArticle.summary.ilike(like),
+                NewsArticle.content.ilike(like),
+                NewsArticle.author.ilike(like),
+            )
+        )
+    articles = query.order_by(NewsArticle.created_at.desc()).paginate(
+        page=page, per_page=12, error_out=False)
+    categories = db.session.query(NewsArticle.category).distinct().all()
+    categories = [c[0] for c in categories]
+    return render_template(&#x27;news.html&#x27;, articles=articles,
+                           categories=categories, selected_category=category,
+                           search_q=search_q)
+
+
+@app.route(&#x27;/news/&lt;int:article_id&gt;&#x27;)
+def article(article_id):
+    art = NewsArticle.query.get_or_404(article_id)
+    related = NewsArticle.query.filter(
+        NewsArticle.category == art.category,
+        NewsArticle.id != art.id
+    ).order_by(NewsArticle.created_at.desc()).limit(4).all()
+    return render_template(&#x27;article.html&#x27;, article=art, related=related)
+
+
+@app.route(&#x27;/entertainment&#x27;)
+def entertainment():
+    articles = NewsArticle.query.filter(
+        NewsArticle.category.in_([&#x27;Entertainment&#x27;, &#x27;Celebrity&#x27;, &#x27;Lifestyle&#x27;, &#x27;Culture&#x27;])
+    ).order_by(NewsArticle.created_at.desc()).all()
+    return render_template(&#x27;entertainment.html&#x27;, articles=articles)
+
+
+@app.route(&#x27;/music&#x27;)
+def music():
+    genre = request.args.get(&#x27;genre&#x27;, &#x27;&#x27;)
+    page = request.args.get(&#x27;page&#x27;, 1, type=int)
+    query = AudioTrack.query
+    if genre:
+        query = query.filter_by(genre=genre)
+    tracks = query.order_by(AudioTrack.created_at.desc()).paginate(
+        page=page, per_page=12, error_out=False)
+    genres = db.session.query(AudioTrack.genre).distinct().all()
+    genres = [g[0] for g in genres]
+    return render_template(&#x27;music.html&#x27;, tracks=tracks,
+                           genres=genres, selected_genre=genre)
+
+
+@app.route(&#x27;/videos&#x27;)
+def videos():
+    genre = request.args.get(&#x27;genre&#x27;, &#x27;&#x27;)
+    page = request.args.get(&#x27;page&#x27;, 1, type=int)
+    query = MusicVideo.query
+    if genre:
+        query = query.filter_by(genre=genre)
+    vids = query.order_by(MusicVideo.created_at.desc()).paginate(
+        page=page, per_page=12, error_out=False)
+    genres = db.session.query(MusicVideo.genre).distinct().all()
+    genres = [g[0] for g in genres]
+    return render_template(&#x27;videos.html&#x27;, videos=vids,
+                           genres=genres, selected_genre=genre)
+
+
+@app.route(&#x27;/upload&#x27;, methods=[&#x27;GET&#x27;])
+def upload():
+    return render_template(&#x27;upload.html&#x27;)
+
+
+@app.route(&#x27;/upload/news&#x27;, methods=[&#x27;POST&#x27;])
+def upload_news():
+    title = request.form.get(&#x27;title&#x27;, &#x27;&#x27;).strip()
+    summary = request.form.get(&#x27;summary&#x27;, &#x27;&#x27;).strip()
+    content = request.form.get(&#x27;content&#x27;, &#x27;&#x27;).strip()
+    category = request.form.get(&#x27;category&#x27;, &#x27;General&#x27;).strip()
+    author = request.form.get(&#x27;author&#x27;, &#x27;Naijamirage Staff&#x27;).strip()
+
+    if not title or not content:
+        flash(&#x27;Title and content are required.&#x27;, &#x27;error&#x27;)
+        return redirect(url_for(&#x27;upload&#x27;))
+
+    image_filename = None
+    if &#x27;image&#x27; in request.files:
+        image_filename = save_upload(request.files[&#x27;image&#x27;], &#x27;news_images&#x27;, ALLOWED_IMAGE)
+
+    article = NewsArticle(
+        title=title, summary=summary or content[:200],
+        content=content, category=category,
+        author=author, image_path=image_filename
+    )
+    db.session.add(article)
+    db.session.commit()
+    flash(&#x27;News article published successfully!&#x27;, &#x27;success&#x27;)
+    return redirect(url_for(&#x27;news&#x27;))
+
+
+@app.route(&#x27;/upload/audio&#x27;, methods=[&#x27;POST&#x27;])
+def upload_audio():
+    title = request.form.get(&#x27;title&#x27;, &#x27;&#x27;).strip()
+    artist = request.form.get(&#x27;artist&#x27;, &#x27;&#x27;).strip()
+    description = request.form.get(&#x27;description&#x27;, &#x27;&#x27;).strip()
+    genre = request.form.get(&#x27;genre&#x27;, &#x27;Afrobeats&#x27;).strip()
+
+    if not title or not artist:
+        flash(&#x27;Title and artist are required.&#x27;, &#x27;error&#x27;)
+        return redirect(url_for(&#x27;upload&#x27;))
+
+    if &#x27;audio_file&#x27; not in request.files:
+        flash(&#x27;No audio file selected.&#x27;, &#x27;error&#x27;)
+        return redirect(url_for(&#x27;upload&#x27;))
+
+    audio_file = request.files[&#x27;audio_file&#x27;]
+    audio_file.stream.seek(0, 2)
+    file_size = audio_file.stream.tell()
+    audio_file.stream.seek(0)
+
+    audio_filename = save_upload(audio_file, &#x27;audio&#x27;, ALLOWED_AUDIO)
+    if not audio_filename:
+        flash(&#x27;Invalid audio file. Allowed: mp3, wav, ogg, aac, m4a, flac&#x27;, &#x27;error&#x27;)
+        return redirect(url_for(&#x27;upload&#x27;))
+
+    cover_filename = None
+    if &#x27;cover_image&#x27; in request.files:
+        cover_filename = save_upload(request.files[&#x27;cover_image&#x27;], &#x27;covers&#x27;, ALLOWED_IMAGE)
+    track = AudioTrack(
+        title=title, artist=artist, description=description,
+        genre=genre, file_path=audio_filename,
+        cover_path=cover_filename, file_size=file_size
+    )
+    db.session.add(track)
+    db.session.commit()
+    flash(&#x27;Audio track uploaded successfully!&#x27;, &#x27;success&#x27;)
+    return redirect(url_for(&#x27;music&#x27;))
+
+
+@app.route(&#x27;/upload/video&#x27;, methods=[&#x27;POST&#x27;])
+def upload_video():
+    title = request.form.get(&#x27;title&#x27;, &#x27;&#x27;).strip()
+    artist = request.form.get(&#x27;artist&#x27;, &#x27;&#x27;).strip()
+    description = request.form.get(&#x27;description&#x27;, &#x27;&#x27;).strip()
+    genre = request.form.get(&#x27;genre&#x27;, &#x27;Afrobeats&#x27;).strip()
+
+    if not title or not artist:
+        flash(&#x27;Title and artist are required.&#x27;, &#x27;error&#x27;)
+        return redirect(url_for(&#x27;upload&#x27;))
+
+    if &#x27;video_file&#x27; not in request.files:
+        flash(&#x27;No video file selected.&#x27;, &#x27;error&#x27;)
+        return redirect(url_for(&#x27;upload&#x27;))
+
+    video_file = request.files[&#x27;video_file&#x27;]
+    video_file.stream.seek(0, 2)
+    file_size = video_file.stream.tell()
+    video_file.stream.seek(0)
+
+    video_filename = save_upload(video_file, &#x27;videos&#x27;, ALLOWED_VIDEO)
+    if not video_filename:
+        flash(&#x27;Invalid video file. Allowed: mp4, webm, mkv, avi, mov&#x27;, &#x27;error&#x27;)
+        return redirect(url_for(&#x27;upload&#x27;))
+
+    thumb_filename = None
+    if &#x27;thumbnail&#x27; in request.files:
+        thumb_filename = save_upload(request.files[&#x27;thumbnail&#x27;], &#x27;thumbnails&#x27;, ALLOWED_IMAGE)
+    video = MusicVideo(
+        title=title, artist=artist, description=description,
+        genre=genre, file_path=video_filename,
+        thumbnail_path=thumb_filename, file_size=file_size
+    )
+    db.session.add(video)
+    db.session.commit()
+    flash(&#x27;Music video uploaded successfully!&#x27;, &#x27;success&#x27;)
+    return redirect(url_for(&#x27;videos&#x27;))
+
+
+# ─── Streaming ────────────────────────────────────────────────────────────────
+
+@app.route(&#x27;/stream/audio/&lt;int:track_id&gt;&#x27;)
+def stream_audio(track_id):
+    track = AudioTrack.query.get_or_404(track_id)
+    track.play_count += 1
+    db.session.commit()
+    if USE_R2:
+        return redirect(r2_presigned_url(f&quot;audio/{track.file_path}&quot;))
+    filepath = os.path.join(UPLOAD_BASE, &#x27;audio&#x27;, track.file_path)
+    return stream_file(filepath)
+
+
+@app.route(&#x27;/stream/video/&lt;int:video_id&gt;&#x27;)
+def stream_video(video_id):
+    video = MusicVideo.query.get_or_404(video_id)
+    video.play_count += 1
+    db.session.commit()
+    if USE_R2:
+        return redirect(r2_presigned_url(f&quot;videos/{video.file_path}&quot;))
+    filepath = os.path.join(UPLOAD_BASE, &#x27;videos&#x27;, video.file_path)
+    return stream_file(filepath)
+
+
+# ─── Downloads ────────────────────────────────────────────────────────────────
+
+@app.route(&#x27;/download/audio/&lt;int:track_id&gt;&#x27;)
+def download_audio(track_id):
+    track = AudioTrack.query.get_or_404(track_id)
+    track.download_count += 1
+    db.session.commit()
+    download_name = secure_filename(f&quot;{track.artist} - {track.title}{os.path.splitext(track.file_path)[1]}&quot;)
+    if USE_R2:
+        return redirect(r2_presigned_url(f&quot;audio/{track.file_path}&quot;, download_name=download_name))
+    filepath = os.path.join(UPLOAD_BASE, &#x27;audio&#x27;, track.file_path)
+    if not os.path.isfile(filepath):
+        abort(404)
+    return send_file(filepath, as_attachment=True, download_name=download_name)
+
+
+@app.route(&#x27;/download/video/&lt;int:video_id&gt;&#x27;)
+def download_video(video_id):
+    video = MusicVideo.query.get_or_404(video_id)
+    video.download_count += 1
+    db.session.commit()
+    download_name = secure_filename(f&quot;{video.artist} - {video.title}{os.path.splitext(video.file_path)[1]}&quot;)
+    if USE_R2:
+        return redirect(r2_presigned_url(f&quot;videos/{video.file_path}&quot;, download_name=download_name))
+    filepath = os.path.join(UPLOAD_BASE, &#x27;videos&#x27;, video.file_path)
+    if not os.path.isfile(filepath):
+        abort(404)
+    return send_file(filepath, as_attachment=True, download_name=download_name)
+
+
+# ─── Media file serving ───────────────────────────────────────────────────────
+
+@app.route(&#x27;/media/covers/&lt;path:filename&gt;&#x27;)
+def serve_cover(filename):
+    if USE_R2:
+        return redirect(r2_presigned_url(f&quot;covers/{filename}&quot;))
+    return send_file(os.path.join(UPLOAD_BASE, &#x27;covers&#x27;, filename))
+
+
+@app.route(&#x27;/media/thumbnails/&lt;path:filename&gt;&#x27;)
+def serve_thumbnail(filename):
+    if USE_R2:
+        return redirect(r2_presigned_url(f&quot;thumbnails/{filename}&quot;))
+    return send_file(os.path.join(UPLOAD_BASE, &#x27;thumbnails&#x27;, filename))
+
+
+@app.route(&#x27;/media/news_images/&lt;path:filename&gt;&#x27;)
+def serve_news_image(filename):
+    if USE_R2:
+        return redirect(r2_presigned_url(f&quot;news_images/{filename}&quot;))
+    return send_file(os.path.join(UPLOAD_BASE, &#x27;news_images&#x27;, filename))
+
+
+# ─── Admin: helpers ───────────────────────────────────────────────────────────
+
+def delete_file(subfolder, filename):
+    &quot;&quot;&quot;Silently remove a file from R2 or local uploads subfolder.&quot;&quot;&quot;
+    if not filename:
+        return
+    if USE_R2:
+        r2_delete(f&quot;{subfolder}/{filename}&quot;)
+    else:
+        try:
+            os.remove(os.path.join(UPLOAD_BASE, subfolder, filename))
+        except OSError:
+            pass
+
+
+# ─── Admin: dashboard ─────────────────────────────────────────────────────────
+
+@app.route(&#x27;/admin&#x27;)
+def admin_dashboard():
+    articles = NewsArticle.query.order_by(NewsArticle.created_at.desc()).all()
+    tracks   = AudioTrack.query.order_by(AudioTrack.created_at.desc()).all()
+    vids     = MusicVideo.query.order_by(MusicVideo.created_at.desc()).all()
+    return render_template(&#x27;admin.html&#x27;,
+                           articles=articles, tracks=tracks, videos=vids)
+
+
+# ─── Admin: news ──────────────────────────────────────────────────────────────
+
+@app.route(&#x27;/admin/news/&lt;int:article_id&gt;/edit&#x27;, methods=[&#x27;GET&#x27;, &#x27;POST&#x27;])
+def admin_edit_news(article_id):
+    art = NewsArticle.query.get_or_404(article_id)
+    if request.method == &#x27;POST&#x27;:
+        art.title    = request.form.get(&#x27;title&#x27;, art.title).strip()
+        art.summary  = request.form.get(&#x27;summary&#x27;, art.summary).strip()
+        art.content  = request.form.get(&#x27;content&#x27;, art.content).strip()
+        art.category = request.form.get(&#x27;category&#x27;, art.category).strip()
+        art.author   = request.form.get(&#x27;author&#x27;, art.author).strip()
+
+        if &#x27;image&#x27; in request.files and request.files[&#x27;image&#x27;].filename:
+            new_img = save_upload(request.files[&#x27;image&#x27;], &#x27;news_images&#x27;, ALLOWED_IMAGE)
+            if new_img:
+                delete_file(&#x27;news_images&#x27;, art.image_path)
+                art.image_path = new_img
+
+        db.session.commit()
+        flash(f&#x27;Article &quot;{art.title}&quot; updated successfully!&#x27;, &#x27;success&#x27;)
+        return redirect(url_for(&#x27;admin_dashboard&#x27;))
+
+    return render_template(&#x27;edit_news.html&#x27;, article=art)
+
+
+@app.route(&#x27;/admin/news/&lt;int:article_id&gt;/delete&#x27;, methods=[&#x27;POST&#x27;])
+def admin_delete_news(article_id):
+    art = NewsArticle.query.get_or_404(article_id)
+    title = art.title
+    delete_file(&#x27;news_images&#x27;, art.image_path)
+    db.session.delete(art)
+    db.session.commit()
+    flash(f&#x27;Article &quot;{title}&quot; deleted.&#x27;, &#x27;success&#x27;)
+    return redirect(url_for(&#x27;admin_dashboard&#x27;))
+
+
+# ─── Admin: audio ─────────────────────────────────────────────────────────────
+
+@app.route(&#x27;/admin/audio/&lt;int:track_id&gt;/edit&#x27;, methods=[&#x27;GET&#x27;, &#x27;POST&#x27;])
+def admin_edit_audio(track_id):
+    track = AudioTrack.query.get_or_404(track_id)
+    if request.method == &#x27;POST&#x27;:
+        track.title       = request.form.get(&#x27;title&#x27;, track.title).strip()
+        track.artist      = request.form.get(&#x27;artist&#x27;, track.artist).strip()
+        track.genre       = request.form.get(&#x27;genre&#x27;, track.genre).strip()
+        track.description = request.form.get(&#x27;description&#x27;, track.description or &#x27;&#x27;).strip()
+
+        if &#x27;audio_file&#x27; in request.files and request.files[&#x27;audio_file&#x27;].filename:
+            af = request.files[&#x27;audio_file&#x27;]
+            af.stream.seek(0, 2)
+            new_size = af.stream.tell()
+            af.stream.seek(0)
+            new_audio = save_upload(af, &#x27;audio&#x27;, ALLOWED_AUDIO)
+            if new_audio:
+                delete_file(&#x27;audio&#x27;, track.file_path)
+                track.file_path = new_audio
+                track.file_size = new_size
+
+        if &#x27;cover_image&#x27; in request.files and request.files[&#x27;cover_image&#x27;].filename:
+            new_cover = save_upload(request.files[&#x27;cover_image&#x27;], &#x27;covers&#x27;, ALLOWED_IMAGE)
+            if new_cover:
+                delete_file(&#x27;covers&#x27;, track.cover_path)
+                track.cover_path = new_cover
+
+        db.session.commit()
+        flash(f&#x27;Track &quot;{track.title}&quot; updated successfully!&#x27;, &#x27;success&#x27;)
+        return redirect(url_for(&#x27;admin_dashboard&#x27;))
+
+    return render_template(&#x27;edit_audio.html&#x27;, track=track)
+
+
+@app.route(&#x27;/admin/audio/&lt;int:track_id&gt;/delete&#x27;, methods=[&#x27;POST&#x27;])
+def admin_delete_audio(track_id):
+    track = AudioTrack.query.get_or_404(track_id)
+    title = track.title
+    delete_file(&#x27;audio&#x27;, track.file_path)
+    delete_file(&#x27;covers&#x27;, track.cover_path)
+    db.session.delete(track)
+    db.session.commit()
+    flash(f&#x27;Track &quot;{title}&quot; deleted.&#x27;, &#x27;success&#x27;)
+    return redirect(url_for(&#x27;admin_dashboard&#x27;))
+
+
+# ─── Admin: video ─────────────────────────────────────────────────────────────
+
+@app.route(&#x27;/admin/video/&lt;int:video_id&gt;/edit&#x27;, methods=[&#x27;GET&#x27;, &#x27;POST&#x27;])
+def admin_edit_video(video_id):
+    video = MusicVideo.query.get_or_404(video_id)
+    if request.method == &#x27;POST&#x27;:
+        video.title       = request.form.get(&#x27;title&#x27;, video.title).strip()
+        video.artist      = request.form.get(&#x27;artist&#x27;, video.artist).strip()
+        video.genre       = request.form.get(&#x27;genre&#x27;, video.genre).strip()
+        video.description = request.form.get(&#x27;description&#x27;, video.description or &#x27;&#x27;).strip()
+
+        if &#x27;video_file&#x27; in request.files and request.files[&#x27;video_file&#x27;].filename:
+            vf = request.files[&#x27;video_file&#x27;]
+            vf.stream.seek(0, 2)
+            new_size = vf.stream.tell()
+            vf.stream.seek(0)
+            new_vid = save_upload(vf, &#x27;videos&#x27;, ALLOWED_VIDEO)
+            if new_vid:
+                delete_file(&#x27;videos&#x27;, video.file_path)
+                video.file_path = new_vid
+                video.file_size = new_size
+
+        if &#x27;thumbnail&#x27; in request.files and request.files[&#x27;thumbnail&#x27;].filename:
+            new_thumb = save_upload(request.files[&#x27;thumbnail&#x27;], &#x27;thumbnails&#x27;, ALLOWED_IMAGE)
+            if new_thumb:
+                delete_file(&#x27;thumbnails&#x27;, video.thumbnail_path)
+                video.thumbnail_path = new_thumb
+
+        db.session.commit()
+        flash(f&#x27;Video &quot;{video.title}&quot; updated successfully!&#x27;, &#x27;success&#x27;)
+        return redirect(url_for(&#x27;admin_dashboard&#x27;))
+
+    return render_template(&#x27;edit_video.html&#x27;, video=video)
+
+
+@app.route(&#x27;/admin/video/&lt;int:video_id&gt;/delete&#x27;, methods=[&#x27;POST&#x27;])
+def admin_delete_video(video_id):
+    video = MusicVideo.query.get_or_404(video_id)
+    title = video.title
+    delete_file(&#x27;videos&#x27;, video.file_path)
+    delete_file(&#x27;thumbnails&#x27;, video.thumbnail_path)
+    db.session.delete(video)
+    db.session.commit()
+    flash(f&#x27;Video &quot;{title}&quot; deleted.&#x27;, &#x27;success&#x27;)
+    return redirect(url_for(&#x27;admin_dashboard&#x27;))
+
+
+# ─── Init &amp; Run ───────────────────────────────────────────────────────────────
+
+with app.app_context():
+    db.create_all()
+    # Ensure upload directories exist
+    for sub in (&#x27;audio&#x27;, &#x27;videos&#x27;, &#x27;covers&#x27;, &#x27;thumbnails&#x27;, &#x27;news_images&#x27;):
+        os.makedirs(os.path.join(UPLOAD_BASE, sub), exist_ok=True)
+
+if __name__ == &#x27;__main__&#x27;:
+    app.run(debug=True, host=&#x27;0.0.0.0&#x27;, port=5000)
+</code></pre>
+</section>
+
+<section id="requirements-txt" class="code-section">
+  <div class="file-header">
+    <span class="file-name">requirements.txt</span>
+    <span class="file-lang">plaintext</span>
+    <span class="file-lines">6 lines</span>
+    <button class="copy-code-btn" onclick="copyCode(this)">Copy</button>
+  </div>
+  <pre><code class="language-plaintext">Flask==3.0.0
+Flask-SQLAlchemy==3.1.1
+Werkzeug==3.0.1
+Pillow==10.2.0
+gunicorn==21.2.0
+boto3==1.34.69
+</code></pre>
+</section>
+
+<section id="render-yaml" class="code-section">
+  <div class="file-header">
+    <span class="file-name">render.yaml</span>
+    <span class="file-lang">yaml</span>
+    <span class="file-lines">11 lines</span>
+    <button class="copy-code-btn" onclick="copyCode(this)">Copy</button>
+  </div>
+  <pre><code class="language-yaml">services:
+  - type: web
+    name: naijamirage
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.0
+      - key: SECRET_KEY
+        generateValue: true
+</code></pre>
+</section>
+
+<section id="templates-base-html" class="code-section">
+  <div class="file-header">
+    <span class="file-name">templates/base.html</span>
+    <span class="file-lang">html</span>
+    <span class="file-lines">136 lines</span>
+    <button class="copy-code-btn" onclick="copyCode(this)">Copy</button>
+  </div>
+  <pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+  &lt;meta charset=&quot;UTF-8&quot; /&gt;
+  &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot; /&gt;
+  &lt;meta name=&quot;description&quot; content=&quot;Naijamirage — Your #1 Nigerian news, entertainment, music and video hub.&quot; /&gt;
+  &lt;title&gt;{% block title %}Naijamirage{% endblock %} | Nigerian News &amp;amp; Entertainment&lt;/title&gt;
+  &lt;link rel=&quot;stylesheet&quot; href=&quot;{{ url_for(&#x27;static&#x27;, filename=&#x27;css/style.css&#x27;) }}&quot; /&gt;
+  &lt;link rel=&quot;icon&quot; type=&quot;image/jpeg&quot; href=&quot;{{ url_for(&#x27;static&#x27;, filename=&#x27;images/logo.jpg&#x27;) }}&quot; /&gt;
+  {% block extra_head %}{% endblock %}
+&lt;/head&gt;
+&lt;body&gt;
+
+&lt;!-- ─── Navbar ──────────────────────────────────────────────────────────────── --&gt;
+&lt;nav class=&quot;navbar&quot;&gt;
+  &lt;div class=&quot;navbar-inner&quot;&gt;
+    &lt;a href=&quot;{{ url_for(&#x27;index&#x27;) }}&quot; class=&quot;navbar-brand&quot;&gt;
+      &lt;img src=&quot;{{ url_for(&#x27;static&#x27;, filename=&#x27;images/logo.jpg&#x27;) }}&quot; alt=&quot;Naijamirage&quot; style=&quot;height:48px;width:auto;border-radius:6px;&quot; /&gt;
+      &lt;span class=&quot;brand-name&quot;&gt;NaijaMirage&lt;/span&gt;
+    &lt;/a&gt;
+
+    &lt;div class=&quot;navbar-right&quot;&gt;
+      &lt;!-- Search box --&gt;
+      &lt;form class=&quot;navbar-search&quot; action=&quot;{{ url_for(&#x27;news&#x27;) }}&quot; method=&quot;GET&quot; role=&quot;search&quot;&gt;
+        &lt;input type=&quot;text&quot; name=&quot;q&quot; class=&quot;navbar-search-input&quot; placeholder=&quot;Search…&quot; autocomplete=&quot;off&quot; /&gt;
+        &lt;button type=&quot;submit&quot; class=&quot;navbar-search-btn&quot; aria-label=&quot;Search&quot;&gt;
+          &lt;svg width=&quot;16&quot; height=&quot;16&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2.5&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;&gt;&lt;circle cx=&quot;11&quot; cy=&quot;11&quot; r=&quot;8&quot;/&gt;&lt;line x1=&quot;21&quot; y1=&quot;21&quot; x2=&quot;16.65&quot; y2=&quot;16.65&quot;/&gt;&lt;/svg&gt;
+        &lt;/button&gt;
+      &lt;/form&gt;
+
+      &lt;!-- Nav links (right-aligned) --&gt;
+      &lt;ul class=&quot;navbar-links&quot;&gt;
+        &lt;li&gt;&lt;a href=&quot;{{ url_for(&#x27;index&#x27;) }}&quot;&gt;Home&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href=&quot;{{ url_for(&#x27;news&#x27;) }}&quot;&gt;News&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href=&quot;{{ url_for(&#x27;entertainment&#x27;) }}&quot;&gt;Entertainment&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href=&quot;{{ url_for(&#x27;music&#x27;) }}&quot;&gt;Music&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href=&quot;{{ url_for(&#x27;videos&#x27;) }}&quot;&gt;Videos&lt;/a&gt;&lt;/li&gt;
+      &lt;/ul&gt;
+
+      &lt;button class=&quot;hamburger&quot; id=&quot;hamburger&quot; aria-label=&quot;Menu&quot;&gt;
+        &lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;
+      &lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;!-- Mobile menu --&gt;
+  &lt;div class=&quot;mobile-menu&quot; id=&quot;mobileMenu&quot;&gt;
+    &lt;form action=&quot;{{ url_for(&#x27;news&#x27;) }}&quot; method=&quot;GET&quot; style=&quot;display:flex;gap:0;background:var(--card2);border:1px solid var(--border);border-radius:var(--radius-sm);overflow:hidden;margin-bottom:10px;&quot;&gt;
+      &lt;input type=&quot;text&quot; name=&quot;q&quot; placeholder=&quot;Search…&quot; style=&quot;flex:1;background:transparent;border:none;outline:none;color:var(--text);padding:9px 14px;font-size:.9rem;&quot; /&gt;
+      &lt;button type=&quot;submit&quot; style=&quot;background:var(--green);border:none;color:#fff;padding:0 14px;cursor:pointer;font-size:1rem;&quot;&gt;🔍&lt;/button&gt;
+    &lt;/form&gt;
+    &lt;a href=&quot;{{ url_for(&#x27;index&#x27;) }}&quot;&gt;🏠 Home&lt;/a&gt;
+    &lt;a href=&quot;{{ url_for(&#x27;news&#x27;) }}&quot;&gt;📰 News&lt;/a&gt;
+    &lt;a href=&quot;{{ url_for(&#x27;entertainment&#x27;) }}&quot;&gt;🎭 Entertainment&lt;/a&gt;
+    &lt;a href=&quot;{{ url_for(&#x27;music&#x27;) }}&quot;&gt;🎵 Music&lt;/a&gt;
+    &lt;a href=&quot;{{ url_for(&#x27;videos&#x27;) }}&quot;&gt;🎬 Videos&lt;/a&gt;
+  &lt;/div&gt;
+&lt;/nav&gt;
+
+&lt;!-- ─── Flash Messages ──────────────────────────────────────────────────────── --&gt;
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    &lt;div class=&quot;flash-container&quot;&gt;
+      {% for category, message in messages %}
+        &lt;div class=&quot;flash flash-{{ &#x27;success&#x27; if category == &#x27;success&#x27; else &#x27;error&#x27; }}&quot;&gt;
+          {{ &#x27;✅&#x27; if category == &#x27;success&#x27; else &#x27;❌&#x27; }} {{ message }}
+        &lt;/div&gt;
+      {% endfor %}
+    &lt;/div&gt;
+  {% endif %}
+{% endwith %}
+
+&lt;!-- ─── Page Content ────────────────────────────────────────────────────────── --&gt;
+{% block content %}{% endblock %}
+
+&lt;!-- ─── Footer ──────────────────────────────────────────────────────────────── --&gt;
+&lt;footer&gt;
+  &lt;div class=&quot;footer-grid&quot;&gt;
+    &lt;div&gt;
+      &lt;div class=&quot;footer-brand&quot; style=&quot;display:flex;align-items:center;gap:10px;&quot;&gt;
+        &lt;img src=&quot;{{ url_for(&#x27;static&#x27;, filename=&#x27;images/logo.jpg&#x27;) }}&quot; alt=&quot;Naijamirage&quot; style=&quot;height:52px;width:auto;border-radius:6px;&quot; /&gt;
+        &lt;span class=&quot;brand-name&quot;&gt;NaijaMirage&lt;/span&gt;
+      &lt;/div&gt;
+      &lt;p class=&quot;footer-about&quot;&gt;
+        Your number one destination for Nigerian news, entertainment, music, and music videos.
+        Stay connected with the latest happenings across Nigeria and the diaspora.
+      &lt;/p&gt;
+    &lt;/div&gt;
+    &lt;div&gt;
+      &lt;div class=&quot;footer-heading&quot;&gt;Quick Links&lt;/div&gt;
+      &lt;ul class=&quot;footer-links&quot;&gt;
+        &lt;li&gt;&lt;a href=&quot;{{ url_for(&#x27;index&#x27;) }}&quot;&gt;Home&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href=&quot;{{ url_for(&#x27;news&#x27;) }}&quot;&gt;News&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href=&quot;{{ url_for(&#x27;entertainment&#x27;) }}&quot;&gt;Entertainment&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href=&quot;{{ url_for(&#x27;music&#x27;) }}&quot;&gt;Music&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href=&quot;{{ url_for(&#x27;videos&#x27;) }}&quot;&gt;Music Videos&lt;/a&gt;&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/div&gt;
+    &lt;div&gt;
+      &lt;div class=&quot;footer-heading&quot;&gt;Categories&lt;/div&gt;
+      &lt;ul class=&quot;footer-links&quot;&gt;
+        &lt;li&gt;&lt;a href=&quot;{{ url_for(&#x27;news&#x27;, category=&#x27;Politics&#x27;) }}&quot;&gt;Politics&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href=&quot;{{ url_for(&#x27;news&#x27;, category=&#x27;Business&#x27;) }}&quot;&gt;Business&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href=&quot;{{ url_for(&#x27;news&#x27;, category=&#x27;Sports&#x27;) }}&quot;&gt;Sports&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href=&quot;{{ url_for(&#x27;news&#x27;, category=&#x27;Technology&#x27;) }}&quot;&gt;Technology&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href=&quot;{{ url_for(&#x27;news&#x27;, category=&#x27;Health&#x27;) }}&quot;&gt;Health&lt;/a&gt;&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/div&gt;
+    &lt;div&gt;
+      &lt;div class=&quot;footer-heading&quot;&gt;Music Genres&lt;/div&gt;
+      &lt;ul class=&quot;footer-links&quot;&gt;
+        &lt;li&gt;&lt;a href=&quot;{{ url_for(&#x27;music&#x27;, genre=&#x27;Afrobeats&#x27;) }}&quot;&gt;Afrobeats&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href=&quot;{{ url_for(&#x27;music&#x27;, genre=&#x27;Afropop&#x27;) }}&quot;&gt;Afropop&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href=&quot;{{ url_for(&#x27;music&#x27;, genre=&#x27;Highlife&#x27;) }}&quot;&gt;Highlife&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href=&quot;{{ url_for(&#x27;music&#x27;, genre=&#x27;Fuji&#x27;) }}&quot;&gt;Fuji&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href=&quot;{{ url_for(&#x27;music&#x27;, genre=&#x27;Gospel&#x27;) }}&quot;&gt;Gospel&lt;/a&gt;&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;div class=&quot;footer-bottom&quot;&gt;
+    &lt;span&gt;&amp;copy; {{ 2025 }} &lt;span class=&quot;brand-name&quot; style=&quot;font-size:inherit;font-weight:700;&quot;&gt;NaijaMirage&lt;/span&gt;. All rights reserved. &amp;nbsp;&lt;a href=&quot;{{ url_for(&#x27;admin_dashboard&#x27;) }}&quot; style=&quot;color:var(--border);font-size:.75rem;&quot; title=&quot;Admin&quot;&gt;⚙ Admin&lt;/a&gt;&lt;/span&gt;
+    &lt;span class=&quot;powered-by&quot;&gt;Powered by &lt;a href=&quot;#&quot; title=&quot;DabelTech&quot;&gt;DabelTech&lt;/a&gt;&lt;/span&gt;
+    &lt;div class=&quot;footer-social&quot;&gt;
+      &lt;a href=&quot;#&quot; title=&quot;Twitter/X&quot;&gt;𝕏&lt;/a&gt;
+      &lt;a href=&quot;#&quot; title=&quot;Instagram&quot;&gt;📷&lt;/a&gt;
+      &lt;a href=&quot;#&quot; title=&quot;Facebook&quot;&gt;f&lt;/a&gt;
+      &lt;a href=&quot;#&quot; title=&quot;YouTube&quot;&gt;▶&lt;/a&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/footer&gt;
+
+&lt;script src=&quot;{{ url_for(&#x27;static&#x27;, filename=&#x27;js/main.js&#x27;) }}&quot;&gt;&lt;/script&gt;
+{% block extra_scripts %}{% endblock %}
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+</section>
+
+<section id="templates-index-html" class="code-section">
+  <div class="file-header">
+    <span class="file-name">templates/index.html</span>
+    <span class="file-lang">html</span>
+    <span class="file-lines">306 lines</span>
+    <button class="copy-code-btn" onclick="copyCode(this)">Copy</button>
+  </div>
+  <pre><code class="language-html">{% extends &quot;base.html&quot; %}
+{% block title %}Home{% endblock %}
+
+{% block content %}
+
+&lt;!-- ─── Hero ──────────────────────────────────────────────────────────────── --&gt;
+&lt;section class=&quot;hero&quot;&gt;
+  &lt;div class=&quot;hero-content&quot;&gt;
+    &lt;div class=&quot;hero-tagline&quot; style=&quot;background:var(--logo-gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;&quot;&gt;Nigeria&#x27;s Premier Media Hub&lt;/div&gt;
+    &lt;h1 class=&quot;hero-title&quot;&gt;
+      Your Daily Dose of&lt;br&gt;&lt;span class=&quot;logo-text&quot;&gt;Naija Stories &amp;amp; Sounds&lt;/span&gt;
+    &lt;/h1&gt;
+    &lt;p class=&quot;hero-sub&quot;&gt;
+      Breaking news, entertainment gist, Afrobeats music and music videos — all in one place.
+    &lt;/p&gt;
+    &lt;div class=&quot;hero-cta&quot;&gt;
+      &lt;a href=&quot;{{ url_for(&#x27;news&#x27;) }}&quot; class=&quot;btn btn-green&quot;&gt;Read Latest News&lt;/a&gt;
+      &lt;a href=&quot;{{ url_for(&#x27;music&#x27;) }}&quot; class=&quot;btn btn-gold&quot;&gt;Stream Music&lt;/a&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/section&gt;
+
+&lt;!-- ─── Breaking Ticker ───────────────────────────────────────────────────── --&gt;
+{% if articles %}
+&lt;div class=&quot;ticker-wrap&quot;&gt;
+  &lt;div class=&quot;ticker&quot;&gt;
+    {% for a in articles %}
+      &lt;span&gt;&amp;#9670; {{ a.title }}&lt;/span&gt;
+    {% endfor %}
+    {% for a in articles %}
+      &lt;span&gt;&amp;#9670; {{ a.title }}&lt;/span&gt;
+    {% endfor %}
+  &lt;/div&gt;
+&lt;/div&gt;
+{% endif %}
+
+&lt;!-- ─── Stats Bar ──────────────────────────────────────────────────────────── --&gt;
+&lt;div class=&quot;container&quot; style=&quot;margin-top:40px;&quot;&gt;
+  &lt;div class=&quot;stats-bar&quot;&gt;
+    &lt;div class=&quot;stat-item&quot;&gt;
+      &lt;div class=&quot;stat-number&quot;&gt;{{ articles|length }}+&lt;/div&gt;
+      &lt;div class=&quot;stat-label&quot;&gt;News Articles&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;stat-item&quot;&gt;
+      &lt;div class=&quot;stat-number&quot;&gt;{{ audio_tracks|length }}+&lt;/div&gt;
+      &lt;div class=&quot;stat-label&quot;&gt;Audio Tracks&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;stat-item&quot;&gt;
+      &lt;div class=&quot;stat-number&quot;&gt;{{ music_videos|length }}+&lt;/div&gt;
+      &lt;div class=&quot;stat-label&quot;&gt;Music Videos&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;stat-item&quot;&gt;
+      &lt;div class=&quot;stat-number&quot;&gt;24/7&lt;/div&gt;
+      &lt;div class=&quot;stat-label&quot;&gt;Always Online&lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- ─── Featured News ─────────────────────────────────────────────────────── --&gt;
+&lt;section class=&quot;section&quot;&gt;
+  &lt;div class=&quot;container&quot;&gt;
+    &lt;h2 class=&quot;section-title&quot;&gt;Latest News&lt;/h2&gt;
+
+    {% if articles %}
+      {% if articles|length &gt;= 2 %}
+      &lt;div class=&quot;featured-grid&quot;&gt;
+        &lt;!-- Main featured --&gt;
+        &lt;div class=&quot;featured-card&quot;&gt;
+          {% if articles[0].image_path %}
+            &lt;img class=&quot;card-img&quot; src=&quot;{{ url_for(&#x27;serve_news_image&#x27;, filename=articles[0].image_path) }}&quot; alt=&quot;{{ articles[0].title }}&quot; /&gt;
+          {% else %}
+            &lt;div class=&quot;card-img-placeholder&quot;&gt;📰&lt;/div&gt;
+          {% endif %}
+          &lt;div class=&quot;featured-card-body&quot;&gt;
+            &lt;span class=&quot;badge badge-green&quot;&gt;{{ articles[0].category }}&lt;/span&gt;
+            &lt;h2 class=&quot;featured-card-title&quot; style=&quot;margin-top:10px;&quot;&gt;
+              &lt;a href=&quot;{{ url_for(&#x27;article&#x27;, article_id=articles[0].id) }}&quot;&gt;{{ articles[0].title }}&lt;/a&gt;
+            &lt;/h2&gt;
+            &lt;p style=&quot;color:var(--text-muted);font-size:.9rem;&quot;&gt;{{ articles[0].summary[:180] }}…&lt;/p&gt;
+            &lt;div style=&quot;margin-top:14px;font-size:.8rem;color:var(--text-muted);&quot;&gt;
+              By {{ articles[0].author }} &amp;bull; {{ articles[0].created_at.strftime(&#x27;%d %b %Y&#x27;) }}
+            &lt;/div&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+
+        &lt;!-- Second featured --&gt;
+        &lt;div class=&quot;featured-card&quot;&gt;
+          {% if articles[1].image_path %}
+            &lt;img class=&quot;card-img&quot; src=&quot;{{ url_for(&#x27;serve_news_image&#x27;, filename=articles[1].image_path) }}&quot; alt=&quot;{{ articles[1].title }}&quot; /&gt;
+          {% else %}
+            &lt;div class=&quot;card-img-placeholder&quot;&gt;📰&lt;/div&gt;
+          {% endif %}
+          &lt;div class=&quot;featured-card-body&quot;&gt;
+            &lt;span class=&quot;badge badge-gold&quot;&gt;{{ articles[1].category }}&lt;/span&gt;
+            &lt;h2 class=&quot;featured-card-title&quot; style=&quot;margin-top:10px;&quot;&gt;
+              &lt;a href=&quot;{{ url_for(&#x27;article&#x27;, article_id=articles[1].id) }}&quot;&gt;{{ articles[1].title }}&lt;/a&gt;
+            &lt;/h2&gt;
+            &lt;p style=&quot;color:var(--text-muted);font-size:.9rem;&quot;&gt;{{ articles[1].summary[:180] }}…&lt;/p&gt;
+            &lt;div style=&quot;margin-top:14px;font-size:.8rem;color:var(--text-muted);&quot;&gt;
+              By {{ articles[1].author }} &amp;bull; {{ articles[1].created_at.strftime(&#x27;%d %b %Y&#x27;) }}
+            &lt;/div&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      {% endif %}
+
+      &lt;!-- More news cards --&gt;
+      {% if articles|length &gt; 2 %}
+      &lt;div class=&quot;cards-grid&quot;&gt;
+        {% for article in articles[2:] %}
+        &lt;div class=&quot;card&quot;&gt;
+          {% if article.image_path %}
+            &lt;img class=&quot;card-img&quot; src=&quot;{{ url_for(&#x27;serve_news_image&#x27;, filename=article.image_path) }}&quot; alt=&quot;{{ article.title }}&quot; /&gt;
+          {% else %}
+            &lt;div class=&quot;card-img-placeholder&quot;&gt;📰&lt;/div&gt;
+          {% endif %}
+          &lt;div class=&quot;card-body&quot;&gt;
+            &lt;div class=&quot;card-category&quot;&gt;&lt;span class=&quot;badge badge-green&quot;&gt;{{ article.category }}&lt;/span&gt;&lt;/div&gt;
+            &lt;h3 class=&quot;card-title&quot;&gt;&lt;a href=&quot;{{ url_for(&#x27;article&#x27;, article_id=article.id) }}&quot;&gt;{{ article.title }}&lt;/a&gt;&lt;/h3&gt;
+            &lt;p class=&quot;card-summary&quot;&gt;{{ article.summary[:120] }}…&lt;/p&gt;
+            &lt;div class=&quot;card-meta&quot;&gt;
+              &lt;span&gt;{{ article.author }}&lt;/span&gt;
+              &lt;span&gt;{{ article.created_at.strftime(&#x27;%d %b %Y&#x27;) }}&lt;/span&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+        {% endfor %}
+      &lt;/div&gt;
+      {% endif %}
+
+      &lt;div style=&quot;text-align:center;margin-top:32px;&quot;&gt;
+        &lt;a href=&quot;{{ url_for(&#x27;news&#x27;) }}&quot; class=&quot;btn btn-outline&quot;&gt;View All News &amp;rarr;&lt;/a&gt;
+      &lt;/div&gt;
+
+    {% else %}
+      &lt;div class=&quot;empty-state&quot;&gt;
+        &lt;div class=&quot;empty-state-icon&quot;&gt;📰&lt;/div&gt;
+        &lt;h3&gt;No news articles yet&lt;/h3&gt;
+        &lt;p&gt;Check back soon for the latest stories.&lt;/p&gt;
+      &lt;/div&gt;
+    {% endif %}
+  &lt;/div&gt;
+&lt;/section&gt;
+
+&lt;!-- ─── Latest Music ───────────────────────────────────────────────────────── --&gt;
+&lt;section class=&quot;section section-alt&quot;&gt;
+  &lt;div class=&quot;container&quot;&gt;
+    &lt;h2 class=&quot;section-title&quot;&gt;🎵 Latest Music&lt;/h2&gt;
+
+    {% if audio_tracks %}
+    &lt;div class=&quot;cards-grid cards-grid-4&quot;&gt;
+      {% for track in audio_tracks %}
+      &lt;div class=&quot;audio-card&quot;
+           data-audio-card
+           data-track-id=&quot;{{ track.id }}&quot;
+           data-stream-url=&quot;{{ url_for(&#x27;stream_audio&#x27;, track_id=track.id) }}&quot;&gt;
+
+        {% if track.cover_path %}
+          &lt;img class=&quot;audio-cover&quot; src=&quot;{{ url_for(&#x27;serve_cover&#x27;, filename=track.cover_path) }}&quot; alt=&quot;{{ track.title }}&quot; /&gt;
+        {% else %}
+          &lt;div class=&quot;audio-cover-placeholder&quot;&gt;🎵&lt;/div&gt;
+        {% endif %}
+
+        &lt;div class=&quot;audio-info&quot;&gt;
+          &lt;div class=&quot;audio-title&quot;&gt;{{ track.title }}&lt;/div&gt;
+          &lt;div class=&quot;audio-artist&quot;&gt;{{ track.artist }}&lt;/div&gt;
+          &lt;div class=&quot;audio-genre&quot;&gt;&lt;span class=&quot;badge badge-green&quot;&gt;{{ track.genre }}&lt;/span&gt;&lt;/div&gt;
+        &lt;/div&gt;
+
+        &lt;div class=&quot;audio-player-ui&quot;&gt;
+          &lt;div class=&quot;audio-controls&quot;&gt;
+            &lt;button class=&quot;play-btn&quot; title=&quot;Play / Pause&quot;&gt;&amp;#9654;&lt;/button&gt;
+            &lt;div class=&quot;progress-wrap&quot;&gt;
+              &lt;div class=&quot;progress-bar&quot;&gt;&lt;/div&gt;
+            &lt;/div&gt;
+            &lt;span class=&quot;time-display&quot;&gt;0:00&lt;/span&gt;
+          &lt;/div&gt;
+          &lt;div class=&quot;volume-wrap&quot;&gt;
+            &lt;span class=&quot;volume-icon&quot;&gt;🔊&lt;/span&gt;
+            &lt;input type=&quot;range&quot; class=&quot;volume-slider&quot; min=&quot;0&quot; max=&quot;1&quot; step=&quot;0.05&quot; value=&quot;1&quot; /&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+
+        &lt;div class=&quot;audio-actions&quot;&gt;
+          &lt;a href=&quot;{{ url_for(&#x27;download_audio&#x27;, track_id=track.id) }}&quot; class=&quot;btn btn-green btn-sm&quot;&gt;⬇ Download&lt;/a&gt;
+        &lt;/div&gt;
+
+        &lt;div class=&quot;audio-stats&quot;&gt;
+          &lt;span&gt;▶ {{ track.play_count }} plays&lt;/span&gt;
+          &lt;span&gt;⬇ {{ track.download_count }} downloads&lt;/span&gt;
+          &lt;span&gt;{{ track.file_size | filesize }}&lt;/span&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      {% endfor %}
+    &lt;/div&gt;
+
+    &lt;div style=&quot;text-align:center;margin-top:32px;&quot;&gt;
+      &lt;a href=&quot;{{ url_for(&#x27;music&#x27;) }}&quot; class=&quot;btn btn-outline&quot;&gt;View All Music &amp;rarr;&lt;/a&gt;
+    &lt;/div&gt;
+
+    {% else %}
+      &lt;div class=&quot;empty-state&quot;&gt;
+        &lt;div class=&quot;empty-state-icon&quot;&gt;🎵&lt;/div&gt;
+        &lt;h3&gt;No music uploaded yet&lt;/h3&gt;
+        &lt;p&gt;New tracks coming soon — stay tuned!&lt;/p&gt;
+      &lt;/div&gt;
+    {% endif %}
+  &lt;/div&gt;
+&lt;/section&gt;
+
+&lt;!-- ─── Latest Videos ─────────────────────────────────────────────────────── --&gt;
+&lt;section class=&quot;section&quot;&gt;
+  &lt;div class=&quot;container&quot;&gt;
+    &lt;h2 class=&quot;section-title&quot;&gt;🎬 Music Videos&lt;/h2&gt;
+
+    {% if music_videos %}
+    &lt;div class=&quot;cards-grid cards-grid-4&quot;&gt;
+      {% for vid in music_videos %}
+      &lt;div class=&quot;video-card&quot;&gt;
+        &lt;div class=&quot;video-thumb-wrap&quot;
+             data-video-thumb
+             data-stream-url=&quot;{{ url_for(&#x27;stream_video&#x27;, video_id=vid.id) }}&quot;&gt;
+          {% if vid.thumbnail_path %}
+            &lt;img src=&quot;{{ url_for(&#x27;serve_thumbnail&#x27;, filename=vid.thumbnail_path) }}&quot; alt=&quot;{{ vid.title }}&quot; /&gt;
+          {% else %}
+            &lt;div class=&quot;video-thumb-placeholder&quot;&gt;🎬&lt;/div&gt;
+          {% endif %}
+          &lt;div class=&quot;video-play-overlay&quot;&gt;
+            &lt;div class=&quot;video-play-icon&quot;&gt;&amp;#9654;&lt;/div&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+
+        &lt;div class=&quot;video-info&quot;&gt;
+          &lt;div class=&quot;video-title&quot;&gt;{{ vid.title }}&lt;/div&gt;
+          &lt;div class=&quot;video-artist&quot;&gt;{{ vid.artist }}&lt;/div&gt;
+          &lt;span class=&quot;badge badge-gold&quot;&gt;{{ vid.genre }}&lt;/span&gt;
+        &lt;/div&gt;
+
+        &lt;div class=&quot;video-actions&quot;&gt;
+          &lt;a href=&quot;{{ url_for(&#x27;download_video&#x27;, video_id=vid.id) }}&quot; class=&quot;btn btn-green btn-sm&quot;&gt;⬇ Download&lt;/a&gt;
+        &lt;/div&gt;
+
+        &lt;div class=&quot;video-stats&quot;&gt;
+          &lt;span&gt;▶ {{ vid.play_count }} plays&lt;/span&gt;
+          &lt;span&gt;⬇ {{ vid.download_count }}&lt;/span&gt;
+          &lt;span&gt;{{ vid.file_size | filesize }}&lt;/span&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      {% endfor %}
+    &lt;/div&gt;
+
+    &lt;div style=&quot;text-align:center;margin-top:32px;&quot;&gt;
+      &lt;a href=&quot;{{ url_for(&#x27;videos&#x27;) }}&quot; class=&quot;btn btn-outline&quot;&gt;View All Videos &amp;rarr;&lt;/a&gt;
+    &lt;/div&gt;
+
+    {% else %}
+      &lt;div class=&quot;empty-state&quot;&gt;
+        &lt;div class=&quot;empty-state-icon&quot;&gt;🎬&lt;/div&gt;
+        &lt;h3&gt;No videos uploaded yet&lt;/h3&gt;
+        &lt;p&gt;New music videos dropping soon!&lt;/p&gt;
+      &lt;/div&gt;
+    {% endif %}
+  &lt;/div&gt;
+&lt;/section&gt;
+
+&lt;!-- ─── Entertainment Highlights ─────────────────────────────────────────── --&gt;
+{% if entertainment %}
+&lt;section class=&quot;section section-alt&quot;&gt;
+  &lt;div class=&quot;container&quot;&gt;
+    &lt;h2 class=&quot;section-title&quot;&gt;🎭 Entertainment&lt;/h2&gt;
+    &lt;div class=&quot;cards-grid&quot;&gt;
+      {% for art in entertainment %}
+      &lt;div class=&quot;card&quot;&gt;
+        {% if art.image_path %}
+          &lt;img class=&quot;card-img&quot; src=&quot;{{ url_for(&#x27;serve_news_image&#x27;, filename=art.image_path) }}&quot; alt=&quot;{{ art.title }}&quot; /&gt;
+        {% else %}
+          &lt;div class=&quot;card-img-placeholder&quot;&gt;🎭&lt;/div&gt;
+        {% endif %}
+        &lt;div class=&quot;card-body&quot;&gt;
+          &lt;div class=&quot;card-category&quot;&gt;&lt;span class=&quot;badge badge-gold&quot;&gt;{{ art.category }}&lt;/span&gt;&lt;/div&gt;
+          &lt;h3 class=&quot;card-title&quot;&gt;&lt;a href=&quot;{{ url_for(&#x27;article&#x27;, article_id=art.id) }}&quot;&gt;{{ art.title }}&lt;/a&gt;&lt;/h3&gt;
+          &lt;p class=&quot;card-summary&quot;&gt;{{ art.summary[:120] }}…&lt;/p&gt;
+          &lt;div class=&quot;card-meta&quot;&gt;
+            &lt;span&gt;{{ art.author }}&lt;/span&gt;
+            &lt;span&gt;{{ art.created_at.strftime(&#x27;%d %b %Y&#x27;) }}&lt;/span&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      {% endfor %}
+    &lt;/div&gt;
+    &lt;div style=&quot;text-align:center;margin-top:32px;&quot;&gt;
+      &lt;a href=&quot;{{ url_for(&#x27;entertainment&#x27;) }}&quot; class=&quot;btn btn-outline&quot;&gt;View All Entertainment &amp;rarr;&lt;/a&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/section&gt;
+{% endif %}
+
+&lt;!-- ─── Video Modal ────────────────────────────────────────────────────────── --&gt;
+&lt;div class=&quot;video-modal&quot; id=&quot;videoModal&quot;&gt;
+  &lt;div class=&quot;video-modal-inner&quot;&gt;
+    &lt;button class=&quot;video-modal-close&quot; id=&quot;modalClose&quot;&gt;&amp;times;&lt;/button&gt;
+    &lt;video id=&quot;modalVideo&quot; controls preload=&quot;metadata&quot;&gt;&lt;/video&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+{% endblock %}
+</code></pre>
+</section>
+
+<section id="templates-article-html" class="code-section">
+  <div class="file-header">
+    <span class="file-name">templates/article.html</span>
+    <span class="file-lang">html</span>
+    <span class="file-lines">92 lines</span>
+    <button class="copy-code-btn" onclick="copyCode(this)">Copy</button>
+  </div>
+  <pre><code class="language-html">{% extends &quot;base.html&quot; %}
+{% block title %}{{ article.title }}{% endblock %}
+
+{% block content %}
+
+&lt;!-- Article Hero Image --&gt;
+{% if article.image_path %}
+&lt;div class=&quot;article-hero&quot;&gt;
+  &lt;img src=&quot;{{ url_for(&#x27;serve_news_image&#x27;, filename=article.image_path) }}&quot; alt=&quot;{{ article.title }}&quot; /&gt;
+&lt;/div&gt;
+{% else %}
+&lt;div class=&quot;article-hero-placeholder&quot;&gt;📰&lt;/div&gt;
+{% endif %}
+
+&lt;!-- Article Content --&gt;
+&lt;div class=&quot;article-container&quot;&gt;
+  &lt;div class=&quot;article-header&quot;&gt;
+    &lt;div class=&quot;article-category&quot;&gt;
+      &lt;span class=&quot;badge badge-green&quot;&gt;{{ article.category }}&lt;/span&gt;
+    &lt;/div&gt;
+    &lt;h1 class=&quot;article-title&quot;&gt;{{ article.title }}&lt;/h1&gt;
+    &lt;div class=&quot;article-meta&quot;&gt;
+      &lt;span&gt;✍ {{ article.author }}&lt;/span&gt;
+      &lt;span&gt;📅 {{ article.created_at.strftime(&#x27;%A, %d %B %Y&#x27;) }}&lt;/span&gt;
+      &lt;span&gt;🕐 {{ article.created_at.strftime(&#x27;%H:%M&#x27;) }} WAT&lt;/span&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;div class=&quot;article-divider&quot;&gt;&lt;/div&gt;
+
+  &lt;!-- Summary --&gt;
+  &lt;p style=&quot;font-size:1.1rem;font-weight:500;color:var(--text-muted);margin-bottom:28px;line-height:1.7;&quot;&gt;
+    {{ article.summary }}
+  &lt;/p&gt;
+
+  &lt;div class=&quot;article-divider&quot;&gt;&lt;/div&gt;
+
+  &lt;!-- Body --&gt;
+  &lt;div class=&quot;article-body&quot;&gt;
+    {{ article.content | replace(&#x27;\n&#x27;, &#x27;&lt;br&gt;&#x27;) | safe }}
+  &lt;/div&gt;
+
+  &lt;div class=&quot;article-divider&quot; style=&quot;margin-top:40px;&quot;&gt;&lt;/div&gt;
+
+  &lt;!-- Share --&gt;
+  &lt;div style=&quot;margin-top:28px;&quot;&gt;
+    &lt;p style=&quot;font-weight:600;margin-bottom:14px;color:var(--text-muted);font-size:.9rem;&quot;&gt;Share this article:&lt;/p&gt;
+    &lt;div class=&quot;share-bar&quot; style=&quot;padding:0;border:none;&quot;
+         data-share-title=&quot;{{ article.title | e }}&quot;
+         data-share-url=&quot;{{ request.url | e }}&quot;&gt;
+      &lt;button class=&quot;share-btn share-btn-x&quot;        onclick=&quot;shareOn(&#x27;twitter&#x27;,   this)&quot;&gt;𝕏 X / Twitter&lt;/button&gt;
+      &lt;button class=&quot;share-btn share-btn-facebook&quot; onclick=&quot;shareOn(&#x27;facebook&#x27;,  this)&quot;&gt;f Facebook&lt;/button&gt;
+      &lt;button class=&quot;share-btn share-btn-whatsapp&quot; onclick=&quot;shareOn(&#x27;whatsapp&#x27;,  this)&quot;&gt;📱 WhatsApp&lt;/button&gt;
+      &lt;button class=&quot;share-btn share-btn-linkedin&quot; onclick=&quot;shareOn(&#x27;linkedin&#x27;,  this)&quot;&gt;in LinkedIn&lt;/button&gt;
+      &lt;button class=&quot;share-btn share-btn-youtube&quot;  onclick=&quot;shareOn(&#x27;youtube&#x27;,   this)&quot;&gt;▶ YouTube&lt;/button&gt;
+      &lt;button class=&quot;share-btn share-btn-copy&quot;     onclick=&quot;shareOn(&#x27;copy&#x27;,      this)&quot;&gt;🔗 Copy Link&lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- Related Articles --&gt;
+{% if related %}
+&lt;section class=&quot;section section-alt&quot;&gt;
+  &lt;div class=&quot;container&quot;&gt;
+    &lt;h2 class=&quot;section-title&quot;&gt;Related Articles&lt;/h2&gt;
+    &lt;div class=&quot;cards-grid&quot;&gt;
+      {% for art in related %}
+      &lt;div class=&quot;card&quot;&gt;
+        {% if art.image_path %}
+          &lt;img class=&quot;card-img&quot; src=&quot;{{ url_for(&#x27;serve_news_image&#x27;, filename=art.image_path) }}&quot; alt=&quot;{{ art.title }}&quot; /&gt;
+        {% else %}
+          &lt;div class=&quot;card-img-placeholder&quot;&gt;📰&lt;/div&gt;
+        {% endif %}
+        &lt;div class=&quot;card-body&quot;&gt;
+          &lt;div class=&quot;card-category&quot;&gt;&lt;span class=&quot;badge badge-green&quot;&gt;{{ art.category }}&lt;/span&gt;&lt;/div&gt;
+          &lt;h3 class=&quot;card-title&quot;&gt;
+            &lt;a href=&quot;{{ url_for(&#x27;article&#x27;, article_id=art.id) }}&quot;&gt;{{ art.title }}&lt;/a&gt;
+          &lt;/h3&gt;
+          &lt;p class=&quot;card-summary&quot;&gt;{{ art.summary[:120] }}…&lt;/p&gt;
+          &lt;div class=&quot;card-meta&quot;&gt;
+            &lt;span&gt;{{ art.author }}&lt;/span&gt;
+            &lt;span&gt;{{ art.created_at.strftime(&#x27;%d %b %Y&#x27;) }}&lt;/span&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      {% endfor %}
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/section&gt;
+{% endif %}
+
+{% endblock %}
+</code></pre>
+</section>
+
+<section id="templates-news-html" class="code-section">
+  <div class="file-header">
+    <span class="file-name">templates/news.html</span>
+    <span class="file-lang">html</span>
+    <span class="file-lines">93 lines</span>
+    <button class="copy-code-btn" onclick="copyCode(this)">Copy</button>
+  </div>
+  <pre><code class="language-html">{% extends &quot;base.html&quot; %}
+{% block title %}News{% endblock %}
+
+{% block content %}
+
+&lt;section class=&quot;hero&quot; style=&quot;padding:48px 20px 40px;&quot;&gt;
+  &lt;div class=&quot;hero-content&quot;&gt;
+    &lt;div class=&quot;hero-tagline&quot; style=&quot;background:var(--logo-gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;&quot;&gt;Stay Informed&lt;/div&gt;
+    &lt;h1 class=&quot;hero-title&quot;&gt;Nigerian &lt;span class=&quot;logo-text&quot;&gt;News&lt;/span&gt;&lt;/h1&gt;
+    &lt;p class=&quot;hero-sub&quot;&gt;Breaking news, politics, business, sports and more.&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/section&gt;
+
+&lt;section class=&quot;section&quot;&gt;
+  &lt;div class=&quot;container&quot;&gt;
+
+    {% if search_q %}
+    &lt;div style=&quot;margin-bottom:20px;&quot;&gt;
+      &lt;p style=&quot;font-size:1rem;color:var(--text-muted);&quot;&gt;
+        Search results for: &lt;span class=&quot;logo-text&quot; style=&quot;font-weight:700;font-size:1.1rem;&quot;&gt;{{ search_q }}&lt;/span&gt;
+        &amp;nbsp;&lt;a href=&quot;{{ url_for(&#x27;news&#x27;) }}&quot; style=&quot;font-size:.82rem;color:var(--text-muted);text-decoration:underline;&quot;&gt;Clear&lt;/a&gt;
+      &lt;/p&gt;
+    &lt;/div&gt;
+    {% endif %}
+
+    &lt;!-- Category filter --&gt;
+    &lt;div class=&quot;filter-bar&quot;&gt;
+      &lt;a href=&quot;{{ url_for(&#x27;news&#x27;) }}&quot; class=&quot;{{ &#x27;active&#x27; if not selected_category }}&quot;&gt;All&lt;/a&gt;
+      {% for cat in categories %}
+        &lt;a href=&quot;{{ url_for(&#x27;news&#x27;, category=cat) }}&quot;
+           class=&quot;{{ &#x27;active&#x27; if selected_category == cat }}&quot;&gt;{{ cat }}&lt;/a&gt;
+      {% endfor %}
+    &lt;/div&gt;
+
+    {% if articles.items %}
+    &lt;div class=&quot;cards-grid&quot;&gt;
+      {% for article in articles.items %}
+      &lt;div class=&quot;card&quot;&gt;
+        {% if article.image_path %}
+          &lt;img class=&quot;card-img&quot; src=&quot;{{ url_for(&#x27;serve_news_image&#x27;, filename=article.image_path) }}&quot; alt=&quot;{{ article.title }}&quot; /&gt;
+        {% else %}
+          &lt;div class=&quot;card-img-placeholder&quot;&gt;📰&lt;/div&gt;
+        {% endif %}
+        &lt;div class=&quot;card-body&quot;&gt;
+          &lt;div class=&quot;card-category&quot;&gt;&lt;span class=&quot;badge badge-green&quot;&gt;{{ article.category }}&lt;/span&gt;&lt;/div&gt;
+          &lt;h3 class=&quot;card-title&quot;&gt;
+            &lt;a href=&quot;{{ url_for(&#x27;article&#x27;, article_id=article.id) }}&quot;&gt;{{ article.title }}&lt;/a&gt;
+          &lt;/h3&gt;
+          &lt;p class=&quot;card-summary&quot;&gt;{{ article.summary[:140] }}…&lt;/p&gt;
+          &lt;div class=&quot;card-meta&quot;&gt;
+            &lt;span&gt;✍ {{ article.author }}&lt;/span&gt;
+            &lt;span&gt;{{ article.created_at.strftime(&#x27;%d %b %Y&#x27;) }}&lt;/span&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      {% endfor %}
+    &lt;/div&gt;
+
+    &lt;!-- Pagination --&gt;
+    {% if articles.pages &gt; 1 %}
+    &lt;div class=&quot;pagination&quot;&gt;
+      {% if articles.has_prev %}
+        &lt;a href=&quot;{{ url_for(&#x27;news&#x27;, page=articles.prev_num, category=selected_category) }}&quot;&gt;&amp;laquo;&lt;/a&gt;
+      {% endif %}
+      {% for p in articles.iter_pages(left_edge=1, right_edge=1, left_current=2, right_current=2) %}
+        {% if p %}
+          {% if p == articles.page %}
+            &lt;span class=&quot;current&quot;&gt;{{ p }}&lt;/span&gt;
+          {% else %}
+            &lt;a href=&quot;{{ url_for(&#x27;news&#x27;, page=p, category=selected_category) }}&quot;&gt;{{ p }}&lt;/a&gt;
+          {% endif %}
+        {% else %}
+          &lt;span&gt;…&lt;/span&gt;
+        {% endif %}
+      {% endfor %}
+      {% if articles.has_next %}
+        &lt;a href=&quot;{{ url_for(&#x27;news&#x27;, page=articles.next_num, category=selected_category) }}&quot;&gt;&amp;raquo;&lt;/a&gt;
+      {% endif %}
+    &lt;/div&gt;
+    {% endif %}
+
+    {% else %}
+      &lt;div class=&quot;empty-state&quot;&gt;
+        &lt;div class=&quot;empty-state-icon&quot;&gt;📰&lt;/div&gt;
+        &lt;h3&gt;No articles found&lt;/h3&gt;
+        &lt;p&gt;{{ &#x27;No articles in this category yet.&#x27; if selected_category else &#x27;No news articles have been published yet.&#x27; }}&lt;/p&gt;
+      &lt;/div&gt;
+    {% endif %}
+
+  &lt;/div&gt;
+&lt;/section&gt;
+
+{% endblock %}
+</code></pre>
+</section>
+
+<section id="templates-entertainment-html" class="code-section">
+  <div class="file-header">
+    <span class="file-name">templates/entertainment.html</span>
+    <span class="file-lang">html</span>
+    <span class="file-lines">102 lines</span>
+    <button class="copy-code-btn" onclick="copyCode(this)">Copy</button>
+  </div>
+  <pre><code class="language-html">{% extends &quot;base.html&quot; %}
+{% block title %}Entertainment{% endblock %}
+
+{% block content %}
+
+&lt;section class=&quot;ent-hero&quot;&gt;
+  &lt;div class=&quot;hero-content&quot; style=&quot;position:relative;&quot;&gt;
+    &lt;div class=&quot;hero-tagline&quot; style=&quot;background:var(--logo-gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;&quot;&gt;Celebrity • Lifestyle • Culture&lt;/div&gt;
+    &lt;h1 class=&quot;hero-title&quot;&gt;Entertainment &lt;span class=&quot;logo-text&quot;&gt;Gist&lt;/span&gt;&lt;/h1&gt;
+    &lt;p class=&quot;hero-sub&quot;&gt;
+      The hottest celebrity news, lifestyle content, and cultural stories from Nigeria and beyond.
+    &lt;/p&gt;
+    &lt;div class=&quot;hero-cta&quot;&gt;
+      &lt;a href=&quot;{{ url_for(&#x27;music&#x27;) }}&quot; class=&quot;btn btn-gold&quot;&gt;🎵 Stream Music&lt;/a&gt;
+      &lt;a href=&quot;{{ url_for(&#x27;videos&#x27;) }}&quot; class=&quot;btn btn-green&quot;&gt;🎬 Watch Videos&lt;/a&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/section&gt;
+
+&lt;section class=&quot;section&quot;&gt;
+  &lt;div class=&quot;container&quot;&gt;
+
+    {% if articles %}
+
+      &lt;!-- First article big feature --&gt;
+      {% if articles %}
+      &lt;div style=&quot;margin-bottom:40px;&quot;&gt;
+        &lt;div class=&quot;featured-card&quot; style=&quot;max-width:100%;&quot;&gt;
+          {% if articles[0].image_path %}
+            &lt;img class=&quot;card-img&quot; style=&quot;aspect-ratio:21/9;object-fit:cover;&quot;
+                 src=&quot;{{ url_for(&#x27;serve_news_image&#x27;, filename=articles[0].image_path) }}&quot;
+                 alt=&quot;{{ articles[0].title }}&quot; /&gt;
+          {% else %}
+            &lt;div class=&quot;card-img-placeholder&quot; style=&quot;aspect-ratio:21/9;&quot;&gt;🎭&lt;/div&gt;
+          {% endif %}
+          &lt;div class=&quot;featured-card-body&quot; style=&quot;padding:28px;&quot;&gt;
+            &lt;span class=&quot;badge badge-gold&quot;&gt;{{ articles[0].category }}&lt;/span&gt;
+            &lt;h2 class=&quot;featured-card-title&quot; style=&quot;font-size:1.8rem;margin-top:12px;&quot;&gt;
+              &lt;a href=&quot;{{ url_for(&#x27;article&#x27;, article_id=articles[0].id) }}&quot;&gt;{{ articles[0].title }}&lt;/a&gt;
+            &lt;/h2&gt;
+            &lt;p style=&quot;color:var(--text-muted);font-size:1rem;margin:12px 0;&quot;&gt;{{ articles[0].summary[:240] }}…&lt;/p&gt;
+            &lt;div style=&quot;display:flex;align-items:center;gap:20px;margin-top:16px;&quot;&gt;
+              &lt;span style=&quot;font-size:.85rem;color:var(--text-muted);&quot;&gt;By {{ articles[0].author }}&lt;/span&gt;
+              &lt;span style=&quot;font-size:.85rem;color:var(--text-muted);&quot;&gt;{{ articles[0].created_at.strftime(&#x27;%d %b %Y&#x27;) }}&lt;/span&gt;
+              &lt;a href=&quot;{{ url_for(&#x27;article&#x27;, article_id=articles[0].id) }}&quot; class=&quot;btn btn-gold btn-sm&quot;&gt;Read More&lt;/a&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      {% endif %}
+
+      &lt;!-- Remaining articles grid --&gt;
+      {% if articles|length &gt; 1 %}
+      &lt;h2 class=&quot;section-title&quot;&gt;More Entertainment&lt;/h2&gt;
+      &lt;div class=&quot;cards-grid&quot;&gt;
+        {% for art in articles[1:] %}
+        &lt;div class=&quot;card&quot;&gt;
+          {% if art.image_path %}
+            &lt;img class=&quot;card-img&quot; src=&quot;{{ url_for(&#x27;serve_news_image&#x27;, filename=art.image_path) }}&quot; alt=&quot;{{ art.title }}&quot; /&gt;
+          {% else %}
+            &lt;div class=&quot;card-img-placeholder&quot;&gt;🎭&lt;/div&gt;
+          {% endif %}
+          &lt;div class=&quot;card-body&quot;&gt;
+            &lt;div class=&quot;card-category&quot;&gt;&lt;span class=&quot;badge badge-gold&quot;&gt;{{ art.category }}&lt;/span&gt;&lt;/div&gt;
+            &lt;h3 class=&quot;card-title&quot;&gt;
+              &lt;a href=&quot;{{ url_for(&#x27;article&#x27;, article_id=art.id) }}&quot;&gt;{{ art.title }}&lt;/a&gt;
+            &lt;/h3&gt;
+            &lt;p class=&quot;card-summary&quot;&gt;{{ art.summary[:130] }}…&lt;/p&gt;
+            &lt;div class=&quot;card-meta&quot;&gt;
+              &lt;span&gt;{{ art.author }}&lt;/span&gt;
+              &lt;span&gt;{{ art.created_at.strftime(&#x27;%d %b %Y&#x27;) }}&lt;/span&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+        {% endfor %}
+      &lt;/div&gt;
+      {% endif %}
+
+    {% else %}
+      &lt;div class=&quot;empty-state&quot;&gt;
+        &lt;div class=&quot;empty-state-icon&quot;&gt;🎭&lt;/div&gt;
+        &lt;h3&gt;No entertainment stories yet&lt;/h3&gt;
+        &lt;p&gt;Entertainment stories coming soon — stay tuned!&lt;/p&gt;
+      &lt;/div&gt;
+    {% endif %}
+
+  &lt;/div&gt;
+&lt;/section&gt;
+
+&lt;!-- Media promo strip --&gt;
+&lt;section class=&quot;section section-alt&quot;&gt;
+  &lt;div class=&quot;container&quot; style=&quot;text-align:center;&quot;&gt;
+    &lt;h2 class=&quot;section-title&quot; style=&quot;justify-content:center;&quot;&gt;Explore More on Naijamirage&lt;/h2&gt;
+    &lt;div style=&quot;display:flex;gap:20px;justify-content:center;flex-wrap:wrap;margin-top:16px;&quot;&gt;
+      &lt;a href=&quot;{{ url_for(&#x27;music&#x27;) }}&quot; class=&quot;btn btn-green&quot; style=&quot;font-size:1rem;padding:14px 30px;&quot;&gt;🎵 Stream Music&lt;/a&gt;
+      &lt;a href=&quot;{{ url_for(&#x27;videos&#x27;) }}&quot; class=&quot;btn btn-gold&quot; style=&quot;font-size:1rem;padding:14px 30px;&quot;&gt;🎬 Watch Videos&lt;/a&gt;
+      &lt;a href=&quot;{{ url_for(&#x27;news&#x27;) }}&quot; class=&quot;btn btn-outline&quot; style=&quot;font-size:1rem;padding:14px 30px;&quot;&gt;📰 Read News&lt;/a&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/section&gt;
+
+{% endblock %}
+</code></pre>
+</section>
+
+<section id="templates-music-html" class="code-section">
+  <div class="file-header">
+    <span class="file-name">templates/music.html</span>
+    <span class="file-lang">html</span>
+    <span class="file-lines">127 lines</span>
+    <button class="copy-code-btn" onclick="copyCode(this)">Copy</button>
+  </div>
+  <pre><code class="language-html">{% extends &quot;base.html&quot; %}
+{% block title %}Music{% endblock %}
+
+{% block content %}
+
+&lt;section class=&quot;hero&quot; style=&quot;padding:48px 20px 40px;&quot;&gt;
+  &lt;div class=&quot;hero-content&quot;&gt;
+    &lt;div class=&quot;hero-tagline&quot; style=&quot;background:var(--logo-gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;&quot;&gt;Stream &amp;amp; Download&lt;/div&gt;
+    &lt;h1 class=&quot;hero-title&quot;&gt;🎵 Naija &lt;span class=&quot;logo-text&quot;&gt;Music&lt;/span&gt;&lt;/h1&gt;
+    &lt;p class=&quot;hero-sub&quot;&gt;Afrobeats, Highlife, Fuji, Gospel and more — all streaming free.&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/section&gt;
+
+&lt;section class=&quot;section&quot;&gt;
+  &lt;div class=&quot;container&quot;&gt;
+
+    &lt;!-- Genre filter --&gt;
+    &lt;div class=&quot;filter-bar&quot;&gt;
+      &lt;a href=&quot;{{ url_for(&#x27;music&#x27;) }}&quot; class=&quot;{{ &#x27;active&#x27; if not selected_genre }}&quot;&gt;All Genres&lt;/a&gt;
+      {% for genre in genres %}
+        &lt;a href=&quot;{{ url_for(&#x27;music&#x27;, genre=genre) }}&quot;
+           class=&quot;{{ &#x27;active&#x27; if selected_genre == genre }}&quot;&gt;{{ genre }}&lt;/a&gt;
+      {% endfor %}
+    &lt;/div&gt;
+
+    {% if tracks.items %}
+    &lt;div class=&quot;cards-grid cards-grid-4&quot;&gt;
+      {% for track in tracks.items %}
+      &lt;div class=&quot;audio-card&quot;
+           data-audio-card
+           data-track-id=&quot;{{ track.id }}&quot;
+           data-stream-url=&quot;{{ url_for(&#x27;stream_audio&#x27;, track_id=track.id) }}&quot;&gt;
+
+        {% if track.cover_path %}
+          &lt;img class=&quot;audio-cover&quot; src=&quot;{{ url_for(&#x27;serve_cover&#x27;, filename=track.cover_path) }}&quot; alt=&quot;{{ track.title }}&quot; /&gt;
+        {% else %}
+          &lt;div class=&quot;audio-cover-placeholder&quot;&gt;🎵&lt;/div&gt;
+        {% endif %}
+
+        &lt;div class=&quot;audio-info&quot;&gt;
+          &lt;div class=&quot;audio-title&quot;&gt;{{ track.title }}&lt;/div&gt;
+          &lt;div class=&quot;audio-artist&quot;&gt;{{ track.artist }}&lt;/div&gt;
+          &lt;div class=&quot;audio-genre&quot;&gt;&lt;span class=&quot;badge badge-green&quot;&gt;{{ track.genre }}&lt;/span&gt;&lt;/div&gt;
+          {% if track.description %}
+          &lt;p style=&quot;font-size:.82rem;color:var(--text-muted);margin-top:8px;line-height:1.5;&quot;&gt;
+            {{ track.description[:100] }}{% if track.description|length &gt; 100 %}…{% endif %}
+          &lt;/p&gt;
+          {% endif %}
+        &lt;/div&gt;
+
+        &lt;div class=&quot;audio-player-ui&quot;&gt;
+          &lt;div class=&quot;audio-controls&quot;&gt;
+            &lt;button class=&quot;play-btn&quot; title=&quot;Play / Pause&quot;&gt;&amp;#9654;&lt;/button&gt;
+            &lt;div class=&quot;progress-wrap&quot;&gt;
+              &lt;div class=&quot;progress-bar&quot;&gt;&lt;/div&gt;
+            &lt;/div&gt;
+            &lt;span class=&quot;time-display&quot;&gt;0:00&lt;/span&gt;
+          &lt;/div&gt;
+          &lt;div class=&quot;volume-wrap&quot; style=&quot;margin-top:8px;&quot;&gt;
+            &lt;span class=&quot;volume-icon&quot;&gt;🔊&lt;/span&gt;
+            &lt;input type=&quot;range&quot; class=&quot;volume-slider&quot; min=&quot;0&quot; max=&quot;1&quot; step=&quot;0.05&quot; value=&quot;1&quot; /&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+
+        &lt;div class=&quot;audio-actions&quot;&gt;
+          &lt;a href=&quot;{{ url_for(&#x27;download_audio&#x27;, track_id=track.id) }}&quot; class=&quot;btn btn-green btn-sm&quot; style=&quot;flex:1;justify-content:center;&quot;&gt;
+            ⬇ Download
+          &lt;/a&gt;
+        &lt;/div&gt;
+
+        &lt;div class=&quot;share-bar&quot;
+             data-share-title=&quot;{{ (track.title ~ &#x27; by &#x27; ~ track.artist) | e }}&quot;
+             data-share-url=&quot;{{ request.url | e }}&quot;&gt;
+          &lt;span class=&quot;share-label&quot;&gt;Share:&lt;/span&gt;
+          &lt;button class=&quot;share-btn share-btn-x&quot;        onclick=&quot;shareOn(&#x27;twitter&#x27;,  this)&quot;&gt;𝕏&lt;/button&gt;
+          &lt;button class=&quot;share-btn share-btn-facebook&quot; onclick=&quot;shareOn(&#x27;facebook&#x27;, this)&quot;&gt;f&lt;/button&gt;
+          &lt;button class=&quot;share-btn share-btn-whatsapp&quot; onclick=&quot;shareOn(&#x27;whatsapp&#x27;, this)&quot;&gt;📱&lt;/button&gt;
+          &lt;button class=&quot;share-btn share-btn-linkedin&quot; onclick=&quot;shareOn(&#x27;linkedin&#x27;, this)&quot;&gt;in&lt;/button&gt;
+          &lt;button class=&quot;share-btn share-btn-youtube&quot;  onclick=&quot;shareOn(&#x27;youtube&#x27;,  this)&quot;&gt;▶&lt;/button&gt;
+          &lt;button class=&quot;share-btn share-btn-copy&quot;     onclick=&quot;shareOn(&#x27;copy&#x27;,     this)&quot;&gt;🔗&lt;/button&gt;
+        &lt;/div&gt;
+
+        &lt;div class=&quot;audio-stats&quot;&gt;
+          &lt;span&gt;▶ {{ track.play_count }}&lt;/span&gt;
+          &lt;span&gt;⬇ {{ track.download_count }}&lt;/span&gt;
+          &lt;span&gt;{{ track.file_size | filesize }}&lt;/span&gt;
+          &lt;span&gt;{{ track.created_at.strftime(&#x27;%d %b&#x27;) }}&lt;/span&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      {% endfor %}
+    &lt;/div&gt;
+
+    &lt;!-- Pagination --&gt;
+    {% if tracks.pages &gt; 1 %}
+    &lt;div class=&quot;pagination&quot;&gt;
+      {% if tracks.has_prev %}
+        &lt;a href=&quot;{{ url_for(&#x27;music&#x27;, page=tracks.prev_num, genre=selected_genre) }}&quot;&gt;&amp;laquo;&lt;/a&gt;
+      {% endif %}
+      {% for p in tracks.iter_pages(left_edge=1, right_edge=1, left_current=2, right_current=2) %}
+        {% if p %}
+          {% if p == tracks.page %}
+            &lt;span class=&quot;current&quot;&gt;{{ p }}&lt;/span&gt;
+          {% else %}
+            &lt;a href=&quot;{{ url_for(&#x27;music&#x27;, page=p, genre=selected_genre) }}&quot;&gt;{{ p }}&lt;/a&gt;
+          {% endif %}
+        {% else %}
+          &lt;span&gt;…&lt;/span&gt;
+        {% endif %}
+      {% endfor %}
+      {% if tracks.has_next %}
+        &lt;a href=&quot;{{ url_for(&#x27;music&#x27;, page=tracks.next_num, genre=selected_genre) }}&quot;&gt;&amp;raquo;&lt;/a&gt;
+      {% endif %}
+    &lt;/div&gt;
+    {% endif %}
+
+    {% else %}
+      &lt;div class=&quot;empty-state&quot;&gt;
+        &lt;div class=&quot;empty-state-icon&quot;&gt;🎵&lt;/div&gt;
+        &lt;h3&gt;No tracks found&lt;/h3&gt;
+        &lt;p&gt;{{ &#x27;No tracks in this genre yet.&#x27; if selected_genre else &#x27;New music coming soon — check back later!&#x27; }}&lt;/p&gt;
+      &lt;/div&gt;
+    {% endif %}
+
+  &lt;/div&gt;
+&lt;/section&gt;
+
+{% endblock %}
+</code></pre>
+</section>
+
+<section id="templates-videos-html" class="code-section">
+  <div class="file-header">
+    <span class="file-name">templates/videos.html</span>
+    <span class="file-lang">html</span>
+    <span class="file-lines">126 lines</span>
+    <button class="copy-code-btn" onclick="copyCode(this)">Copy</button>
+  </div>
+  <pre><code class="language-html">{% extends &quot;base.html&quot; %}
+{% block title %}Music Videos{% endblock %}
+
+{% block content %}
+
+&lt;section class=&quot;hero&quot; style=&quot;padding:48px 20px 40px;&quot;&gt;
+  &lt;div class=&quot;hero-content&quot;&gt;
+    &lt;div class=&quot;hero-tagline&quot; style=&quot;background:var(--logo-gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;&quot;&gt;Watch &amp;amp; Download&lt;/div&gt;
+    &lt;h1 class=&quot;hero-title&quot;&gt;🎬 Music &lt;span class=&quot;logo-text&quot;&gt;Videos&lt;/span&gt;&lt;/h1&gt;
+    &lt;p class=&quot;hero-sub&quot;&gt;The latest Naija music videos — stream instantly or download for offline viewing.&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/section&gt;
+
+&lt;section class=&quot;section&quot;&gt;
+  &lt;div class=&quot;container&quot;&gt;
+
+    &lt;!-- Genre filter --&gt;
+    &lt;div class=&quot;filter-bar&quot;&gt;
+      &lt;a href=&quot;{{ url_for(&#x27;videos&#x27;) }}&quot; class=&quot;{{ &#x27;active&#x27; if not selected_genre }}&quot;&gt;All Genres&lt;/a&gt;
+      {% for genre in genres %}
+        &lt;a href=&quot;{{ url_for(&#x27;videos&#x27;, genre=genre) }}&quot;
+           class=&quot;{{ &#x27;active&#x27; if selected_genre == genre }}&quot;&gt;{{ genre }}&lt;/a&gt;
+      {% endfor %}
+    &lt;/div&gt;
+
+    {% if videos.items %}
+    &lt;div class=&quot;cards-grid cards-grid-4&quot;&gt;
+      {% for vid in videos.items %}
+      &lt;div class=&quot;video-card&quot;&gt;
+
+        &lt;!-- Thumbnail / play trigger --&gt;
+        &lt;div class=&quot;video-thumb-wrap&quot;
+             data-video-thumb
+             data-stream-url=&quot;{{ url_for(&#x27;stream_video&#x27;, video_id=vid.id) }}&quot;&gt;
+          {% if vid.thumbnail_path %}
+            &lt;img src=&quot;{{ url_for(&#x27;serve_thumbnail&#x27;, filename=vid.thumbnail_path) }}&quot; alt=&quot;{{ vid.title }}&quot; /&gt;
+          {% else %}
+            &lt;div class=&quot;video-thumb-placeholder&quot;&gt;🎬&lt;/div&gt;
+          {% endif %}
+          &lt;div class=&quot;video-play-overlay&quot;&gt;
+            &lt;div class=&quot;video-play-icon&quot;&gt;&amp;#9654;&lt;/div&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+
+        &lt;div class=&quot;video-info&quot;&gt;
+          &lt;div class=&quot;video-title&quot;&gt;{{ vid.title }}&lt;/div&gt;
+          &lt;div class=&quot;video-artist&quot;&gt;{{ vid.artist }}&lt;/div&gt;
+          &lt;span class=&quot;badge badge-gold&quot;&gt;{{ vid.genre }}&lt;/span&gt;
+          {% if vid.description %}
+          &lt;p style=&quot;font-size:.82rem;color:var(--text-muted);margin-top:8px;line-height:1.5;&quot;&gt;
+            {{ vid.description[:100] }}{% if vid.description|length &gt; 100 %}…{% endif %}
+          &lt;/p&gt;
+          {% endif %}
+        &lt;/div&gt;
+
+        &lt;div class=&quot;video-actions&quot;&gt;
+          &lt;a href=&quot;{{ url_for(&#x27;download_video&#x27;, video_id=vid.id) }}&quot; class=&quot;btn btn-green btn-sm&quot; style=&quot;flex:1;justify-content:center;&quot;&gt;
+            ⬇ Download
+          &lt;/a&gt;
+        &lt;/div&gt;
+
+        &lt;div class=&quot;share-bar&quot;
+             data-share-title=&quot;{{ (vid.title ~ &#x27; by &#x27; ~ vid.artist) | e }}&quot;
+             data-share-url=&quot;{{ request.url | e }}&quot;&gt;
+          &lt;span class=&quot;share-label&quot;&gt;Share:&lt;/span&gt;
+          &lt;button class=&quot;share-btn share-btn-x&quot;        onclick=&quot;shareOn(&#x27;twitter&#x27;,  this)&quot;&gt;𝕏&lt;/button&gt;
+          &lt;button class=&quot;share-btn share-btn-facebook&quot; onclick=&quot;shareOn(&#x27;facebook&#x27;, this)&quot;&gt;f&lt;/button&gt;
+          &lt;button class=&quot;share-btn share-btn-whatsapp&quot; onclick=&quot;shareOn(&#x27;whatsapp&#x27;, this)&quot;&gt;📱&lt;/button&gt;
+          &lt;button class=&quot;share-btn share-btn-linkedin&quot; onclick=&quot;shareOn(&#x27;linkedin&#x27;, this)&quot;&gt;in&lt;/button&gt;
+          &lt;button class=&quot;share-btn share-btn-youtube&quot;  onclick=&quot;shareOn(&#x27;youtube&#x27;,  this)&quot;&gt;▶&lt;/button&gt;
+          &lt;button class=&quot;share-btn share-btn-copy&quot;     onclick=&quot;shareOn(&#x27;copy&#x27;,     this)&quot;&gt;🔗&lt;/button&gt;
+        &lt;/div&gt;
+
+        &lt;div class=&quot;video-stats&quot;&gt;
+          &lt;span&gt;▶ {{ vid.play_count }}&lt;/span&gt;
+          &lt;span&gt;⬇ {{ vid.download_count }}&lt;/span&gt;
+          &lt;span&gt;{{ vid.file_size | filesize }}&lt;/span&gt;
+          &lt;span&gt;{{ vid.created_at.strftime(&#x27;%d %b&#x27;) }}&lt;/span&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      {% endfor %}
+    &lt;/div&gt;
+
+    &lt;!-- Pagination --&gt;
+    {% if videos.pages &gt; 1 %}
+    &lt;div class=&quot;pagination&quot;&gt;
+      {% if videos.has_prev %}
+        &lt;a href=&quot;{{ url_for(&#x27;videos&#x27;, page=videos.prev_num, genre=selected_genre) }}&quot;&gt;&amp;laquo;&lt;/a&gt;
+      {% endif %}
+      {% for p in videos.iter_pages(left_edge=1, right_edge=1, left_current=2, right_current=2) %}
+        {% if p %}
+          {% if p == videos.page %}
+            &lt;span class=&quot;current&quot;&gt;{{ p }}&lt;/span&gt;
+          {% else %}
+            &lt;a href=&quot;{{ url_for(&#x27;videos&#x27;, page=p, genre=selected_genre) }}&quot;&gt;{{ p }}&lt;/a&gt;
+          {% endif %}
+        {% else %}
+          &lt;span&gt;…&lt;/span&gt;
+        {% endif %}
+      {% endfor %}
+      {% if videos.has_next %}
+        &lt;a href=&quot;{{ url_for(&#x27;videos&#x27;, page=videos.next_num, genre=selected_genre) }}&quot;&gt;&amp;raquo;&lt;/a&gt;
+      {% endif %}
+    &lt;/div&gt;
+    {% endif %}
+
+    {% else %}
+      &lt;div class=&quot;empty-state&quot;&gt;
+        &lt;div class=&quot;empty-state-icon&quot;&gt;🎬&lt;/div&gt;
+        &lt;h3&gt;No videos found&lt;/h3&gt;
+        &lt;p&gt;{{ &#x27;No videos in this genre yet.&#x27; if selected_genre else &#x27;New music videos dropping soon!&#x27; }}&lt;/p&gt;
+      &lt;/div&gt;
+    {% endif %}
+
+  &lt;/div&gt;
+&lt;/section&gt;
+
+&lt;!-- Video Modal --&gt;
+&lt;div class=&quot;video-modal&quot; id=&quot;videoModal&quot;&gt;
+  &lt;div class=&quot;video-modal-inner&quot;&gt;
+    &lt;button class=&quot;video-modal-close&quot; id=&quot;modalClose&quot;&gt;&amp;times;&lt;/button&gt;
+    &lt;video id=&quot;modalVideo&quot; controls preload=&quot;metadata&quot;&gt;&lt;/video&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+{% endblock %}
+</code></pre>
+</section>
+
+<section id="templates-upload-html" class="code-section">
+  <div class="file-header">
+    <span class="file-name">templates/upload.html</span>
+    <span class="file-lang">html</span>
+    <span class="file-lines">259 lines</span>
+    <button class="copy-code-btn" onclick="copyCode(this)">Copy</button>
+  </div>
+  <pre><code class="language-html">{% extends &quot;base.html&quot; %}
+{% block title %}Upload Content{% endblock %}
+
+{% block content %}
+
+&lt;section class=&quot;hero&quot; style=&quot;padding:48px 20px 40px;&quot;&gt;
+  &lt;div class=&quot;hero-content&quot;&gt;
+    &lt;div class=&quot;hero-tagline&quot;&gt;Admin Panel&lt;/div&gt;
+    &lt;h1 class=&quot;hero-title&quot;&gt;Upload &lt;span&gt;Content&lt;/span&gt;&lt;/h1&gt;
+    &lt;p class=&quot;hero-sub&quot;&gt;Publish news articles, upload music tracks, and add music videos.&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/section&gt;
+
+&lt;section class=&quot;section&quot;&gt;
+  &lt;div class=&quot;container&quot; style=&quot;max-width:860px;&quot;&gt;
+
+    &lt;!-- Tabs --&gt;
+    &lt;div class=&quot;upload-tabs&quot;&gt;
+      &lt;div class=&quot;upload-tab active&quot; data-tab=&quot;news&quot;&gt;📰 News Article&lt;/div&gt;
+      &lt;div class=&quot;upload-tab&quot; data-tab=&quot;audio&quot;&gt;🎵 Audio / Music&lt;/div&gt;
+      &lt;div class=&quot;upload-tab&quot; data-tab=&quot;video&quot;&gt;🎬 Music Video&lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;!-- ─── News Panel ─────────────────────────────────────────────────────── --&gt;
+    &lt;div class=&quot;upload-panel active&quot; id=&quot;panel-news&quot;&gt;
+      &lt;form class=&quot;upload-form&quot; action=&quot;{{ url_for(&#x27;upload_news&#x27;) }}&quot; method=&quot;POST&quot;
+            enctype=&quot;multipart/form-data&quot; data-upload-form&gt;
+
+        &lt;div class=&quot;form-group&quot;&gt;
+          &lt;label class=&quot;form-label&quot;&gt;Article Title &lt;span&gt;*&lt;/span&gt;&lt;/label&gt;
+          &lt;input type=&quot;text&quot; name=&quot;title&quot; class=&quot;form-input&quot; placeholder=&quot;Enter article headline…&quot; required /&gt;
+        &lt;/div&gt;
+
+        &lt;div style=&quot;display:grid;grid-template-columns:1fr 1fr;gap:20px;&quot;&gt;
+          &lt;div class=&quot;form-group&quot;&gt;
+            &lt;label class=&quot;form-label&quot;&gt;Category &lt;span&gt;*&lt;/span&gt;&lt;/label&gt;
+            &lt;select name=&quot;category&quot; class=&quot;form-select&quot;&gt;
+              &lt;option value=&quot;General&quot;&gt;General&lt;/option&gt;
+              &lt;option value=&quot;Politics&quot;&gt;Politics&lt;/option&gt;
+              &lt;option value=&quot;Business&quot;&gt;Business&lt;/option&gt;
+              &lt;option value=&quot;Sports&quot;&gt;Sports&lt;/option&gt;
+              &lt;option value=&quot;Technology&quot;&gt;Technology&lt;/option&gt;
+              &lt;option value=&quot;Health&quot;&gt;Health&lt;/option&gt;
+              &lt;option value=&quot;Entertainment&quot;&gt;Entertainment&lt;/option&gt;
+              &lt;option value=&quot;Celebrity&quot;&gt;Celebrity&lt;/option&gt;
+              &lt;option value=&quot;Lifestyle&quot;&gt;Lifestyle&lt;/option&gt;
+              &lt;option value=&quot;Culture&quot;&gt;Culture&lt;/option&gt;
+              &lt;option value=&quot;Education&quot;&gt;Education&lt;/option&gt;
+              &lt;option value=&quot;International&quot;&gt;International&lt;/option&gt;
+            &lt;/select&gt;
+          &lt;/div&gt;
+
+          &lt;div class=&quot;form-group&quot;&gt;
+            &lt;label class=&quot;form-label&quot;&gt;Author Name&lt;/label&gt;
+            &lt;input type=&quot;text&quot; name=&quot;author&quot; class=&quot;form-input&quot;
+                   placeholder=&quot;Naijamirage Staff&quot; value=&quot;Naijamirage Staff&quot; /&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+
+        &lt;div class=&quot;form-group&quot;&gt;
+          &lt;label class=&quot;form-label&quot;&gt;Summary / Excerpt&lt;/label&gt;
+          &lt;textarea name=&quot;summary&quot; class=&quot;form-textarea&quot; rows=&quot;3&quot;
+                    placeholder=&quot;Brief summary shown on listing pages (optional — auto-generated if empty)…&quot;&gt;&lt;/textarea&gt;
+        &lt;/div&gt;
+
+        &lt;div class=&quot;form-group&quot;&gt;
+          &lt;label class=&quot;form-label&quot;&gt;Article Content &lt;span&gt;*&lt;/span&gt;&lt;/label&gt;
+          &lt;textarea name=&quot;content&quot; class=&quot;form-textarea&quot; rows=&quot;12&quot;
+                    placeholder=&quot;Write the full article here…&quot; required&gt;&lt;/textarea&gt;
+        &lt;/div&gt;
+
+        &lt;div class=&quot;form-group&quot;&gt;
+          &lt;label class=&quot;form-label&quot;&gt;Featured Image&lt;/label&gt;
+          &lt;div class=&quot;file-drop&quot;&gt;
+            &lt;input type=&quot;file&quot; name=&quot;image&quot; accept=&quot;image/*&quot; /&gt;
+            &lt;div class=&quot;file-drop-icon&quot;&gt;🖼️&lt;/div&gt;
+            &lt;div class=&quot;file-drop-text&quot;&gt;
+              &lt;strong&gt;Click to browse&lt;/strong&gt; or drag &amp;amp; drop&lt;br /&gt;
+              JPG, PNG, GIF, WEBP accepted
+            &lt;/div&gt;
+            &lt;div class=&quot;file-name-display&quot;&gt;&lt;/div&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+
+        &lt;div class=&quot;progress-container&quot;&gt;
+          &lt;div class=&quot;upload-progress-bar-wrap&quot;&gt;
+            &lt;div class=&quot;upload-progress-bar&quot;&gt;&lt;/div&gt;
+          &lt;/div&gt;
+          &lt;div class=&quot;upload-progress-text&quot;&gt;Preparing upload…&lt;/div&gt;
+        &lt;/div&gt;
+
+        &lt;button type=&quot;submit&quot; class=&quot;btn btn-green&quot; style=&quot;width:100%;justify-content:center;padding:14px;font-size:1rem;margin-top:8px;&quot;&gt;
+          📰 Publish Article
+        &lt;/button&gt;
+      &lt;/form&gt;
+    &lt;/div&gt;
+
+    &lt;!-- ─── Audio Panel ────────────────────────────────────────────────────── --&gt;
+    &lt;div class=&quot;upload-panel&quot; id=&quot;panel-audio&quot;&gt;
+      &lt;form class=&quot;upload-form&quot; action=&quot;{{ url_for(&#x27;upload_audio&#x27;) }}&quot; method=&quot;POST&quot;
+            enctype=&quot;multipart/form-data&quot; data-upload-form&gt;
+
+        &lt;div style=&quot;display:grid;grid-template-columns:1fr 1fr;gap:20px;&quot;&gt;
+          &lt;div class=&quot;form-group&quot;&gt;
+            &lt;label class=&quot;form-label&quot;&gt;Track Title &lt;span&gt;*&lt;/span&gt;&lt;/label&gt;
+            &lt;input type=&quot;text&quot; name=&quot;title&quot; class=&quot;form-input&quot; placeholder=&quot;Song title…&quot; required /&gt;
+          &lt;/div&gt;
+
+          &lt;div class=&quot;form-group&quot;&gt;
+            &lt;label class=&quot;form-label&quot;&gt;Artist Name &lt;span&gt;*&lt;/span&gt;&lt;/label&gt;
+            &lt;input type=&quot;text&quot; name=&quot;artist&quot; class=&quot;form-input&quot; placeholder=&quot;Artist / band name…&quot; required /&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+
+        &lt;div class=&quot;form-group&quot;&gt;
+          &lt;label class=&quot;form-label&quot;&gt;Genre&lt;/label&gt;
+          &lt;select name=&quot;genre&quot; class=&quot;form-select&quot;&gt;
+            &lt;option value=&quot;Afrobeats&quot;&gt;Afrobeats&lt;/option&gt;
+            &lt;option value=&quot;Afropop&quot;&gt;Afropop&lt;/option&gt;
+            &lt;option value=&quot;Highlife&quot;&gt;Highlife&lt;/option&gt;
+            &lt;option value=&quot;Fuji&quot;&gt;Fuji&lt;/option&gt;
+            &lt;option value=&quot;Jùjú&quot;&gt;Jùjú&lt;/option&gt;
+            &lt;option value=&quot;Gospel&quot;&gt;Gospel&lt;/option&gt;
+            &lt;option value=&quot;R&amp;B&quot;&gt;R&amp;amp;B&lt;/option&gt;
+            &lt;option value=&quot;Hip-Hop&quot;&gt;Hip-Hop (Naija)&lt;/option&gt;
+            &lt;option value=&quot;Reggae&quot;&gt;Reggae&lt;/option&gt;
+            &lt;option value=&quot;Amapiano&quot;&gt;Amapiano&lt;/option&gt;
+            &lt;option value=&quot;Other&quot;&gt;Other&lt;/option&gt;
+          &lt;/select&gt;
+        &lt;/div&gt;
+
+        &lt;div class=&quot;form-group&quot;&gt;
+          &lt;label class=&quot;form-label&quot;&gt;Description&lt;/label&gt;
+          &lt;textarea name=&quot;description&quot; class=&quot;form-textarea&quot; rows=&quot;3&quot;
+                    placeholder=&quot;Short description about the track (optional)…&quot;&gt;&lt;/textarea&gt;
+        &lt;/div&gt;
+
+        &lt;div class=&quot;form-group&quot;&gt;
+          &lt;label class=&quot;form-label&quot;&gt;Audio File &lt;span&gt;*&lt;/span&gt;&lt;/label&gt;
+          &lt;div class=&quot;file-drop&quot;&gt;
+            &lt;input type=&quot;file&quot; name=&quot;audio_file&quot; accept=&quot;.mp3,.wav,.ogg,.aac,.m4a,.flac&quot; required /&gt;
+            &lt;div class=&quot;file-drop-icon&quot;&gt;🎵&lt;/div&gt;
+            &lt;div class=&quot;file-drop-text&quot;&gt;
+              &lt;strong&gt;Click to browse&lt;/strong&gt; or drag &amp;amp; drop&lt;br /&gt;
+              MP3, WAV, OGG, AAC, M4A, FLAC — max 500 MB
+            &lt;/div&gt;
+            &lt;div class=&quot;file-name-display&quot;&gt;&lt;/div&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+
+        &lt;div class=&quot;form-group&quot;&gt;
+          &lt;label class=&quot;form-label&quot;&gt;Cover Art (optional)&lt;/label&gt;
+          &lt;div class=&quot;file-drop&quot;&gt;
+            &lt;input type=&quot;file&quot; name=&quot;cover_image&quot; accept=&quot;image/*&quot; /&gt;
+            &lt;div class=&quot;file-drop-icon&quot;&gt;🎨&lt;/div&gt;
+            &lt;div class=&quot;file-drop-text&quot;&gt;
+              &lt;strong&gt;Click to browse&lt;/strong&gt; or drag &amp;amp; drop&lt;br /&gt;
+              JPG, PNG, WEBP — album cover / artwork
+            &lt;/div&gt;
+            &lt;div class=&quot;file-name-display&quot;&gt;&lt;/div&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+
+        &lt;div class=&quot;progress-container&quot;&gt;
+          &lt;div class=&quot;upload-progress-bar-wrap&quot;&gt;
+            &lt;div class=&quot;upload-progress-bar&quot;&gt;&lt;/div&gt;
+          &lt;/div&gt;
+          &lt;div class=&quot;upload-progress-text&quot;&gt;Uploading…&lt;/div&gt;
+        &lt;/div&gt;
+
+        &lt;button type=&quot;submit&quot; class=&quot;btn btn-green&quot; style=&quot;width:100%;justify-content:center;padding:14px;font-size:1rem;margin-top:8px;&quot;&gt;
+          🎵 Upload Track
+        &lt;/button&gt;
+      &lt;/form&gt;
+    &lt;/div&gt;
+
+    &lt;!-- ─── Video Panel ────────────────────────────────────────────────────── --&gt;
+    &lt;div class=&quot;upload-panel&quot; id=&quot;panel-video&quot;&gt;
+      &lt;form class=&quot;upload-form&quot; action=&quot;{{ url_for(&#x27;upload_video&#x27;) }}&quot; method=&quot;POST&quot;
+            enctype=&quot;multipart/form-data&quot; data-upload-form&gt;
+
+        &lt;div style=&quot;display:grid;grid-template-columns:1fr 1fr;gap:20px;&quot;&gt;
+          &lt;div class=&quot;form-group&quot;&gt;
+            &lt;label class=&quot;form-label&quot;&gt;Video Title &lt;span&gt;*&lt;/span&gt;&lt;/label&gt;
+            &lt;input type=&quot;text&quot; name=&quot;title&quot; class=&quot;form-input&quot; placeholder=&quot;Video title…&quot; required /&gt;
+          &lt;/div&gt;
+
+          &lt;div class=&quot;form-group&quot;&gt;
+            &lt;label class=&quot;form-label&quot;&gt;Artist Name &lt;span&gt;*&lt;/span&gt;&lt;/label&gt;
+            &lt;input type=&quot;text&quot; name=&quot;artist&quot; class=&quot;form-input&quot; placeholder=&quot;Artist / band name…&quot; required /&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+
+        &lt;div class=&quot;form-group&quot;&gt;
+          &lt;label class=&quot;form-label&quot;&gt;Genre&lt;/label&gt;
+          &lt;select name=&quot;genre&quot; class=&quot;form-select&quot;&gt;
+            &lt;option value=&quot;Afrobeats&quot;&gt;Afrobeats&lt;/option&gt;
+            &lt;option value=&quot;Afropop&quot;&gt;Afropop&lt;/option&gt;
+            &lt;option value=&quot;Highlife&quot;&gt;Highlife&lt;/option&gt;
+            &lt;option value=&quot;Fuji&quot;&gt;Fuji&lt;/option&gt;
+            &lt;option value=&quot;Jùjú&quot;&gt;Jùjú&lt;/option&gt;
+            &lt;option value=&quot;Gospel&quot;&gt;Gospel&lt;/option&gt;
+            &lt;option value=&quot;R&amp;B&quot;&gt;R&amp;amp;B&lt;/option&gt;
+            &lt;option value=&quot;Hip-Hop&quot;&gt;Hip-Hop (Naija)&lt;/option&gt;
+            &lt;option value=&quot;Reggae&quot;&gt;Reggae&lt;/option&gt;
+            &lt;option value=&quot;Amapiano&quot;&gt;Amapiano&lt;/option&gt;
+            &lt;option value=&quot;Other&quot;&gt;Other&lt;/option&gt;
+          &lt;/select&gt;
+        &lt;/div&gt;
+
+        &lt;div class=&quot;form-group&quot;&gt;
+          &lt;label class=&quot;form-label&quot;&gt;Description&lt;/label&gt;
+          &lt;textarea name=&quot;description&quot; class=&quot;form-textarea&quot; rows=&quot;3&quot;
+                    placeholder=&quot;Short description about the video (optional)…&quot;&gt;&lt;/textarea&gt;
+        &lt;/div&gt;
+
+        &lt;div class=&quot;form-group&quot;&gt;
+          &lt;label class=&quot;form-label&quot;&gt;Video File &lt;span&gt;*&lt;/span&gt;&lt;/label&gt;
+          &lt;div class=&quot;file-drop&quot;&gt;
+            &lt;input type=&quot;file&quot; name=&quot;video_file&quot; accept=&quot;.mp4,.webm,.mkv,.avi,.mov&quot; required /&gt;
+            &lt;div class=&quot;file-drop-icon&quot;&gt;🎬&lt;/div&gt;
+            &lt;div class=&quot;file-drop-text&quot;&gt;
+              &lt;strong&gt;Click to browse&lt;/strong&gt; or drag &amp;amp; drop&lt;br /&gt;
+              MP4, WEBM, MKV, AVI, MOV — max 500 MB
+            &lt;/div&gt;
+            &lt;div class=&quot;file-name-display&quot;&gt;&lt;/div&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+
+        &lt;div class=&quot;form-group&quot;&gt;
+          &lt;label class=&quot;form-label&quot;&gt;Thumbnail Image (optional)&lt;/label&gt;
+          &lt;div class=&quot;file-drop&quot;&gt;
+            &lt;input type=&quot;file&quot; name=&quot;thumbnail&quot; accept=&quot;image/*&quot; /&gt;
+            &lt;div class=&quot;file-drop-icon&quot;&gt;🖼️&lt;/div&gt;
+            &lt;div class=&quot;file-drop-text&quot;&gt;
+              &lt;strong&gt;Click to browse&lt;/strong&gt; or drag &amp;amp; drop&lt;br /&gt;
+              JPG, PNG, WEBP — video thumbnail / poster
+            &lt;/div&gt;
+            &lt;div class=&quot;file-name-display&quot;&gt;&lt;/div&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+
+        &lt;div class=&quot;progress-container&quot;&gt;
+          &lt;div class=&quot;upload-progress-bar-wrap&quot;&gt;
+            &lt;div class=&quot;upload-progress-bar&quot;&gt;&lt;/div&gt;
+          &lt;/div&gt;
+          &lt;div class=&quot;upload-progress-text&quot;&gt;Uploading video…&lt;/div&gt;
+        &lt;/div&gt;
+
+        &lt;button type=&quot;submit&quot; class=&quot;btn btn-gold&quot; style=&quot;width:100%;justify-content:center;padding:14px;font-size:1rem;margin-top:8px;color:#111;&quot;&gt;
+          🎬 Upload Video
+        &lt;/button&gt;
+      &lt;/form&gt;
+    &lt;/div&gt;
+
+  &lt;/div&gt;
+&lt;/section&gt;
+
+{% endblock %}
+</code></pre>
+</section>
+
+<section id="templates-admin-html" class="code-section">
+  <div class="file-header">
+    <span class="file-name">templates/admin.html</span>
+    <span class="file-lang">html</span>
+    <span class="file-lines">287 lines</span>
+    <button class="copy-code-btn" onclick="copyCode(this)">Copy</button>
+  </div>
+  <pre><code class="language-html">{% extends &quot;base.html&quot; %}
+{% block title %}Admin Dashboard{% endblock %}
+
+{% block extra_head %}
+&lt;style&gt;
+.admin-hero {
+  background: linear-gradient(135deg, #0d0d1a 0%, #1a0030 100%);
+  padding: 40px 20px 32px;
+  border-bottom: 1px solid var(--border);
+}
+.admin-table-wrap { overflow-x: auto; }
+.admin-table {
+  width: 100%; border-collapse: collapse; font-size: .9rem;
+}
+.admin-table th {
+  text-align: left; padding: 12px 16px;
+  background: var(--card2); color: var(--text-muted);
+  font-weight: 600; font-size: .78rem; text-transform: uppercase;
+  letter-spacing: .06em; border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
+.admin-table td {
+  padding: 12px 16px; border-bottom: 1px solid var(--border);
+  vertical-align: middle;
+}
+.admin-table tr:hover td { background: rgba(255,255,255,.02); }
+.admin-table tr:last-child td { border-bottom: none; }
+.td-thumb {
+  width: 52px; height: 52px; object-fit: cover;
+  border-radius: 6px; background: var(--card2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.5rem; flex-shrink: 0;
+}
+.td-thumb img { width:52px; height:52px; object-fit:cover; border-radius:6px; }
+.td-title { font-weight: 600; max-width: 260px; }
+.td-title small { display:block; color: var(--text-muted); font-weight:400; font-size:.8rem; margin-top:2px; }
+.td-muted { color: var(--text-muted); font-size: .85rem; }
+.action-btns { display:flex; gap:8px; white-space:nowrap; }
+.btn-edit  { background: var(--card2); color: var(--gold); border:1px solid var(--border); padding:6px 14px; border-radius:6px; font-size:.82rem; font-weight:600; cursor:pointer; transition:all .2s; text-decoration:none; display:inline-block; }
+.btn-edit:hover  { background: var(--gold); color:#111; border-color:var(--gold); }
+.btn-del   { background: transparent; color: #e63946; border:1px solid #e63946; padding:6px 14px; border-radius:6px; font-size:.82rem; font-weight:600; cursor:pointer; transition:all .2s; }
+.btn-del:hover   { background: #e63946; color:#fff; }
+.admin-tab-nav { display:flex; gap:4px; margin-bottom:24px; background:var(--card2); border-radius:var(--radius); padding:6px; border:1px solid var(--border); }
+.admin-tab { flex:1; padding:11px; border-radius:var(--radius-sm); text-align:center; font-weight:600; font-size:.9rem; cursor:pointer; color:var(--text-muted); transition:all .2s; }
+.admin-tab.active { background:var(--green); color:#fff; }
+.admin-panel { display:none; }
+.admin-panel.active { display:block; }
+.count-pill { background:var(--card2); border:1px solid var(--border); border-radius:20px; padding:2px 10px; font-size:.75rem; color:var(--text-muted); margin-left:8px; }
+&lt;/style&gt;
+{% endblock %}
+
+{% block content %}
+
+&lt;div class=&quot;admin-hero&quot;&gt;
+  &lt;div class=&quot;container&quot;&gt;
+    &lt;div style=&quot;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;&quot;&gt;
+      &lt;div&gt;
+        &lt;div style=&quot;color:var(--gold);font-size:.8rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;margin-bottom:8px;&quot;&gt;Content Management&lt;/div&gt;
+        &lt;h1 style=&quot;font-size:2rem;font-weight:800;&quot;&gt;Admin Dashboard&lt;/h1&gt;
+        &lt;p style=&quot;color:var(--text-muted);margin-top:6px;&quot;&gt;Edit, update or delete your published content.&lt;/p&gt;
+      &lt;/div&gt;
+      &lt;a href=&quot;{{ url_for(&#x27;upload&#x27;) }}&quot; class=&quot;btn btn-green&quot; style=&quot;white-space:nowrap;&quot;&gt;+ Upload New Content&lt;/a&gt;
+    &lt;/div&gt;
+
+    &lt;!-- Stats strip --&gt;
+    &lt;div style=&quot;display:flex;gap:24px;margin-top:28px;flex-wrap:wrap;&quot;&gt;
+      &lt;div style=&quot;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 28px;text-align:center;min-width:110px;&quot;&gt;
+        &lt;div style=&quot;font-size:1.8rem;font-weight:800;color:var(--gold);font-family:&#x27;Poppins&#x27;,sans-serif;&quot;&gt;{{ articles|length }}&lt;/div&gt;
+        &lt;div style=&quot;font-size:.78rem;color:var(--text-muted);margin-top:4px;&quot;&gt;Articles&lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div style=&quot;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 28px;text-align:center;min-width:110px;&quot;&gt;
+        &lt;div style=&quot;font-size:1.8rem;font-weight:800;color:var(--green);font-family:&#x27;Poppins&#x27;,sans-serif;&quot;&gt;{{ tracks|length }}&lt;/div&gt;
+        &lt;div style=&quot;font-size:.78rem;color:var(--text-muted);margin-top:4px;&quot;&gt;Audio Tracks&lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div style=&quot;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 28px;text-align:center;min-width:110px;&quot;&gt;
+        &lt;div style=&quot;font-size:1.8rem;font-weight:800;color:#a855f7;font-family:&#x27;Poppins&#x27;,sans-serif;&quot;&gt;{{ videos|length }}&lt;/div&gt;
+        &lt;div style=&quot;font-size:.78rem;color:var(--text-muted);margin-top:4px;&quot;&gt;Music Videos&lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;section class=&quot;section&quot;&gt;
+  &lt;div class=&quot;container&quot;&gt;
+
+    &lt;!-- Tab navigation --&gt;
+    &lt;div class=&quot;admin-tab-nav&quot;&gt;
+      &lt;div class=&quot;admin-tab active&quot; data-admin-tab=&quot;news&quot;&gt;
+        📰 News Articles &lt;span class=&quot;count-pill&quot;&gt;{{ articles|length }}&lt;/span&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;admin-tab&quot; data-admin-tab=&quot;audio&quot;&gt;
+        🎵 Audio Tracks &lt;span class=&quot;count-pill&quot;&gt;{{ tracks|length }}&lt;/span&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;admin-tab&quot; data-admin-tab=&quot;video&quot;&gt;
+        🎬 Music Videos &lt;span class=&quot;count-pill&quot;&gt;{{ videos|length }}&lt;/span&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;!-- ─── News Panel ──────────────────────────────────────────────────────── --&gt;
+    &lt;div class=&quot;admin-panel active&quot; id=&quot;admin-panel-news&quot;&gt;
+      {% if articles %}
+      &lt;div class=&quot;admin-table-wrap&quot;&gt;
+        &lt;table class=&quot;admin-table&quot;&gt;
+          &lt;thead&gt;
+            &lt;tr&gt;
+              &lt;th&gt;Image&lt;/th&gt;
+              &lt;th&gt;Title / Author&lt;/th&gt;
+              &lt;th&gt;Category&lt;/th&gt;
+              &lt;th&gt;Date&lt;/th&gt;
+              &lt;th&gt;Actions&lt;/th&gt;
+            &lt;/tr&gt;
+          &lt;/thead&gt;
+          &lt;tbody&gt;
+            {% for art in articles %}
+            &lt;tr&gt;
+              &lt;td&gt;
+                &lt;div class=&quot;td-thumb&quot;&gt;
+                  {% if art.image_path %}
+                    &lt;img src=&quot;{{ url_for(&#x27;serve_news_image&#x27;, filename=art.image_path) }}&quot; alt=&quot;&quot; /&gt;
+                  {% else %}📰{% endif %}
+                &lt;/div&gt;
+              &lt;/td&gt;
+              &lt;td&gt;
+                &lt;div class=&quot;td-title&quot;&gt;
+                  &lt;a href=&quot;{{ url_for(&#x27;article&#x27;, article_id=art.id) }}&quot; target=&quot;_blank&quot; style=&quot;color:var(--text);&quot;&gt;{{ art.title }}&lt;/a&gt;
+                  &lt;small&gt;By {{ art.author }}&lt;/small&gt;
+                &lt;/div&gt;
+              &lt;/td&gt;
+              &lt;td&gt;&lt;span class=&quot;badge badge-green&quot;&gt;{{ art.category }}&lt;/span&gt;&lt;/td&gt;
+              &lt;td class=&quot;td-muted&quot;&gt;{{ art.created_at.strftime(&#x27;%d %b %Y&#x27;) }}&lt;/td&gt;
+              &lt;td&gt;
+                &lt;div class=&quot;action-btns&quot;&gt;
+                  &lt;a href=&quot;{{ url_for(&#x27;admin_edit_news&#x27;, article_id=art.id) }}&quot; class=&quot;btn-edit&quot;&gt;✏️ Edit&lt;/a&gt;
+                  &lt;form method=&quot;POST&quot; action=&quot;{{ url_for(&#x27;admin_delete_news&#x27;, article_id=art.id) }}&quot;
+                        onsubmit=&quot;return confirm(&#x27;Delete article: {{ art.title | e }}?&#x27;)&quot;&gt;
+                    &lt;button type=&quot;submit&quot; class=&quot;btn-del&quot;&gt;🗑 Delete&lt;/button&gt;
+                  &lt;/form&gt;
+                &lt;/div&gt;
+              &lt;/td&gt;
+            &lt;/tr&gt;
+            {% endfor %}
+          &lt;/tbody&gt;
+        &lt;/table&gt;
+      &lt;/div&gt;
+      {% else %}
+        &lt;div class=&quot;empty-state&quot;&gt;
+          &lt;div class=&quot;empty-state-icon&quot;&gt;📰&lt;/div&gt;
+          &lt;h3&gt;No articles yet&lt;/h3&gt;
+          &lt;a href=&quot;{{ url_for(&#x27;upload&#x27;) }}&quot; class=&quot;btn btn-green&quot; style=&quot;margin-top:14px;&quot;&gt;Publish First Article&lt;/a&gt;
+        &lt;/div&gt;
+      {% endif %}
+    &lt;/div&gt;
+
+    &lt;!-- ─── Audio Panel ─────────────────────────────────────────────────────── --&gt;
+    &lt;div class=&quot;admin-panel&quot; id=&quot;admin-panel-audio&quot;&gt;
+      {% if tracks %}
+      &lt;div class=&quot;admin-table-wrap&quot;&gt;
+        &lt;table class=&quot;admin-table&quot;&gt;
+          &lt;thead&gt;
+            &lt;tr&gt;
+              &lt;th&gt;Cover&lt;/th&gt;
+              &lt;th&gt;Title / Artist&lt;/th&gt;
+              &lt;th&gt;Genre&lt;/th&gt;
+              &lt;th&gt;Size&lt;/th&gt;
+              &lt;th&gt;Plays / DLs&lt;/th&gt;
+              &lt;th&gt;Actions&lt;/th&gt;
+            &lt;/tr&gt;
+          &lt;/thead&gt;
+          &lt;tbody&gt;
+            {% for track in tracks %}
+            &lt;tr&gt;
+              &lt;td&gt;
+                &lt;div class=&quot;td-thumb&quot;&gt;
+                  {% if track.cover_path %}
+                    &lt;img src=&quot;{{ url_for(&#x27;serve_cover&#x27;, filename=track.cover_path) }}&quot; alt=&quot;&quot; /&gt;
+                  {% else %}🎵{% endif %}
+                &lt;/div&gt;
+              &lt;/td&gt;
+              &lt;td&gt;
+                &lt;div class=&quot;td-title&quot;&gt;
+                  {{ track.title }}
+                  &lt;small&gt;{{ track.artist }}&lt;/small&gt;
+                &lt;/div&gt;
+              &lt;/td&gt;
+              &lt;td&gt;&lt;span class=&quot;badge badge-green&quot;&gt;{{ track.genre }}&lt;/span&gt;&lt;/td&gt;
+              &lt;td class=&quot;td-muted&quot;&gt;{{ track.file_size | filesize }}&lt;/td&gt;
+              &lt;td class=&quot;td-muted&quot;&gt;▶ {{ track.play_count }} / ⬇ {{ track.download_count }}&lt;/td&gt;
+              &lt;td&gt;
+                &lt;div class=&quot;action-btns&quot;&gt;
+                  &lt;a href=&quot;{{ url_for(&#x27;admin_edit_audio&#x27;, track_id=track.id) }}&quot; class=&quot;btn-edit&quot;&gt;✏️ Edit&lt;/a&gt;
+                  &lt;form method=&quot;POST&quot; action=&quot;{{ url_for(&#x27;admin_delete_audio&#x27;, track_id=track.id) }}&quot;
+                        onsubmit=&quot;return confirm(&#x27;Delete track: {{ track.title | e }}?&#x27;)&quot;&gt;
+                    &lt;button type=&quot;submit&quot; class=&quot;btn-del&quot;&gt;🗑 Delete&lt;/button&gt;
+                  &lt;/form&gt;
+                &lt;/div&gt;
+              &lt;/td&gt;
+            &lt;/tr&gt;
+            {% endfor %}
+          &lt;/tbody&gt;
+        &lt;/table&gt;
+      &lt;/div&gt;
+      {% else %}
+        &lt;div class=&quot;empty-state&quot;&gt;
+          &lt;div class=&quot;empty-state-icon&quot;&gt;🎵&lt;/div&gt;
+          &lt;h3&gt;No audio tracks yet&lt;/h3&gt;
+          &lt;a href=&quot;{{ url_for(&#x27;upload&#x27;) }}&quot; class=&quot;btn btn-green&quot; style=&quot;margin-top:14px;&quot;&gt;Upload First Track&lt;/a&gt;
+        &lt;/div&gt;
+      {% endif %}
+    &lt;/div&gt;
+
+    &lt;!-- ─── Video Panel ──────────────────────────────────────────────────────── --&gt;
+    &lt;div class=&quot;admin-panel&quot; id=&quot;admin-panel-video&quot;&gt;
+      {% if videos %}
+      &lt;div class=&quot;admin-table-wrap&quot;&gt;
+        &lt;table class=&quot;admin-table&quot;&gt;
+          &lt;thead&gt;
+            &lt;tr&gt;
+              &lt;th&gt;Thumb&lt;/th&gt;
+              &lt;th&gt;Title / Artist&lt;/th&gt;
+              &lt;th&gt;Genre&lt;/th&gt;
+              &lt;th&gt;Size&lt;/th&gt;
+              &lt;th&gt;Plays / DLs&lt;/th&gt;
+              &lt;th&gt;Actions&lt;/th&gt;
+            &lt;/tr&gt;
+          &lt;/thead&gt;
+          &lt;tbody&gt;
+            {% for vid in videos %}
+            &lt;tr&gt;
+              &lt;td&gt;
+                &lt;div class=&quot;td-thumb&quot;&gt;
+                  {% if vid.thumbnail_path %}
+                    &lt;img src=&quot;{{ url_for(&#x27;serve_thumbnail&#x27;, filename=vid.thumbnail_path) }}&quot; alt=&quot;&quot; /&gt;
+                  {% else %}🎬{% endif %}
+                &lt;/div&gt;
+              &lt;/td&gt;
+              &lt;td&gt;
+                &lt;div class=&quot;td-title&quot;&gt;
+                  {{ vid.title }}
+                  &lt;small&gt;{{ vid.artist }}&lt;/small&gt;
+                &lt;/div&gt;
+              &lt;/td&gt;
+              &lt;td&gt;&lt;span class=&quot;badge badge-gold&quot;&gt;{{ vid.genre }}&lt;/span&gt;&lt;/td&gt;
+              &lt;td class=&quot;td-muted&quot;&gt;{{ vid.file_size | filesize }}&lt;/td&gt;
+              &lt;td class=&quot;td-muted&quot;&gt;▶ {{ vid.play_count }} / ⬇ {{ vid.download_count }}&lt;/td&gt;
+              &lt;td&gt;
+                &lt;div class=&quot;action-btns&quot;&gt;
+                  &lt;a href=&quot;{{ url_for(&#x27;admin_edit_video&#x27;, video_id=vid.id) }}&quot; class=&quot;btn-edit&quot;&gt;✏️ Edit&lt;/a&gt;
+                  &lt;form method=&quot;POST&quot; action=&quot;{{ url_for(&#x27;admin_delete_video&#x27;, video_id=vid.id) }}&quot;
+                        onsubmit=&quot;return confirm(&#x27;Delete video: {{ vid.title | e }}?&#x27;)&quot;&gt;
+                    &lt;button type=&quot;submit&quot; class=&quot;btn-del&quot;&gt;🗑 Delete&lt;/button&gt;
+                  &lt;/form&gt;
+                &lt;/div&gt;
+              &lt;/td&gt;
+            &lt;/tr&gt;
+            {% endfor %}
+          &lt;/tbody&gt;
+        &lt;/table&gt;
+      &lt;/div&gt;
+      {% else %}
+        &lt;div class=&quot;empty-state&quot;&gt;
+          &lt;div class=&quot;empty-state-icon&quot;&gt;🎬&lt;/div&gt;
+          &lt;h3&gt;No videos yet&lt;/h3&gt;
+          &lt;a href=&quot;{{ url_for(&#x27;upload&#x27;) }}&quot; class=&quot;btn btn-gold&quot; style=&quot;margin-top:14px;&quot;&gt;Upload First Video&lt;/a&gt;
+        &lt;/div&gt;
+      {% endif %}
+    &lt;/div&gt;
+
+  &lt;/div&gt;
+&lt;/section&gt;
+
+{% endblock %}
+
+{% block extra_scripts %}
+&lt;script&gt;
+// Admin tab switcher
+document.querySelectorAll(&#x27;[data-admin-tab]&#x27;).forEach(tab =&gt; {
+  tab.addEventListener(&#x27;click&#x27;, () =&gt; {
+    const target = tab.dataset.adminTab;
+    document.querySelectorAll(&#x27;[data-admin-tab]&#x27;).forEach(t =&gt; t.classList.remove(&#x27;active&#x27;));
+    document.querySelectorAll(&#x27;.admin-panel&#x27;).forEach(p =&gt; p.classList.remove(&#x27;active&#x27;));
+    tab.classList.add(&#x27;active&#x27;);
+    const panel = document.getElementById(&#x27;admin-panel-&#x27; + target);
+    if (panel) panel.classList.add(&#x27;active&#x27;);
+  });
+});
+&lt;/script&gt;
+{% endblock %}
+</code></pre>
+</section>
+
+<section id="templates-edit_news-html" class="code-section">
+  <div class="file-header">
+    <span class="file-name">templates/edit_news.html</span>
+    <span class="file-lang">html</span>
+    <span class="file-lines">92 lines</span>
+    <button class="copy-code-btn" onclick="copyCode(this)">Copy</button>
+  </div>
+  <pre><code class="language-html">{% extends &quot;base.html&quot; %}
+{% block title %}Edit Article — {{ article.title }}{% endblock %}
+
+{% block content %}
+&lt;section class=&quot;section&quot;&gt;
+  &lt;div class=&quot;container&quot; style=&quot;max-width:860px;&quot;&gt;
+
+    &lt;div style=&quot;display:flex;align-items:center;gap:16px;margin-bottom:32px;flex-wrap:wrap;&quot;&gt;
+      &lt;a href=&quot;{{ url_for(&#x27;admin_dashboard&#x27;) }}&quot; class=&quot;btn btn-outline btn-sm&quot;&gt;&amp;larr; Back to Admin&lt;/a&gt;
+      &lt;div&gt;
+        &lt;h1 style=&quot;font-size:1.6rem;font-weight:800;&quot;&gt;Edit Article&lt;/h1&gt;
+        &lt;p style=&quot;color:var(--text-muted);font-size:.9rem;margin-top:4px;&quot;&gt;ID #{{ article.id }} &amp;bull; Published {{ article.created_at.strftime(&#x27;%d %b %Y&#x27;) }}&lt;/p&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;form class=&quot;upload-form&quot; method=&quot;POST&quot;
+          action=&quot;{{ url_for(&#x27;admin_edit_news&#x27;, article_id=article.id) }}&quot;
+          enctype=&quot;multipart/form-data&quot;&gt;
+
+      &lt;div class=&quot;form-group&quot;&gt;
+        &lt;label class=&quot;form-label&quot;&gt;Article Title &lt;span&gt;*&lt;/span&gt;&lt;/label&gt;
+        &lt;input type=&quot;text&quot; name=&quot;title&quot; class=&quot;form-input&quot;
+               value=&quot;{{ article.title }}&quot; required /&gt;
+      &lt;/div&gt;
+
+      &lt;div style=&quot;display:grid;grid-template-columns:1fr 1fr;gap:20px;&quot;&gt;
+        &lt;div class=&quot;form-group&quot;&gt;
+          &lt;label class=&quot;form-label&quot;&gt;Category &lt;span&gt;*&lt;/span&gt;&lt;/label&gt;
+          &lt;select name=&quot;category&quot; class=&quot;form-select&quot;&gt;
+            {% for cat in [&#x27;General&#x27;,&#x27;Politics&#x27;,&#x27;Business&#x27;,&#x27;Sports&#x27;,&#x27;Technology&#x27;,
+                           &#x27;Health&#x27;,&#x27;Entertainment&#x27;,&#x27;Celebrity&#x27;,&#x27;Lifestyle&#x27;,&#x27;Culture&#x27;,
+                           &#x27;Education&#x27;,&#x27;International&#x27;] %}
+              &lt;option value=&quot;{{ cat }}&quot; {{ &#x27;selected&#x27; if article.category == cat }}&gt;{{ cat }}&lt;/option&gt;
+            {% endfor %}
+          &lt;/select&gt;
+        &lt;/div&gt;
+
+        &lt;div class=&quot;form-group&quot;&gt;
+          &lt;label class=&quot;form-label&quot;&gt;Author&lt;/label&gt;
+          &lt;input type=&quot;text&quot; name=&quot;author&quot; class=&quot;form-input&quot;
+                 value=&quot;{{ article.author }}&quot; /&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+
+      &lt;div class=&quot;form-group&quot;&gt;
+        &lt;label class=&quot;form-label&quot;&gt;Summary / Excerpt&lt;/label&gt;
+        &lt;textarea name=&quot;summary&quot; class=&quot;form-textarea&quot; rows=&quot;3&quot;&gt;{{ article.summary }}&lt;/textarea&gt;
+      &lt;/div&gt;
+
+      &lt;div class=&quot;form-group&quot;&gt;
+        &lt;label class=&quot;form-label&quot;&gt;Article Content &lt;span&gt;*&lt;/span&gt;&lt;/label&gt;
+        &lt;textarea name=&quot;content&quot; class=&quot;form-textarea&quot; rows=&quot;14&quot; required&gt;{{ article.content }}&lt;/textarea&gt;
+      &lt;/div&gt;
+
+      &lt;!-- Current image preview --&gt;
+      {% if article.image_path %}
+      &lt;div class=&quot;form-group&quot;&gt;
+        &lt;label class=&quot;form-label&quot;&gt;Current Featured Image&lt;/label&gt;
+        &lt;div style=&quot;margin-bottom:12px;&quot;&gt;
+          &lt;img src=&quot;{{ url_for(&#x27;serve_news_image&#x27;, filename=article.image_path) }}&quot;
+               alt=&quot;Current image&quot;
+               style=&quot;max-height:180px;border-radius:var(--radius);border:1px solid var(--border);&quot; /&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      {% endif %}
+
+      &lt;div class=&quot;form-group&quot;&gt;
+        &lt;label class=&quot;form-label&quot;&gt;Replace Featured Image &lt;span style=&quot;color:var(--text-muted);font-weight:400;&quot;&gt;(leave empty to keep current)&lt;/span&gt;&lt;/label&gt;
+        &lt;div class=&quot;file-drop&quot;&gt;
+          &lt;input type=&quot;file&quot; name=&quot;image&quot; accept=&quot;image/*&quot; /&gt;
+          &lt;div class=&quot;file-drop-icon&quot;&gt;🖼️&lt;/div&gt;
+          &lt;div class=&quot;file-drop-text&quot;&gt;
+            &lt;strong&gt;Click to browse&lt;/strong&gt; or drag &amp;amp; drop a new image&lt;br /&gt;
+            JPG, PNG, GIF, WEBP
+          &lt;/div&gt;
+          &lt;div class=&quot;file-name-display&quot;&gt;&lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+
+      &lt;div style=&quot;display:flex;gap:12px;margin-top:8px;flex-wrap:wrap;&quot;&gt;
+        &lt;button type=&quot;submit&quot; class=&quot;btn btn-green&quot; style=&quot;flex:1;justify-content:center;padding:14px;font-size:1rem;&quot;&gt;
+          💾 Save Changes
+        &lt;/button&gt;
+        &lt;a href=&quot;{{ url_for(&#x27;admin_dashboard&#x27;) }}&quot; class=&quot;btn btn-outline&quot; style=&quot;padding:14px 24px;&quot;&gt;
+          Cancel
+        &lt;/a&gt;
+      &lt;/div&gt;
+    &lt;/form&gt;
+
+  &lt;/div&gt;
+&lt;/section&gt;
+{% endblock %}
+</code></pre>
+</section>
+
+<section id="templates-edit_audio-html" class="code-section">
+  <div class="file-header">
+    <span class="file-name">templates/edit_audio.html</span>
+    <span class="file-lang">html</span>
+    <span class="file-lines">112 lines</span>
+    <button class="copy-code-btn" onclick="copyCode(this)">Copy</button>
+  </div>
+  <pre><code class="language-html">{% extends &quot;base.html&quot; %}
+{% block title %}Edit Track — {{ track.title }}{% endblock %}
+
+{% block content %}
+&lt;section class=&quot;section&quot;&gt;
+  &lt;div class=&quot;container&quot; style=&quot;max-width:860px;&quot;&gt;
+
+    &lt;div style=&quot;display:flex;align-items:center;gap:16px;margin-bottom:32px;flex-wrap:wrap;&quot;&gt;
+      &lt;a href=&quot;{{ url_for(&#x27;admin_dashboard&#x27;) }}&quot; class=&quot;btn btn-outline btn-sm&quot;&gt;&amp;larr; Back to Admin&lt;/a&gt;
+      &lt;div&gt;
+        &lt;h1 style=&quot;font-size:1.6rem;font-weight:800;&quot;&gt;Edit Audio Track&lt;/h1&gt;
+        &lt;p style=&quot;color:var(--text-muted);font-size:.9rem;margin-top:4px;&quot;&gt;
+          ID #{{ track.id }} &amp;bull; Uploaded {{ track.created_at.strftime(&#x27;%d %b %Y&#x27;) }}
+          &amp;bull; ▶ {{ track.play_count }} plays &amp;bull; ⬇ {{ track.download_count }} downloads
+        &lt;/p&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;form class=&quot;upload-form&quot; method=&quot;POST&quot;
+          action=&quot;{{ url_for(&#x27;admin_edit_audio&#x27;, track_id=track.id) }}&quot;
+          enctype=&quot;multipart/form-data&quot;&gt;
+
+      &lt;div style=&quot;display:grid;grid-template-columns:1fr 1fr;gap:20px;&quot;&gt;
+        &lt;div class=&quot;form-group&quot;&gt;
+          &lt;label class=&quot;form-label&quot;&gt;Track Title &lt;span&gt;*&lt;/span&gt;&lt;/label&gt;
+          &lt;input type=&quot;text&quot; name=&quot;title&quot; class=&quot;form-input&quot;
+                 value=&quot;{{ track.title }}&quot; required /&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;form-group&quot;&gt;
+          &lt;label class=&quot;form-label&quot;&gt;Artist Name &lt;span&gt;*&lt;/span&gt;&lt;/label&gt;
+          &lt;input type=&quot;text&quot; name=&quot;artist&quot; class=&quot;form-input&quot;
+                 value=&quot;{{ track.artist }}&quot; required /&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+
+      &lt;div class=&quot;form-group&quot;&gt;
+        &lt;label class=&quot;form-label&quot;&gt;Genre&lt;/label&gt;
+        &lt;select name=&quot;genre&quot; class=&quot;form-select&quot;&gt;
+          {% for g in [&#x27;Afrobeats&#x27;,&#x27;Afropop&#x27;,&#x27;Highlife&#x27;,&#x27;Fuji&#x27;,&#x27;Jùjú&#x27;,&#x27;Gospel&#x27;,&#x27;R&amp;B&#x27;,&#x27;Hip-Hop&#x27;,&#x27;Reggae&#x27;,&#x27;Amapiano&#x27;,&#x27;Other&#x27;] %}
+            &lt;option value=&quot;{{ g }}&quot; {{ &#x27;selected&#x27; if track.genre == g }}&gt;{{ g }}&lt;/option&gt;
+          {% endfor %}
+        &lt;/select&gt;
+      &lt;/div&gt;
+
+      &lt;div class=&quot;form-group&quot;&gt;
+        &lt;label class=&quot;form-label&quot;&gt;Description&lt;/label&gt;
+        &lt;textarea name=&quot;description&quot; class=&quot;form-textarea&quot; rows=&quot;3&quot;&gt;{{ track.description or &#x27;&#x27; }}&lt;/textarea&gt;
+      &lt;/div&gt;
+
+      &lt;!-- Current audio info --&gt;
+      &lt;div class=&quot;form-group&quot;&gt;
+        &lt;label class=&quot;form-label&quot;&gt;Current Audio File&lt;/label&gt;
+        &lt;div style=&quot;background:var(--card2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:14px;display:flex;align-items:center;gap:14px;&quot;&gt;
+          &lt;span style=&quot;font-size:1.8rem;&quot;&gt;🎵&lt;/span&gt;
+          &lt;div&gt;
+            &lt;div style=&quot;font-weight:600;&quot;&gt;{{ track.file_path.rsplit(&#x27;_&#x27;,1)[0] if &#x27;_&#x27; in track.file_path else track.file_path }}&lt;/div&gt;
+            &lt;div style=&quot;color:var(--text-muted);font-size:.82rem;&quot;&gt;{{ track.file_size | filesize }}&lt;/div&gt;
+          &lt;/div&gt;
+          &lt;audio controls style=&quot;margin-left:auto;max-width:260px;&quot;
+                 src=&quot;{{ url_for(&#x27;stream_audio&#x27;, track_id=track.id) }}&quot;&gt;&lt;/audio&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+
+      &lt;div class=&quot;form-group&quot;&gt;
+        &lt;label class=&quot;form-label&quot;&gt;Replace Audio File &lt;span style=&quot;color:var(--text-muted);font-weight:400;&quot;&gt;(leave empty to keep current)&lt;/span&gt;&lt;/label&gt;
+        &lt;div class=&quot;file-drop&quot;&gt;
+          &lt;input type=&quot;file&quot; name=&quot;audio_file&quot; accept=&quot;.mp3,.wav,.ogg,.aac,.m4a,.flac&quot; /&gt;
+          &lt;div class=&quot;file-drop-icon&quot;&gt;🎵&lt;/div&gt;
+          &lt;div class=&quot;file-drop-text&quot;&gt;
+            &lt;strong&gt;Click to browse&lt;/strong&gt; or drag &amp;amp; drop&lt;br /&gt;
+            MP3, WAV, OGG, AAC, M4A, FLAC
+          &lt;/div&gt;
+          &lt;div class=&quot;file-name-display&quot;&gt;&lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+
+      &lt;!-- Cover art --&gt;
+      {% if track.cover_path %}
+      &lt;div class=&quot;form-group&quot;&gt;
+        &lt;label class=&quot;form-label&quot;&gt;Current Cover Art&lt;/label&gt;
+        &lt;img src=&quot;{{ url_for(&#x27;serve_cover&#x27;, filename=track.cover_path) }}&quot;
+             alt=&quot;Cover art&quot;
+             style=&quot;width:120px;height:120px;object-fit:cover;border-radius:var(--radius);border:1px solid var(--border);margin-bottom:12px;&quot; /&gt;
+      &lt;/div&gt;
+      {% endif %}
+
+      &lt;div class=&quot;form-group&quot;&gt;
+        &lt;label class=&quot;form-label&quot;&gt;Replace Cover Art &lt;span style=&quot;color:var(--text-muted);font-weight:400;&quot;&gt;(leave empty to keep current)&lt;/span&gt;&lt;/label&gt;
+        &lt;div class=&quot;file-drop&quot;&gt;
+          &lt;input type=&quot;file&quot; name=&quot;cover_image&quot; accept=&quot;image/*&quot; /&gt;
+          &lt;div class=&quot;file-drop-icon&quot;&gt;🎨&lt;/div&gt;
+          &lt;div class=&quot;file-drop-text&quot;&gt;
+            &lt;strong&gt;Click to browse&lt;/strong&gt; or drag &amp;amp; drop&lt;br /&gt;
+            JPG, PNG, WEBP
+          &lt;/div&gt;
+          &lt;div class=&quot;file-name-display&quot;&gt;&lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+
+      &lt;div style=&quot;display:flex;gap:12px;margin-top:8px;flex-wrap:wrap;&quot;&gt;
+        &lt;button type=&quot;submit&quot; class=&quot;btn btn-green&quot; style=&quot;flex:1;justify-content:center;padding:14px;font-size:1rem;&quot;&gt;
+          💾 Save Changes
+        &lt;/button&gt;
+        &lt;a href=&quot;{{ url_for(&#x27;admin_dashboard&#x27;) }}&quot; class=&quot;btn btn-outline&quot; style=&quot;padding:14px 24px;&quot;&gt;
+          Cancel
+        &lt;/a&gt;
+      &lt;/div&gt;
+    &lt;/form&gt;
+
+  &lt;/div&gt;
+&lt;/section&gt;
+{% endblock %}
+</code></pre>
+</section>
+
+<section id="templates-edit_video-html" class="code-section">
+  <div class="file-header">
+    <span class="file-name">templates/edit_video.html</span>
+    <span class="file-lang">html</span>
+    <span class="file-lines">115 lines</span>
+    <button class="copy-code-btn" onclick="copyCode(this)">Copy</button>
+  </div>
+  <pre><code class="language-html">{% extends &quot;base.html&quot; %}
+{% block title %}Edit Video — {{ video.title }}{% endblock %}
+
+{% block content %}
+&lt;section class=&quot;section&quot;&gt;
+  &lt;div class=&quot;container&quot; style=&quot;max-width:860px;&quot;&gt;
+
+    &lt;div style=&quot;display:flex;align-items:center;gap:16px;margin-bottom:32px;flex-wrap:wrap;&quot;&gt;
+      &lt;a href=&quot;{{ url_for(&#x27;admin_dashboard&#x27;) }}&quot; class=&quot;btn btn-outline btn-sm&quot;&gt;&amp;larr; Back to Admin&lt;/a&gt;
+      &lt;div&gt;
+        &lt;h1 style=&quot;font-size:1.6rem;font-weight:800;&quot;&gt;Edit Music Video&lt;/h1&gt;
+        &lt;p style=&quot;color:var(--text-muted);font-size:.9rem;margin-top:4px;&quot;&gt;
+          ID #{{ video.id }} &amp;bull; Uploaded {{ video.created_at.strftime(&#x27;%d %b %Y&#x27;) }}
+          &amp;bull; ▶ {{ video.play_count }} plays &amp;bull; ⬇ {{ video.download_count }} downloads
+        &lt;/p&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;form class=&quot;upload-form&quot; method=&quot;POST&quot;
+          action=&quot;{{ url_for(&#x27;admin_edit_video&#x27;, video_id=video.id) }}&quot;
+          enctype=&quot;multipart/form-data&quot;&gt;
+
+      &lt;div style=&quot;display:grid;grid-template-columns:1fr 1fr;gap:20px;&quot;&gt;
+        &lt;div class=&quot;form-group&quot;&gt;
+          &lt;label class=&quot;form-label&quot;&gt;Video Title &lt;span&gt;*&lt;/span&gt;&lt;/label&gt;
+          &lt;input type=&quot;text&quot; name=&quot;title&quot; class=&quot;form-input&quot;
+                 value=&quot;{{ video.title }}&quot; required /&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;form-group&quot;&gt;
+          &lt;label class=&quot;form-label&quot;&gt;Artist Name &lt;span&gt;*&lt;/span&gt;&lt;/label&gt;
+          &lt;input type=&quot;text&quot; name=&quot;artist&quot; class=&quot;form-input&quot;
+                 value=&quot;{{ video.artist }}&quot; required /&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+
+      &lt;div class=&quot;form-group&quot;&gt;
+        &lt;label class=&quot;form-label&quot;&gt;Genre&lt;/label&gt;
+        &lt;select name=&quot;genre&quot; class=&quot;form-select&quot;&gt;
+          {% for g in [&#x27;Afrobeats&#x27;,&#x27;Afropop&#x27;,&#x27;Highlife&#x27;,&#x27;Fuji&#x27;,&#x27;Jùjú&#x27;,&#x27;Gospel&#x27;,&#x27;R&amp;B&#x27;,&#x27;Hip-Hop&#x27;,&#x27;Reggae&#x27;,&#x27;Amapiano&#x27;,&#x27;Other&#x27;] %}
+            &lt;option value=&quot;{{ g }}&quot; {{ &#x27;selected&#x27; if video.genre == g }}&gt;{{ g }}&lt;/option&gt;
+          {% endfor %}
+        &lt;/select&gt;
+      &lt;/div&gt;
+
+      &lt;div class=&quot;form-group&quot;&gt;
+        &lt;label class=&quot;form-label&quot;&gt;Description&lt;/label&gt;
+        &lt;textarea name=&quot;description&quot; class=&quot;form-textarea&quot; rows=&quot;3&quot;&gt;{{ video.description or &#x27;&#x27; }}&lt;/textarea&gt;
+      &lt;/div&gt;
+
+      &lt;!-- Current video preview --&gt;
+      &lt;div class=&quot;form-group&quot;&gt;
+        &lt;label class=&quot;form-label&quot;&gt;Current Video File&lt;/label&gt;
+        &lt;div style=&quot;background:var(--card2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:14px;&quot;&gt;
+          &lt;div style=&quot;display:flex;align-items:center;gap:14px;margin-bottom:14px;&quot;&gt;
+            &lt;span style=&quot;font-size:1.8rem;&quot;&gt;🎬&lt;/span&gt;
+            &lt;div&gt;
+              &lt;div style=&quot;font-weight:600;&quot;&gt;{{ video.file_path.rsplit(&#x27;_&#x27;,1)[0] if &#x27;_&#x27; in video.file_path else video.file_path }}&lt;/div&gt;
+              &lt;div style=&quot;color:var(--text-muted);font-size:.82rem;&quot;&gt;{{ video.file_size | filesize }}&lt;/div&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+          &lt;video controls style=&quot;width:100%;max-height:300px;border-radius:var(--radius-sm);background:#000;&quot;
+                 src=&quot;{{ url_for(&#x27;stream_video&#x27;, video_id=video.id) }}&quot;
+                 preload=&quot;metadata&quot;&gt;&lt;/video&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+
+      &lt;div class=&quot;form-group&quot;&gt;
+        &lt;label class=&quot;form-label&quot;&gt;Replace Video File &lt;span style=&quot;color:var(--text-muted);font-weight:400;&quot;&gt;(leave empty to keep current)&lt;/span&gt;&lt;/label&gt;
+        &lt;div class=&quot;file-drop&quot;&gt;
+          &lt;input type=&quot;file&quot; name=&quot;video_file&quot; accept=&quot;.mp4,.webm,.mkv,.avi,.mov&quot; /&gt;
+          &lt;div class=&quot;file-drop-icon&quot;&gt;🎬&lt;/div&gt;
+          &lt;div class=&quot;file-drop-text&quot;&gt;
+            &lt;strong&gt;Click to browse&lt;/strong&gt; or drag &amp;amp; drop&lt;br /&gt;
+            MP4, WEBM, MKV, AVI, MOV — max 500 MB
+          &lt;/div&gt;
+          &lt;div class=&quot;file-name-display&quot;&gt;&lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+
+      &lt;!-- Thumbnail --&gt;
+      {% if video.thumbnail_path %}
+      &lt;div class=&quot;form-group&quot;&gt;
+        &lt;label class=&quot;form-label&quot;&gt;Current Thumbnail&lt;/label&gt;
+        &lt;img src=&quot;{{ url_for(&#x27;serve_thumbnail&#x27;, filename=video.thumbnail_path) }}&quot;
+             alt=&quot;Thumbnail&quot;
+             style=&quot;height:120px;border-radius:var(--radius);border:1px solid var(--border);margin-bottom:12px;&quot; /&gt;
+      &lt;/div&gt;
+      {% endif %}
+
+      &lt;div class=&quot;form-group&quot;&gt;
+        &lt;label class=&quot;form-label&quot;&gt;Replace Thumbnail &lt;span style=&quot;color:var(--text-muted);font-weight:400;&quot;&gt;(leave empty to keep current)&lt;/span&gt;&lt;/label&gt;
+        &lt;div class=&quot;file-drop&quot;&gt;
+          &lt;input type=&quot;file&quot; name=&quot;thumbnail&quot; accept=&quot;image/*&quot; /&gt;
+          &lt;div class=&quot;file-drop-icon&quot;&gt;🖼️&lt;/div&gt;
+          &lt;div class=&quot;file-drop-text&quot;&gt;
+            &lt;strong&gt;Click to browse&lt;/strong&gt; or drag &amp;amp; drop&lt;br /&gt;
+            JPG, PNG, WEBP
+          &lt;/div&gt;
+          &lt;div class=&quot;file-name-display&quot;&gt;&lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+
+      &lt;div style=&quot;display:flex;gap:12px;margin-top:8px;flex-wrap:wrap;&quot;&gt;
+        &lt;button type=&quot;submit&quot; class=&quot;btn btn-green&quot; style=&quot;flex:1;justify-content:center;padding:14px;font-size:1rem;&quot;&gt;
+          💾 Save Changes
+        &lt;/button&gt;
+        &lt;a href=&quot;{{ url_for(&#x27;admin_dashboard&#x27;) }}&quot; class=&quot;btn btn-outline&quot; style=&quot;padding:14px 24px;&quot;&gt;
+          Cancel
+        &lt;/a&gt;
+      &lt;/div&gt;
+    &lt;/form&gt;
+
+  &lt;/div&gt;
+&lt;/section&gt;
+{% endblock %}
+</code></pre>
+</section>
+
+<section id="static-css-style-css" class="code-section">
+  <div class="file-header">
+    <span class="file-name">static/css/style.css</span>
+    <span class="file-lang">css</span>
+    <span class="file-lines">791 lines</span>
+    <button class="copy-code-btn" onclick="copyCode(this)">Copy</button>
+  </div>
+  <pre><code class="language-css">/* ─── Google Fonts ─────────────────────────────────────────────────────────── */
+@import url(&#x27;https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&amp;family=Inter:wght@300;400;500;600&amp;display=swap&#x27;);
+
+/* ─── Logo Gradient (matches NaijaMirage logo colours) ─────────────────────── */
+/* teal → purple → dark-red → orange → yellow → lime-green */
+:root {
+  --logo-gradient: linear-gradient(90deg,
+    #0891b2 0%,
+    #7c3aed 22%,
+    #b91c1c 42%,
+    #ea580c 62%,
+    #ca8a04 80%,
+    #65a30d 100%);
+  --logo-gradient-diag: linear-gradient(135deg,
+    #0891b2 0%,
+    #7c3aed 22%,
+    #b91c1c 42%,
+    #ea580c 62%,
+    #ca8a04 80%,
+    #65a30d 100%);
+}
+
+/* Reusable gradient text utility */
+.logo-text {
+  background: var(--logo-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ─── CSS Variables ─────────────────────────────────────────────────────────── */
+:root {
+  --green:       #008751;
+  --green-light: #00a86b;
+  --green-dark:  #005c38;
+  --gold:        #FFD700;
+  --gold-dark:   #c9a800;
+  --bg:          #0d0d1a;
+  --bg2:         #13132a;
+  --card:        #1a1a2e;
+  --card2:       #22223b;
+  --border:      #2a2a4a;
+  --text:        #f0f0f0;
+  --text-muted:  #9999bb;
+  --red:         #e63946;
+  --radius:      12px;
+  --radius-sm:   8px;
+  --shadow:      0 4px 24px rgba(0,0,0,0.4);
+  --transition:  0.25s ease;
+}
+
+/* ─── Reset &amp; Base ──────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: &#x27;Inter&#x27;, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+a { color: inherit; text-decoration: none; transition: color var(--transition); }
+a:hover { color: var(--gold); }
+
+img { max-width: 100%; height: auto; display: block; }
+
+h1,h2,h3,h4,h5,h6 { font-family: &#x27;Poppins&#x27;, sans-serif; line-height: 1.25; }
+
+ul { list-style: none; }
+
+/* ─── Scrollbar ─────────────────────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: var(--bg2); }
+::-webkit-scrollbar-thumb { background: var(--green); border-radius: 4px; }
+
+/* ─── Utility ───────────────────────────────────────────────────────────────── */
+.container { max-width: 1280px; margin: 0 auto; padding: 0 20px; }
+.section-title {
+  font-size: 1.6rem; font-weight: 700;
+  margin-bottom: 1.5rem;
+  display: flex; align-items: center; gap: 12px;
+}
+.section-title::after {
+  content: &#x27;&#x27;; flex: 1; height: 2px;
+  background: linear-gradient(90deg, #0891b2, #7c3aed, #ea580c, #ca8a04, transparent);
+}
+.badge {
+  display: inline-block;
+  padding: 3px 10px; border-radius: 20px;
+  font-size: 0.72rem; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.05em;
+}
+.badge-green  { background: var(--green);  color: #fff; }
+.badge-gold   { background: var(--gold);   color: #111; }
+.badge-red    { background: var(--red);    color: #fff; }
+.btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 10px 22px; border-radius: var(--radius-sm);
+  font-family: &#x27;Poppins&#x27;, sans-serif; font-weight: 600;
+  font-size: 0.9rem; cursor: pointer; border: none;
+  transition: all var(--transition);
+}
+.btn-green  { background: var(--green); color: #fff; }
+.btn-green:hover { background: var(--green-light); color: #fff; }
+.btn-gold   { background: var(--gold);  color: #111; }
+.btn-gold:hover { background: var(--gold-dark); }
+.btn-outline {
+  background: transparent; color: var(--text);
+  border: 2px solid var(--border);
+}
+.btn-outline:hover { border-color: var(--green); color: var(--green); }
+.btn-sm { padding: 7px 14px; font-size: 0.82rem; }
+
+/* ─── Navbar ────────────────────────────────────────────────────────────────── */
+.navbar {
+  position: sticky; top: 0; z-index: 1000;
+  background: rgba(13,13,26,0.95);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 20px;
+}
+.navbar-inner {
+  max-width: 1280px; margin: 0 auto;
+  display: flex; align-items: center;
+  height: 68px; gap: 0;
+}
+.navbar-brand {
+  font-family: &#x27;Poppins&#x27;, sans-serif;
+  font-size: 1.6rem; font-weight: 800;
+  display: flex; align-items: center; gap: 10px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.brand-name {
+  background: var(--logo-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: -0.5px;
+}
+/* keep old classes working in footer etc */
+.brand-naija { color: var(--green); }
+.brand-mirage { color: var(--gold); }
+.brand-dot { color: var(--text-muted); font-size: 1rem; }
+
+.navbar-right {
+  display: flex; align-items: center; gap: 10px;
+  margin-left: auto;
+}
+.navbar-links {
+  display: flex; gap: 4px;
+}
+.navbar-links a {
+  padding: 8px 13px; border-radius: var(--radius-sm);
+  font-weight: 500; font-size: 0.9rem; color: var(--text-muted);
+  transition: all var(--transition);
+}
+.navbar-links a:hover,
+.navbar-links a.active {
+  background: var(--card);
+  color: var(--gold);
+}
+
+/* ─── Navbar Search ──────────────────────────────────────────────────────────── */
+.navbar-search {
+  display: flex; align-items: center;
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 20px; overflow: hidden;
+  transition: border-color var(--transition);
+}
+.navbar-search:focus-within {
+  border-color: #7c3aed;
+}
+.navbar-search-input {
+  background: transparent; border: none; outline: none;
+  color: var(--text); font-family: &#x27;Inter&#x27;, sans-serif;
+  font-size: 0.88rem; padding: 7px 14px;
+  width: 160px; transition: width var(--transition);
+}
+.navbar-search-input::placeholder { color: var(--text-muted); }
+.navbar-search-input:focus { width: 220px; }
+.navbar-search-btn {
+  background: transparent; border: none; cursor: pointer;
+  color: var(--text-muted); padding: 7px 12px;
+  display: flex; align-items: center;
+  transition: color var(--transition);
+}
+.navbar-search-btn:hover { color: var(--gold); }
+.navbar-upload-btn {
+  background: var(--green); color: #fff;
+  padding: 8px 18px; border-radius: var(--radius-sm);
+  font-weight: 600; font-size: 0.88rem;
+  transition: background var(--transition);
+}
+.navbar-upload-btn:hover { background: var(--green-light); color: #fff; }
+
+.hamburger {
+  display: none; flex-direction: column; gap: 5px;
+  cursor: pointer; background: none; border: none; padding: 4px;
+}
+.hamburger span {
+  display: block; width: 25px; height: 2px;
+  background: var(--text); border-radius: 2px;
+  transition: all var(--transition);
+}
+
+.mobile-menu {
+  display: none;
+  background: var(--bg2); border-top: 1px solid var(--border);
+  padding: 16px 20px;
+}
+.mobile-menu.open { display: block; }
+.mobile-menu a {
+  display: block; padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+  color: var(--text-muted); font-weight: 500;
+}
+.mobile-menu a:last-child { border-bottom: none; }
+.mobile-menu a:hover { color: var(--gold); }
+
+/* ─── Flash Messages ────────────────────────────────────────────────────────── */
+.flash-container { padding: 12px 20px; }
+.flash {
+  padding: 12px 20px; border-radius: var(--radius-sm);
+  font-weight: 500; margin-bottom: 10px;
+  display: flex; align-items: center; gap: 10px;
+}
+.flash-success { background: #0d3320; border: 1px solid var(--green); color: #4dff99; }
+.flash-error   { background: #3d0a0f; border: 1px solid var(--red);   color: #ff6b6b; }
+
+/* ─── Hero ──────────────────────────────────────────────────────────────────── */
+.hero {
+  background: linear-gradient(135deg, #0d0d1a 0%, #001a0d 50%, #0d0d1a 100%);
+  padding: 70px 20px 60px;
+  text-align: center;
+  position: relative; overflow: hidden;
+}
+.hero::before {
+  content: &#x27;&#x27;;
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 50% 0%, rgba(0,135,81,0.18) 0%, transparent 70%);
+}
+.hero-content { position: relative; max-width: 700px; margin: 0 auto; }
+.hero-tagline {
+  font-size: 0.85rem; font-weight: 600; letter-spacing: 0.15em;
+  color: var(--gold); text-transform: uppercase; margin-bottom: 16px;
+}
+.hero-title {
+  font-size: clamp(2rem, 5vw, 3.4rem);
+  font-weight: 800; margin-bottom: 16px;
+  line-height: 1.1;
+}
+.hero-title span { color: var(--green); }
+.hero-sub {
+  font-size: 1.05rem; color: var(--text-muted);
+  margin-bottom: 32px;
+}
+.hero-cta { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+
+/* ─── Ticker ────────────────────────────────────────────────────────────────── */
+.ticker-wrap {
+  background: var(--green); overflow: hidden;
+  padding: 10px 0; position: relative;
+}
+.ticker-wrap::before {
+  content: &#x27;BREAKING&#x27;;
+  position: absolute; left: 0; top: 0; bottom: 0;
+  background: var(--gold); color: #111;
+  font-family: &#x27;Poppins&#x27;, sans-serif; font-weight: 800;
+  font-size: 0.78rem; letter-spacing: 0.1em;
+  padding: 0 16px;
+  display: flex; align-items: center;
+  z-index: 2;
+}
+.ticker {
+  display: flex; gap: 60px;
+  animation: ticker 30s linear infinite;
+  white-space: nowrap; padding-left: 160px;
+  font-weight: 500; font-size: 0.9rem;
+}
+.ticker:hover { animation-play-state: paused; }
+@keyframes ticker {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* ─── Cards Grid ────────────────────────────────────────────────────────────── */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 24px;
+}
+.cards-grid-4 {
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+}
+
+.card {
+  background: var(--card); border-radius: var(--radius);
+  overflow: hidden; border: 1px solid var(--border);
+  transition: transform var(--transition), box-shadow var(--transition);
+  display: flex; flex-direction: column;
+}
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow);
+  border-color: var(--green);
+}
+.card-img {
+  width: 100%; aspect-ratio: 16/9; object-fit: cover;
+  background: var(--card2);
+}
+.card-img-placeholder {
+  width: 100%; aspect-ratio: 16/9;
+  background: linear-gradient(135deg, var(--card2), var(--border));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 2.5rem;
+}
+.card-body { padding: 18px; flex: 1; display: flex; flex-direction: column; }
+.card-category { margin-bottom: 8px; }
+.card-title {
+  font-size: 1.05rem; font-weight: 700;
+  margin-bottom: 8px; line-height: 1.35;
+}
+.card-title a:hover { color: var(--gold); }
+.card-summary { color: var(--text-muted); font-size: 0.88rem; flex: 1; }
+.card-meta {
+  margin-top: 14px; padding-top: 12px;
+  border-top: 1px solid var(--border);
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 0.8rem; color: var(--text-muted);
+}
+
+/* ─── Featured Article ──────────────────────────────────────────────────────── */
+.featured-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px; margin-bottom: 24px;
+}
+.featured-card {
+  background: var(--card); border-radius: var(--radius);
+  overflow: hidden; border: 1px solid var(--border);
+  position: relative;
+  transition: transform var(--transition), box-shadow var(--transition);
+}
+.featured-card:hover {
+  transform: translateY(-3px); box-shadow: var(--shadow);
+}
+.featured-card .card-img,
+.featured-card .card-img-placeholder { aspect-ratio: 16/9; }
+.featured-card-body {
+  padding: 20px;
+}
+.featured-card-title { font-size: 1.3rem; font-weight: 700; margin-bottom: 10px; }
+.featured-card-title a:hover { color: var(--gold); }
+
+/* ─── Section Padding ───────────────────────────────────────────────────────── */
+.section { padding: 56px 0; }
+.section-alt { background: var(--bg2); }
+
+/* ─── Audio Player ──────────────────────────────────────────────────────────── */
+.audio-card {
+  background: var(--card); border-radius: var(--radius);
+  border: 1px solid var(--border);
+  transition: all var(--transition);
+  overflow: hidden;
+}
+.audio-card:hover { border-color: var(--green); box-shadow: var(--shadow); }
+
+.audio-cover {
+  width: 100%; aspect-ratio: 1;
+  object-fit: cover; background: var(--card2);
+}
+.audio-cover-placeholder {
+  width: 100%; aspect-ratio: 1;
+  background: linear-gradient(135deg, #001a0d, #004d26);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 3.5rem;
+}
+.audio-info { padding: 16px; }
+.audio-title { font-size: 1rem; font-weight: 700; margin-bottom: 4px; }
+.audio-artist { color: var(--text-muted); font-size: 0.88rem; margin-bottom: 4px; }
+.audio-genre { margin-bottom: 12px; }
+
+.audio-player-ui { padding: 0 16px 16px; }
+.audio-controls {
+  display: flex; align-items: center; gap: 10px; margin-bottom: 10px;
+}
+.play-btn {
+  width: 42px; height: 42px; border-radius: 50%;
+  background: var(--green); border: none; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; transition: background var(--transition);
+  color: #fff; font-size: 1rem;
+}
+.play-btn:hover { background: var(--green-light); }
+
+.progress-wrap {
+  flex: 1; height: 5px; background: var(--border);
+  border-radius: 3px; cursor: pointer; position: relative;
+}
+.progress-bar {
+  height: 100%; background: var(--green);
+  border-radius: 3px; width: 0%;
+  transition: width 0.1s linear;
+}
+.time-display { font-size: 0.75rem; color: var(--text-muted); white-space: nowrap; }
+
+.volume-wrap { display: flex; align-items: center; gap: 8px; }
+.volume-icon { font-size: 0.9rem; color: var(--text-muted); }
+.volume-slider {
+  -webkit-appearance: none; appearance: none;
+  width: 70px; height: 4px;
+  background: var(--border); border-radius: 2px; outline: none; cursor: pointer;
+}
+.volume-slider::-webkit-slider-thumb {
+  -webkit-appearance: none; appearance: none;
+  width: 14px; height: 14px; border-radius: 50%;
+  background: var(--green); cursor: pointer;
+}
+
+.audio-actions {
+  display: flex; gap: 8px; padding: 0 16px 16px;
+}
+.audio-stats {
+  padding: 10px 16px; border-top: 1px solid var(--border);
+  display: flex; gap: 16px;
+  font-size: 0.78rem; color: var(--text-muted);
+}
+
+/* ─── Video Card ─────────────────────────────────────────────────────────────── */
+.video-card {
+  background: var(--card); border-radius: var(--radius);
+  border: 1px solid var(--border);
+  overflow: hidden;
+  transition: all var(--transition);
+}
+.video-card:hover { border-color: var(--green); box-shadow: var(--shadow); }
+
+.video-thumb-wrap {
+  position: relative; aspect-ratio: 16/9;
+  background: #000; overflow: hidden; cursor: pointer;
+}
+.video-thumb-wrap img,
+.video-thumb-placeholder {
+  width: 100%; height: 100%; object-fit: cover;
+}
+.video-thumb-placeholder {
+  background: linear-gradient(135deg, #0d0d1a, #1a1a2e);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 3.5rem;
+}
+.video-play-overlay {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(0,0,0,0.35);
+  transition: background var(--transition);
+}
+.video-play-overlay:hover { background: rgba(0,0,0,0.5); }
+.video-play-icon {
+  width: 54px; height: 54px; border-radius: 50%;
+  background: rgba(0,135,81,0.85);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.4rem; color: #fff;
+  transition: transform var(--transition);
+}
+.video-thumb-wrap:hover .video-play-icon { transform: scale(1.1); }
+
+/* Modal video player */
+.video-modal {
+  display: none; position: fixed; inset: 0; z-index: 9999;
+  background: rgba(0,0,0,0.88);
+  align-items: center; justify-content: center;
+}
+.video-modal.open { display: flex; }
+.video-modal-inner {
+  position: relative; width: 90vw; max-width: 960px;
+}
+.video-modal video {
+  width: 100%; border-radius: var(--radius); background: #000;
+}
+.video-modal-close {
+  position: absolute; top: -40px; right: 0;
+  background: none; border: none; color: #fff;
+  font-size: 1.8rem; cursor: pointer; line-height: 1;
+}
+
+.video-info { padding: 16px; }
+.video-title { font-size: 1rem; font-weight: 700; margin-bottom: 4px; }
+.video-artist { color: var(--text-muted); font-size: 0.88rem; margin-bottom: 8px; }
+.video-actions {
+  display: flex; gap: 8px; padding: 0 16px 16px;
+}
+.video-stats {
+  padding: 10px 16px; border-top: 1px solid var(--border);
+  display: flex; gap: 16px;
+  font-size: 0.78rem; color: var(--text-muted);
+}
+
+/* ─── Filter Bar ────────────────────────────────────────────────────────────── */
+.filter-bar {
+  display: flex; gap: 10px; flex-wrap: wrap;
+  margin-bottom: 32px; align-items: center;
+}
+.filter-bar a {
+  padding: 7px 18px; border-radius: 20px;
+  font-size: 0.85rem; font-weight: 500;
+  background: var(--card); border: 1px solid var(--border);
+  color: var(--text-muted);
+  transition: all var(--transition);
+}
+.filter-bar a:hover,
+.filter-bar a.active {
+  background: var(--green); border-color: var(--green); color: #fff;
+}
+
+/* ─── Pagination ────────────────────────────────────────────────────────────── */
+.pagination {
+  display: flex; gap: 8px; justify-content: center;
+  margin-top: 40px; flex-wrap: wrap;
+}
+.pagination a, .pagination span {
+  min-width: 40px; height: 40px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: var(--radius-sm);
+  background: var(--card); border: 1px solid var(--border);
+  font-weight: 500; font-size: 0.9rem; color: var(--text-muted);
+  transition: all var(--transition);
+}
+.pagination a:hover { background: var(--green); border-color: var(--green); color: #fff; }
+.pagination .current { background: var(--green); border-color: var(--green); color: #fff; }
+
+/* ─── Upload Page ───────────────────────────────────────────────────────────── */
+.upload-tabs {
+  display: flex; gap: 4px; margin-bottom: 32px;
+  background: var(--card2); border-radius: var(--radius);
+  padding: 6px; border: 1px solid var(--border);
+}
+.upload-tab {
+  flex: 1; padding: 12px; border-radius: var(--radius-sm);
+  text-align: center; font-weight: 600; font-size: 0.92rem;
+  cursor: pointer; color: var(--text-muted);
+  transition: all var(--transition);
+}
+.upload-tab.active { background: var(--green); color: #fff; }
+.upload-tab:hover:not(.active) { color: var(--text); }
+
+.upload-panel { display: none; }
+.upload-panel.active { display: block; }
+
+.upload-form {
+  background: var(--card); border-radius: var(--radius);
+  border: 1px solid var(--border); padding: 32px;
+}
+.form-group { margin-bottom: 22px; }
+.form-label {
+  display: block; margin-bottom: 8px;
+  font-weight: 600; font-size: 0.9rem; color: var(--text);
+}
+.form-label span { color: var(--red); margin-left: 2px; }
+.form-input, .form-select, .form-textarea {
+  width: 100%; padding: 12px 16px;
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: var(--radius-sm); color: var(--text);
+  font-family: &#x27;Inter&#x27;, sans-serif; font-size: 0.95rem;
+  transition: border-color var(--transition);
+  outline: none;
+}
+.form-input:focus, .form-select:focus, .form-textarea:focus {
+  border-color: var(--green);
+}
+.form-select option { background: var(--bg2); }
+.form-textarea { resize: vertical; min-height: 120px; }
+
+.file-drop {
+  border: 2px dashed var(--border); border-radius: var(--radius);
+  padding: 40px 20px; text-align: center; cursor: pointer;
+  transition: all var(--transition); position: relative;
+}
+.file-drop:hover, .file-drop.dragover {
+  border-color: var(--green); background: rgba(0,135,81,0.07);
+}
+.file-drop input[type=&quot;file&quot;] {
+  position: absolute; inset: 0; opacity: 0; cursor: pointer;
+}
+.file-drop-icon { font-size: 2.5rem; margin-bottom: 12px; }
+.file-drop-text { color: var(--text-muted); font-size: 0.9rem; }
+.file-drop-text strong { color: var(--green); }
+.file-name-display {
+  margin-top: 10px; font-size: 0.85rem;
+  color: var(--gold); font-weight: 500;
+}
+
+.progress-container {
+  display: none; margin-top: 20px;
+  background: var(--card2); border-radius: var(--radius);
+  padding: 16px; border: 1px solid var(--border);
+}
+.progress-container.visible { display: block; }
+.upload-progress-bar-wrap {
+  height: 8px; background: var(--border); border-radius: 4px;
+  overflow: hidden; margin-bottom: 8px;
+}
+.upload-progress-bar {
+  height: 100%; background: linear-gradient(90deg, var(--green), var(--gold));
+  border-radius: 4px; width: 0%;
+  transition: width 0.3s ease;
+}
+.upload-progress-text { font-size: 0.82rem; color: var(--text-muted); }
+
+/* ─── Article Page ───────────────────────────────────────────────────────────── */
+.article-hero { position: relative; aspect-ratio: 21/9; overflow: hidden; }
+.article-hero img { width: 100%; height: 100%; object-fit: cover; }
+.article-hero-placeholder {
+  width: 100%; height: 360px;
+  background: linear-gradient(135deg, var(--card), var(--card2));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 5rem;
+}
+.article-container { max-width: 860px; margin: 0 auto; padding: 48px 20px; }
+.article-header { margin-bottom: 32px; }
+.article-category { margin-bottom: 14px; }
+.article-title { font-size: clamp(1.6rem, 3vw, 2.4rem); font-weight: 800; margin-bottom: 16px; }
+.article-meta {
+  display: flex; gap: 24px; color: var(--text-muted);
+  font-size: 0.88rem; flex-wrap: wrap; align-items: center;
+}
+.article-meta span { display: flex; align-items: center; gap: 6px; }
+.article-divider {
+  height: 1px; background: var(--border); margin: 24px 0;
+}
+.article-body {
+  font-size: 1.05rem; line-height: 1.85; color: #d8d8ee;
+}
+.article-body p { margin-bottom: 20px; }
+.article-body h2, .article-body h3 {
+  margin: 32px 0 16px; color: var(--text);
+}
+
+/* ─── Entertainment Page ─────────────────────────────────────────────────────── */
+.ent-hero {
+  background: linear-gradient(135deg, #1a0030, #0d0d1a);
+  padding: 48px 20px; text-align: center;
+  position: relative; overflow: hidden;
+}
+.ent-hero::before {
+  content: &#x27;&#x27;;
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 50% 0%, rgba(255,215,0,0.1) 0%, transparent 65%);
+}
+
+/* ─── Stats Bar ──────────────────────────────────────────────────────────────── */
+.stats-bar {
+  background: var(--card); border-radius: var(--radius);
+  border: 1px solid var(--border);
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  overflow: hidden; margin-bottom: 48px;
+}
+.stat-item {
+  padding: 24px; text-align: center;
+  border-right: 1px solid var(--border);
+}
+.stat-item:last-child { border-right: none; }
+.stat-number {
+  font-size: 2rem; font-weight: 800; color: var(--gold);
+  font-family: &#x27;Poppins&#x27;, sans-serif;
+}
+.stat-label { font-size: 0.82rem; color: var(--text-muted); margin-top: 4px; }
+
+/* ─── Footer ─────────────────────────────────────────────────────────────────── */
+footer {
+  background: var(--bg2); border-top: 1px solid var(--border);
+  padding: 56px 20px 24px;
+  margin-top: 80px;
+}
+.footer-grid {
+  max-width: 1280px; margin: 0 auto;
+  display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 40px; margin-bottom: 40px;
+}
+.footer-brand { font-size: 1.8rem; font-weight: 800; margin-bottom: 12px; }
+.footer-about { color: var(--text-muted); font-size: 0.9rem; line-height: 1.7; }
+.footer-heading {
+  font-family: &#x27;Poppins&#x27;, sans-serif; font-weight: 700;
+  font-size: 0.95rem; margin-bottom: 16px;
+  color: var(--gold);
+}
+.footer-links a {
+  display: block; color: var(--text-muted);
+  font-size: 0.88rem; padding: 5px 0;
+  transition: color var(--transition);
+}
+.footer-links a:hover { color: var(--green); }
+.footer-bottom {
+  max-width: 1280px; margin: 0 auto;
+  padding-top: 24px; border-top: 1px solid var(--border);
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 0.82rem; color: var(--text-muted); flex-wrap: wrap; gap: 12px;
+}
+.footer-social { display: flex; gap: 12px; }
+.footer-social a {
+  width: 36px; height: 36px; border-radius: 50%;
+  background: var(--card); border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem; transition: all var(--transition);
+}
+.footer-social a:hover {
+  background: var(--green); border-color: var(--green); color: #fff;
+}
+
+/* ─── Share Buttons ──────────────────────────────────────────────────────────── */
+.share-bar {
+  display: flex; gap: 6px; flex-wrap: wrap; align-items: center;
+  padding: 12px 16px; border-top: 1px solid var(--border);
+}
+.share-label {
+  font-size: 0.75rem; color: var(--text-muted); font-weight: 600;
+  margin-right: 2px; white-space: nowrap;
+}
+.share-btn {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 5px 11px; border-radius: 20px;
+  font-size: 0.75rem; font-weight: 600;
+  border: 1px solid var(--border);
+  background: var(--card2); color: var(--text-muted);
+  cursor: pointer; transition: all var(--transition);
+  text-decoration: none; white-space: nowrap;
+}
+.share-btn:hover { color: #fff; border-color: transparent; }
+.share-btn-x:hover        { background: #000; color: #fff; }
+.share-btn-facebook:hover { background: #1877f2; color: #fff; }
+.share-btn-whatsapp:hover { background: #25d366; color: #fff; }
+.share-btn-linkedin:hover { background: #0a66c2; color: #fff; }
+.share-btn-youtube:hover  { background: #ff0000; color: #fff; }
+.share-btn-copy:hover     { background: var(--green); border-color: var(--green); color: #fff; }
+.share-btn-copy.copied    { background: var(--green); border-color: var(--green); color: #fff; }
+
+/* ─── Powered by DabelTech ───────────────────────────────────────────────────── */
+.powered-by {
+  font-size: 0.78rem; color: var(--text-muted);
+  display: flex; align-items: center; gap: 5px;
+}
+.powered-by a {
+  font-weight: 700;
+  background: var(--logo-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  transition: opacity var(--transition);
+}
+.powered-by a:hover { opacity: 0.8; }
+
+/* ─── No Content ─────────────────────────────────────────────────────────────── */
+.empty-state {
+  text-align: center; padding: 80px 20px; color: var(--text-muted);
+}
+.empty-state-icon { font-size: 4rem; margin-bottom: 16px; }
+.empty-state h3 { font-size: 1.3rem; margin-bottom: 10px; color: var(--text); }
+
+/* ─── Responsive ─────────────────────────────────────────────────────────────── */
+@media (max-width: 1024px) {
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+  .stats-bar { grid-template-columns: repeat(2,1fr); }
+  .stats-bar .stat-item:nth-child(2) { border-right: none; }
+}
+
+@media (max-width: 768px) {
+  .navbar-links { display: none; }
+  .hamburger { display: flex; }
+  .featured-grid { grid-template-columns: 1fr; }
+  .cards-grid { grid-template-columns: 1fr; }
+  .cards-grid-4 { grid-template-columns: repeat(2, 1fr); }
+  .footer-grid { grid-template-columns: 1fr; }
+  .footer-bottom { flex-direction: column; text-align: center; }
+  .stats-bar { grid-template-columns: repeat(2,1fr); }
+  .upload-tabs { flex-direction: column; }
+  .upload-form { padding: 20px; }
+  .article-meta { gap: 14px; }
+}
+
+@media (max-width: 480px) {
+  .hero { padding: 48px 16px 40px; }
+  .hero-cta { flex-direction: column; align-items: center; }
+  .cards-grid-4 { grid-template-columns: 1fr; }
+  .stats-bar { grid-template-columns: 1fr; }
+  .stats-bar .stat-item { border-right: none; border-bottom: 1px solid var(--border); }
+  .stats-bar .stat-item:last-child { border-bottom: none; }
+  .section { padding: 36px 0; }
+}
+</code></pre>
+</section>
+
+<section id="static-js-main-js" class="code-section">
+  <div class="file-header">
+    <span class="file-name">static/js/main.js</span>
+    <span class="file-lang">javascript</span>
+    <span class="file-lines">312 lines</span>
+    <button class="copy-code-btn" onclick="copyCode(this)">Copy</button>
+  </div>
+  <pre><code class="language-javascript">/* ─── Naijamirage Main JS ──────────────────────────────────────────────────── */
+
+// ─── Mobile Nav ───────────────────────────────────────────────────────────────
+const hamburger = document.getElementById(&#x27;hamburger&#x27;);
+const mobileMenu = document.getElementById(&#x27;mobileMenu&#x27;);
+if (hamburger &amp;&amp; mobileMenu) {
+  hamburger.addEventListener(&#x27;click&#x27;, () =&gt; {
+    mobileMenu.classList.toggle(&#x27;open&#x27;);
+  });
+  document.addEventListener(&#x27;click&#x27;, (e) =&gt; {
+    if (!hamburger.contains(e.target) &amp;&amp; !mobileMenu.contains(e.target)) {
+      mobileMenu.classList.remove(&#x27;open&#x27;);
+    }
+  });
+}
+
+// ─── Active Nav Link ──────────────────────────────────────────────────────────
+(function markActiveNav() {
+  const path = window.location.pathname;
+  document.querySelectorAll(&#x27;.navbar-links a, .mobile-menu a&#x27;).forEach(link =&gt; {
+    const href = link.getAttribute(&#x27;href&#x27;);
+    if (href === path || (href !== &#x27;/&#x27; &amp;&amp; path.startsWith(href))) {
+      link.classList.add(&#x27;active&#x27;);
+    }
+  });
+})();
+
+// ─── Audio Players ────────────────────────────────────────────────────────────
+let currentAudio = null;
+let currentPlayBtn = null;
+
+function formatTime(secs) {
+  if (isNaN(secs)) return &#x27;0:00&#x27;;
+  const m = Math.floor(secs / 60);
+  const s = Math.floor(secs % 60);
+  return `${m}:${s.toString().padStart(2, &#x27;0&#x27;)}`;
+}
+
+function initAudioPlayers() {
+  document.querySelectorAll(&#x27;[data-audio-card]&#x27;).forEach(card =&gt; {
+    const trackId  = card.dataset.trackId;
+    const streamUrl = card.dataset.streamUrl;
+    const playBtn  = card.querySelector(&#x27;.play-btn&#x27;);
+    const progressWrap = card.querySelector(&#x27;.progress-wrap&#x27;);
+    const progressBar  = card.querySelector(&#x27;.progress-bar&#x27;);
+    const timeDisplay  = card.querySelector(&#x27;.time-display&#x27;);
+    const volumeSlider = card.querySelector(&#x27;.volume-slider&#x27;);
+
+    if (!playBtn || !streamUrl) return;
+
+    let audio = null;
+
+    function getOrCreateAudio() {
+      if (!audio) {
+        audio = new Audio(streamUrl);
+        audio.addEventListener(&#x27;timeupdate&#x27;, () =&gt; {
+          if (!audio.duration) return;
+          const pct = (audio.currentTime / audio.duration) * 100;
+          if (progressBar) progressBar.style.width = pct + &#x27;%&#x27;;
+          if (timeDisplay) timeDisplay.textContent =
+            `${formatTime(audio.currentTime)} / ${formatTime(audio.duration)}`;
+        });
+        audio.addEventListener(&#x27;ended&#x27;, () =&gt; {
+          playBtn.innerHTML = &#x27;&amp;#9654;&#x27;;
+          if (progressBar) progressBar.style.width = &#x27;0%&#x27;;
+          if (timeDisplay) timeDisplay.textContent = &#x27;0:00&#x27;;
+        });
+        audio.addEventListener(&#x27;error&#x27;, () =&gt; {
+          playBtn.innerHTML = &#x27;&amp;#9654;&#x27;;
+        });
+      }
+      return audio;
+    }
+
+    playBtn.addEventListener(&#x27;click&#x27;, () =&gt; {
+      const a = getOrCreateAudio();
+      // Pause any other playing audio
+      if (currentAudio &amp;&amp; currentAudio !== a) {
+        currentAudio.pause();
+        if (currentPlayBtn) currentPlayBtn.innerHTML = &#x27;&amp;#9654;&#x27;;
+      }
+      if (a.paused) {
+        a.play().catch(() =&gt; {});
+        playBtn.innerHTML = &#x27;&amp;#9646;&amp;#9646;&#x27;;
+        currentAudio = a;
+        currentPlayBtn = playBtn;
+      } else {
+        a.pause();
+        playBtn.innerHTML = &#x27;&amp;#9654;&#x27;;
+      }
+    });
+
+    if (progressWrap) {
+      progressWrap.addEventListener(&#x27;click&#x27;, (e) =&gt; {
+        const a = getOrCreateAudio();
+        if (!a.duration) return;
+        const rect = progressWrap.getBoundingClientRect();
+        const pct = (e.clientX - rect.left) / rect.width;
+        a.currentTime = pct * a.duration;
+      });
+    }
+
+    if (volumeSlider) {
+      volumeSlider.addEventListener(&#x27;input&#x27;, () =&gt; {
+        const a = getOrCreateAudio();
+        a.volume = volumeSlider.value;
+      });
+    }
+  });
+}
+
+// ─── Video Modal ──────────────────────────────────────────────────────────────
+function initVideoModals() {
+  const modal = document.getElementById(&#x27;videoModal&#x27;);
+  const modalVideo = document.getElementById(&#x27;modalVideo&#x27;);
+  const modalClose = document.getElementById(&#x27;modalClose&#x27;);
+  if (!modal || !modalVideo) return;
+
+  document.querySelectorAll(&#x27;[data-video-thumb]&#x27;).forEach(thumb =&gt; {
+    thumb.addEventListener(&#x27;click&#x27;, () =&gt; {
+      const src = thumb.dataset.streamUrl;
+      if (!src) return;
+      modalVideo.src = src;
+      modal.classList.add(&#x27;open&#x27;);
+      modalVideo.play().catch(() =&gt; {});
+    });
+  });
+
+  function closeModal() {
+    modal.classList.remove(&#x27;open&#x27;);
+    modalVideo.pause();
+    modalVideo.src = &#x27;&#x27;;
+  }
+
+  if (modalClose) modalClose.addEventListener(&#x27;click&#x27;, closeModal);
+  modal.addEventListener(&#x27;click&#x27;, (e) =&gt; {
+    if (e.target === modal) closeModal();
+  });
+  document.addEventListener(&#x27;keydown&#x27;, (e) =&gt; {
+    if (e.key === &#x27;Escape&#x27; &amp;&amp; modal.classList.contains(&#x27;open&#x27;)) closeModal();
+  });
+}
+
+// ─── Upload Tab Switcher ──────────────────────────────────────────────────────
+function initUploadTabs() {
+  const tabs = document.querySelectorAll(&#x27;.upload-tab&#x27;);
+  const panels = document.querySelectorAll(&#x27;.upload-panel&#x27;);
+  if (!tabs.length) return;
+
+  tabs.forEach(tab =&gt; {
+    tab.addEventListener(&#x27;click&#x27;, () =&gt; {
+      const target = tab.dataset.tab;
+      tabs.forEach(t =&gt; t.classList.remove(&#x27;active&#x27;));
+      panels.forEach(p =&gt; p.classList.remove(&#x27;active&#x27;));
+      tab.classList.add(&#x27;active&#x27;);
+      const panel = document.getElementById(`panel-${target}`);
+      if (panel) panel.classList.add(&#x27;active&#x27;);
+    });
+  });
+}
+
+// ─── File Drop Zone ───────────────────────────────────────────────────────────
+function initFileDrops() {
+  document.querySelectorAll(&#x27;.file-drop&#x27;).forEach(drop =&gt; {
+    const input = drop.querySelector(&#x27;input[type=&quot;file&quot;]&#x27;);
+    const nameDisplay = drop.querySelector(&#x27;.file-name-display&#x27;);
+    if (!input) return;
+
+    input.addEventListener(&#x27;change&#x27;, () =&gt; {
+      if (input.files.length &amp;&amp; nameDisplay) {
+        nameDisplay.textContent = &#x27;📎 &#x27; + input.files[0].name;
+      }
+    });
+
+    drop.addEventListener(&#x27;dragover&#x27;, (e) =&gt; {
+      e.preventDefault();
+      drop.classList.add(&#x27;dragover&#x27;);
+    });
+    drop.addEventListener(&#x27;dragleave&#x27;, () =&gt; drop.classList.remove(&#x27;dragover&#x27;));
+    drop.addEventListener(&#x27;drop&#x27;, (e) =&gt; {
+      e.preventDefault();
+      drop.classList.remove(&#x27;dragover&#x27;);
+      if (input &amp;&amp; e.dataTransfer.files.length) {
+        input.files = e.dataTransfer.files;
+        if (nameDisplay) nameDisplay.textContent = &#x27;📎 &#x27; + e.dataTransfer.files[0].name;
+      }
+    });
+  });
+}
+
+// ─── Upload Progress ──────────────────────────────────────────────────────────
+function initUploadForms() {
+  document.querySelectorAll(&#x27;[data-upload-form]&#x27;).forEach(form =&gt; {
+    const container = form.querySelector(&#x27;.progress-container&#x27;);
+    const bar       = form.querySelector(&#x27;.upload-progress-bar&#x27;);
+    const text      = form.querySelector(&#x27;.upload-progress-text&#x27;);
+    const submitBtn = form.querySelector(&#x27;[type=&quot;submit&quot;]&#x27;);
+
+    form.addEventListener(&#x27;submit&#x27;, (e) =&gt; {
+      e.preventDefault();
+      const fd = new FormData(form);
+      const xhr = new XMLHttpRequest();
+      xhr.open(&#x27;POST&#x27;, form.action);
+
+      if (container) container.classList.add(&#x27;visible&#x27;);
+      if (submitBtn) submitBtn.disabled = true;
+
+      xhr.upload.addEventListener(&#x27;progress&#x27;, (evt) =&gt; {
+        if (!evt.lengthComputable) return;
+        const pct = Math.round((evt.loaded / evt.total) * 100);
+        if (bar) bar.style.width = pct + &#x27;%&#x27;;
+        if (text) text.textContent = `Uploading… ${pct}%`;
+      });
+
+      xhr.addEventListener(&#x27;load&#x27;, () =&gt; {
+        if (bar) bar.style.width = &#x27;100%&#x27;;
+        if (text) text.textContent = &#x27;Upload complete! Redirecting…&#x27;;
+        // Follow the redirect the server sends
+        window.location.href = xhr.responseURL || &#x27;/&#x27;;
+      });
+
+      xhr.addEventListener(&#x27;error&#x27;, () =&gt; {
+        if (text) text.textContent = &#x27;Upload failed. Please try again.&#x27;;
+        if (submitBtn) submitBtn.disabled = false;
+      });
+
+      xhr.send(fd);
+    });
+  });
+}
+
+// ─── Flash Auto-dismiss ───────────────────────────────────────────────────────
+function initFlashDismiss() {
+  document.querySelectorAll(&#x27;.flash&#x27;).forEach(el =&gt; {
+    setTimeout(() =&gt; {
+      el.style.transition = &#x27;opacity 0.5s ease&#x27;;
+      el.style.opacity = &#x27;0&#x27;;
+      setTimeout(() =&gt; el.remove(), 500);
+    }, 5000);
+  });
+}
+
+// ─── Ticker duplication ───────────────────────────────────────────────────────
+function initTicker() {
+  const ticker = document.querySelector(&#x27;.ticker&#x27;);
+  if (!ticker) return;
+  // Duplicate so the scroll is seamless
+  ticker.innerHTML += ticker.innerHTML;
+}
+
+// ─── Lazy image loading ───────────────────────────────────────────────────────
+function initLazyImages() {
+  if (!(&#x27;IntersectionObserver&#x27; in window)) return;
+  const obs = new IntersectionObserver((entries) =&gt; {
+    entries.forEach(entry =&gt; {
+      if (entry.isIntersecting) {
+        const img = entry.target;
+        if (img.dataset.src) {
+          img.src = img.dataset.src;
+          img.removeAttribute(&#x27;data-src&#x27;);
+        }
+        obs.unobserve(img);
+      }
+    });
+  }, { rootMargin: &#x27;200px&#x27; });
+  document.querySelectorAll(&#x27;img[data-src]&#x27;).forEach(img =&gt; obs.observe(img));
+}
+
+// ─── Social Share ─────────────────────────────────────────────────────────────
+function shareOn(platform, btn) {
+  const bar   = btn.closest(&#x27;[data-share-title]&#x27;) || btn.closest(&#x27;.share-bar&#x27;);
+  const title = bar ? bar.dataset.shareTitle || &#x27;&#x27; : &#x27;&#x27;;
+  const url   = bar ? bar.dataset.shareUrl   || window.location.href : window.location.href;
+
+  const eUrl   = encodeURIComponent(url);
+  const eTitle = encodeURIComponent(title);
+  const eText  = encodeURIComponent(title + &#x27;\n&#x27; + url);
+
+  const targets = {
+    twitter:  &#x27;https://twitter.com/intent/tweet?text=&#x27; + eTitle + &#x27;&amp;url=&#x27; + eUrl,
+    facebook: &#x27;https://www.facebook.com/sharer/sharer.php?u=&#x27; + eUrl,
+    whatsapp: &#x27;https://api.whatsapp.com/send?text=&#x27; + eText,
+    linkedin: &#x27;https://www.linkedin.com/shareArticle?mini=true&amp;url=&#x27; + eUrl + &#x27;&amp;title=&#x27; + eTitle,
+    youtube:  &#x27;https://www.youtube.com/results?search_query=&#x27; + eTitle,
+  };
+
+  if (platform === &#x27;copy&#x27;) {
+    navigator.clipboard.writeText(url).then(() =&gt; {
+      const orig = btn.innerHTML;
+      btn.innerHTML = &#x27;✅ Copied!&#x27;;
+      btn.classList.add(&#x27;copied&#x27;);
+      setTimeout(() =&gt; { btn.innerHTML = orig; btn.classList.remove(&#x27;copied&#x27;); }, 2000);
+    }).catch(() =&gt; { prompt(&#x27;Copy this link:&#x27;, url); });
+    return;
+  }
+
+  if (targets[platform]) {
+    window.open(targets[platform], &#x27;_blank&#x27;, &#x27;width=620,height=460,noopener,noreferrer&#x27;);
+  }
+}
+
+// ─── Init ─────────────────────────────────────────────────────────────────────
+document.addEventListener(&#x27;DOMContentLoaded&#x27;, () =&gt; {
+  initAudioPlayers();
+  initVideoModals();
+  initUploadTabs();
+  initFileDrops();
+  initUploadForms();
+  initFlashDismiss();
+  initTicker();
+  initLazyImages();
+});
+</code></pre>
+</section>
+</main>
+<script>
+hljs.highlightAll();
+function copyCode(btn) {
+  const code = btn.closest('.code-section').querySelector('code').innerText;
+  navigator.clipboard.writeText(code).then(() => {
+    btn.textContent = 'Copied!'; btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+  });
+}
+const allSections = document.querySelectorAll('.code-section');
+const allLinks    = document.querySelectorAll('.nav-link');
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      allLinks.forEach(l => l.classList.remove('active'));
+      const active = document.querySelector('.nav-link[href="#' + e.target.id + '"]');
+      if (active) { active.classList.add('active'); active.scrollIntoView({block:'nearest'}); }
+    }
+  });
+}, {threshold: 0.05});
+allSections.forEach(s => obs.observe(s));
+</script>
+</body>
+</html>
