@@ -710,6 +710,48 @@ footer {
   background: var(--green); border-color: var(--green); color: #fff;
 }
 
+/* ─── Share Buttons ──────────────────────────────────────────────────────────── */
+.share-bar {
+  display: flex; gap: 6px; flex-wrap: wrap; align-items: center;
+  padding: 12px 16px; border-top: 1px solid var(--border);
+}
+.share-label {
+  font-size: 0.75rem; color: var(--text-muted); font-weight: 600;
+  margin-right: 2px; white-space: nowrap;
+}
+.share-btn {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 5px 11px; border-radius: 20px;
+  font-size: 0.75rem; font-weight: 600;
+  border: 1px solid var(--border);
+  background: var(--card2); color: var(--text-muted);
+  cursor: pointer; transition: all var(--transition);
+  text-decoration: none; white-space: nowrap;
+}
+.share-btn:hover { color: #fff; border-color: transparent; }
+.share-btn-x:hover        { background: #000; color: #fff; }
+.share-btn-facebook:hover { background: #1877f2; color: #fff; }
+.share-btn-whatsapp:hover { background: #25d366; color: #fff; }
+.share-btn-linkedin:hover { background: #0a66c2; color: #fff; }
+.share-btn-youtube:hover  { background: #ff0000; color: #fff; }
+.share-btn-copy:hover     { background: var(--green); border-color: var(--green); color: #fff; }
+.share-btn-copy.copied    { background: var(--green); border-color: var(--green); color: #fff; }
+
+/* ─── Powered by DabelTech ───────────────────────────────────────────────────── */
+.powered-by {
+  font-size: 0.78rem; color: var(--text-muted);
+  display: flex; align-items: center; gap: 5px;
+}
+.powered-by a {
+  font-weight: 700;
+  background: var(--logo-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  transition: opacity var(--transition);
+}
+.powered-by a:hover { opacity: 0.8; }
+
 /* ─── No Content ─────────────────────────────────────────────────────────────── */
 .empty-state {
   text-align: center; padding: 80px 20px; color: var(--text-muted);

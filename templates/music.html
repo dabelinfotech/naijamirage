@@ -68,6 +68,18 @@
           </a>
         </div>
 
+        <div class="share-bar"
+             data-share-title="{{ (track.title ~ ' by ' ~ track.artist) | e }}"
+             data-share-url="{{ request.url | e }}">
+          <span class="share-label">Share:</span>
+          <button class="share-btn share-btn-x"        onclick="shareOn('twitter',  this)">𝕏</button>
+          <button class="share-btn share-btn-facebook" onclick="shareOn('facebook', this)">f</button>
+          <button class="share-btn share-btn-whatsapp" onclick="shareOn('whatsapp', this)">📱</button>
+          <button class="share-btn share-btn-linkedin" onclick="shareOn('linkedin', this)">in</button>
+          <button class="share-btn share-btn-youtube"  onclick="shareOn('youtube',  this)">▶</button>
+          <button class="share-btn share-btn-copy"     onclick="shareOn('copy',     this)">🔗</button>
+        </div>
+
         <div class="audio-stats">
           <span>▶ {{ track.play_count }}</span>
           <span>⬇ {{ track.download_count }}</span>

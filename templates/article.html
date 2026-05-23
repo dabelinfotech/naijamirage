@@ -43,12 +43,17 @@
   <div class="article-divider" style="margin-top:40px;"></div>
 
   <!-- Share -->
-  <div style="margin-top:24px;">
-    <p style="font-weight:600;margin-bottom:12px;color:var(--text-muted);">Share this article:</p>
-    <div style="display:flex;gap:10px;flex-wrap:wrap;">
-      <a href="#" class="btn btn-outline btn-sm">𝕏 Twitter</a>
-      <a href="#" class="btn btn-outline btn-sm">f Facebook</a>
-      <a href="#" class="btn btn-outline btn-sm">📱 WhatsApp</a>
+  <div style="margin-top:28px;">
+    <p style="font-weight:600;margin-bottom:14px;color:var(--text-muted);font-size:.9rem;">Share this article:</p>
+    <div class="share-bar" style="padding:0;border:none;"
+         data-share-title="{{ article.title | e }}"
+         data-share-url="{{ request.url | e }}">
+      <button class="share-btn share-btn-x"        onclick="shareOn('twitter',   this)">𝕏 X / Twitter</button>
+      <button class="share-btn share-btn-facebook" onclick="shareOn('facebook',  this)">f Facebook</button>
+      <button class="share-btn share-btn-whatsapp" onclick="shareOn('whatsapp',  this)">📱 WhatsApp</button>
+      <button class="share-btn share-btn-linkedin" onclick="shareOn('linkedin',  this)">in LinkedIn</button>
+      <button class="share-btn share-btn-youtube"  onclick="shareOn('youtube',   this)">▶ YouTube</button>
+      <button class="share-btn share-btn-copy"     onclick="shareOn('copy',      this)">🔗 Copy Link</button>
     </div>
   </div>
 </div>

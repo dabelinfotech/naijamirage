@@ -266,6 +266,39 @@ function initLazyImages() {
   document.querySelectorAll('img[data-src]').forEach(img => obs.observe(img));
 }
 
+// ─── Social Share ─────────────────────────────────────────────────────────────
+function shareOn(platform, btn) {
+  const bar   = btn.closest('[data-share-title]') || btn.closest('.share-bar');
+  const title = bar ? bar.dataset.shareTitle || '' : '';
+  const url   = bar ? bar.dataset.shareUrl   || window.location.href : window.location.href;
+
+  const eUrl   = encodeURIComponent(url);
+  const eTitle = encodeURIComponent(title);
+  const eText  = encodeURIComponent(title + '\n' + url);
+
+  const targets = {
+    twitter:  'https://twitter.com/intent/tweet?text=' + eTitle + '&url=' + eUrl,
+    facebook: 'https://www.facebook.com/sharer/sharer.php?u=' + eUrl,
+    whatsapp: 'https://api.whatsapp.com/send?text=' + eText,
+    linkedin: 'https://www.linkedin.com/shareArticle?mini=true&url=' + eUrl + '&title=' + eTitle,
+    youtube:  'https://www.youtube.com/results?search_query=' + eTitle,
+  };
+
+  if (platform === 'copy') {
+    navigator.clipboard.writeText(url).then(() => {
+      const orig = btn.innerHTML;
+      btn.innerHTML = '✅ Copied!';
+      btn.classList.add('copied');
+      setTimeout(() => { btn.innerHTML = orig; btn.classList.remove('copied'); }, 2000);
+    }).catch(() => { prompt('Copy this link:', url); });
+    return;
+  }
+
+  if (targets[platform]) {
+    window.open(targets[platform], '_blank', 'width=620,height=460,noopener,noreferrer');
+  }
+}
+
 // ─── Init ─────────────────────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
   initAudioPlayers();

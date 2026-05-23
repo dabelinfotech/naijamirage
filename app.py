@@ -7,7 +7,50 @@ from flask_sqlalchemy import SQLAlchemy
 from werkzeug.utils import secure_filename
 
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
-UPLOAD_BASE = os.path.join(BASE_DIR, 'uploads')
+
+# Vercel has a read-only filesystem except /tmp
+_ON_VERCEL = bool(os.environ.get('VERCEL'))
+UPLOAD_BASE = '/tmp/uploads'      if _ON_VERCEL else os.path.join(BASE_DIR, 'uploads')
+_DB_PATH    = '/tmp/naijamirage.db' if _ON_VERCEL else os.path.join(BASE_DIR, 'naijamirage.db')
+
+# ─── Cloudflare R2 / S3 Storage ───────────────────────────────────────────────
+
+R2_ACCOUNT_ID      = os.environ.get('R2_ACCOUNT_ID', '')
+R2_ACCESS_KEY_ID   = os.environ.get('R2_ACCESS_KEY_ID', '')
+R2_SECRET_ACCESS_KEY = os.environ.get('R2_SECRET_ACCESS_KEY', '')
+R2_BUCKET_NAME     = os.environ.get('R2_BUCKET_NAME', 'naijamirage')
+USE_R2 = bool(R2_ACCOUNT_ID and R2_ACCESS_KEY_ID and R2_SECRET_ACCESS_KEY)
+
+
+def _r2():
+    import boto3
+    from botocore.client import Config
+    return boto3.client(
+        's3',
+        endpoint_url=f'https://{R2_ACCOUNT_ID}.r2.cloudflarestorage.com',
+        aws_access_key_id=R2_ACCESS_KEY_ID,
+        aws_secret_access_key=R2_SECRET_ACCESS_KEY,
+        config=Config(signature_version='s3v4'),
+        region_name='auto',
+    )
+
+
+def r2_upload(stream, key):
+    _r2().upload_fileobj(stream, R2_BUCKET_NAME, key)
+
+
+def r2_presigned_url(key, download_name=None, expires=3600):
+    params = {'Bucket': R2_BUCKET_NAME, 'Key': key}
+    if download_name:
+        params['ResponseContentDisposition'] = f'attachment; filename="{download_name}"'
+    return _r2().generate_presigned_url('get_object', Params=params, ExpiresIn=expires)
+
+
+def r2_delete(key):
+    try:
+        _r2().delete_object(Bucket=R2_BUCKET_NAME, Key=key)
+    except Exception:
+        pass
 
 ALLOWED_AUDIO = {'mp3', 'wav', 'ogg', 'aac', 'm4a', 'flac'}
 ALLOWED_VIDEO = {'mp4', 'webm', 'mkv', 'avi', 'mov'}
@@ -15,7 +58,7 @@ ALLOWED_IMAGE = {'jpg', 'jpeg', 'png', 'gif', 'webp'}
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'naijamirage-secret-2024')
-app.config['SQLALCHEMY_DATABASE_URI'] = f"sqlite:///{os.path.join(BASE_DIR, 'naijamirage.db')}"
+app.config['SQLALCHEMY_DATABASE_URI'] = f"sqlite:///{_DB_PATH}"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['MAX_CONTENT_LENGTH'] = 500 * 1024 * 1024  # 500 MB
 
@@ -73,18 +116,21 @@ def allowed_file(filename, allowed_set):
 
 
 def save_upload(file, subfolder, allowed_set):
-    """Save uploaded file; return filename or None."""
+    """Save uploaded file to R2 or local disk; return filename or None."""
     if not file or file.filename == '':
         return None
     if not allowed_file(file.filename, allowed_set):
         return None
     filename = secure_filename(file.filename)
-    # Avoid collisions
     base, ext = os.path.splitext(filename)
     timestamp = datetime.utcnow().strftime('%Y%m%d%H%M%S%f')
     filename = f"{base}_{timestamp}{ext}"
-    dest = os.path.join(UPLOAD_BASE, subfolder, filename)
-    file.save(dest)
+    if USE_R2:
+        file.stream.seek(0)
+        r2_upload(file.stream, f"{subfolder}/{filename}")
+    else:
+        dest = os.path.join(UPLOAD_BASE, subfolder, filename)
+        file.save(dest)
     return filename
 
 
@@ -99,6 +145,9 @@ def format_size(size_bytes):
 
 
 app.jinja_env.filters['filesize'] = format_size
+
+from urllib.parse import quote_plus
+app.jinja_env.filters['urlencode'] = quote_plus
 
 
 def stream_file(filepath, mimetype=None):
@@ -296,7 +345,12 @@ def upload_audio():
         flash('No audio file selected.', 'error')
         return redirect(url_for('upload'))
 
-    audio_filename = save_upload(request.files['audio_file'], 'audio', ALLOWED_AUDIO)
+    audio_file = request.files['audio_file']
+    audio_file.stream.seek(0, 2)
+    file_size = audio_file.stream.tell()
+    audio_file.stream.seek(0)
+
+    audio_filename = save_upload(audio_file, 'audio', ALLOWED_AUDIO)
     if not audio_filename:
         flash('Invalid audio file. Allowed: mp3, wav, ogg, aac, m4a, flac', 'error')
         return redirect(url_for('upload'))
@@ -304,8 +358,6 @@ def upload_audio():
     cover_filename = None
     if 'cover_image' in request.files:
         cover_filename = save_upload(request.files['cover_image'], 'covers', ALLOWED_IMAGE)
-
-    file_size = os.path.getsize(os.path.join(UPLOAD_BASE, 'audio', audio_filename))
     track = AudioTrack(
         title=title, artist=artist, description=description,
         genre=genre, file_path=audio_filename,
@@ -332,7 +384,12 @@ def upload_video():
         flash('No video file selected.', 'error')
         return redirect(url_for('upload'))
 
-    video_filename = save_upload(request.files['video_file'], 'videos', ALLOWED_VIDEO)
+    video_file = request.files['video_file']
+    video_file.stream.seek(0, 2)
+    file_size = video_file.stream.tell()
+    video_file.stream.seek(0)
+
+    video_filename = save_upload(video_file, 'videos', ALLOWED_VIDEO)
     if not video_filename:
         flash('Invalid video file. Allowed: mp4, webm, mkv, avi, mov', 'error')
         return redirect(url_for('upload'))
@@ -340,8 +397,6 @@ def upload_video():
     thumb_filename = None
     if 'thumbnail' in request.files:
         thumb_filename = save_upload(request.files['thumbnail'], 'thumbnails', ALLOWED_IMAGE)
-
-    file_size = os.path.getsize(os.path.join(UPLOAD_BASE, 'videos', video_filename))
     video = MusicVideo(
         title=title, artist=artist, description=description,
         genre=genre, file_path=video_filename,
@@ -360,6 +415,8 @@ def stream_audio(track_id):
     track = AudioTrack.query.get_or_404(track_id)
     track.play_count += 1
     db.session.commit()
+    if USE_R2:
+        return redirect(r2_presigned_url(f"audio/{track.file_path}"))
     filepath = os.path.join(UPLOAD_BASE, 'audio', track.file_path)
     return stream_file(filepath)
 
@@ -369,6 +426,8 @@ def stream_video(video_id):
     video = MusicVideo.query.get_or_404(video_id)
     video.play_count += 1
     db.session.commit()
+    if USE_R2:
+        return redirect(r2_presigned_url(f"videos/{video.file_path}"))
     filepath = os.path.join(UPLOAD_BASE, 'videos', video.file_path)
     return stream_file(filepath)
 
@@ -380,11 +439,12 @@ def download_audio(track_id):
     track = AudioTrack.query.get_or_404(track_id)
     track.download_count += 1
     db.session.commit()
+    download_name = secure_filename(f"{track.artist} - {track.title}{os.path.splitext(track.file_path)[1]}")
+    if USE_R2:
+        return redirect(r2_presigned_url(f"audio/{track.file_path}", download_name=download_name))
     filepath = os.path.join(UPLOAD_BASE, 'audio', track.file_path)
     if not os.path.isfile(filepath):
         abort(404)
-    original_name = track.file_path.rsplit('_', 1)[0] + os.path.splitext(track.file_path)[1]
-    download_name = secure_filename(f"{track.artist} - {track.title}{os.path.splitext(track.file_path)[1]}")
     return send_file(filepath, as_attachment=True, download_name=download_name)
 
 
@@ -393,10 +453,12 @@ def download_video(video_id):
     video = MusicVideo.query.get_or_404(video_id)
     video.download_count += 1
     db.session.commit()
+    download_name = secure_filename(f"{video.artist} - {video.title}{os.path.splitext(video.file_path)[1]}")
+    if USE_R2:
+        return redirect(r2_presigned_url(f"videos/{video.file_path}", download_name=download_name))
     filepath = os.path.join(UPLOAD_BASE, 'videos', video.file_path)
     if not os.path.isfile(filepath):
         abort(404)
-    download_name = secure_filename(f"{video.artist} - {video.title}{os.path.splitext(video.file_path)[1]}")
     return send_file(filepath, as_attachment=True, download_name=download_name)
 
 
@@ -404,24 +466,34 @@ def download_video(video_id):
 
 @app.route('/media/covers/<path:filename>')
 def serve_cover(filename):
+    if USE_R2:
+        return redirect(r2_presigned_url(f"covers/{filename}"))
     return send_file(os.path.join(UPLOAD_BASE, 'covers', filename))
 
 
 @app.route('/media/thumbnails/<path:filename>')
 def serve_thumbnail(filename):
+    if USE_R2:
+        return redirect(r2_presigned_url(f"thumbnails/{filename}"))
     return send_file(os.path.join(UPLOAD_BASE, 'thumbnails', filename))
 
 
 @app.route('/media/news_images/<path:filename>')
 def serve_news_image(filename):
+    if USE_R2:
+        return redirect(r2_presigned_url(f"news_images/{filename}"))
     return send_file(os.path.join(UPLOAD_BASE, 'news_images', filename))
 
 
 # ─── Admin: helpers ───────────────────────────────────────────────────────────
 
 def delete_file(subfolder, filename):
-    """Silently remove a file from an uploads subfolder."""
-    if filename:
+    """Silently remove a file from R2 or local uploads subfolder."""
+    if not filename:
+        return
+    if USE_R2:
+        r2_delete(f"{subfolder}/{filename}")
+    else:
         try:
             os.remove(os.path.join(UPLOAD_BASE, subfolder, filename))
         except OSError:
@@ -487,12 +559,15 @@ def admin_edit_audio(track_id):
         track.description = request.form.get('description', track.description or '').strip()
 
         if 'audio_file' in request.files and request.files['audio_file'].filename:
-            new_audio = save_upload(request.files['audio_file'], 'audio', ALLOWED_AUDIO)
+            af = request.files['audio_file']
+            af.stream.seek(0, 2)
+            new_size = af.stream.tell()
+            af.stream.seek(0)
+            new_audio = save_upload(af, 'audio', ALLOWED_AUDIO)
             if new_audio:
                 delete_file('audio', track.file_path)
                 track.file_path = new_audio
-                track.file_size = os.path.getsize(
-                    os.path.join(UPLOAD_BASE, 'audio', new_audio))
+                track.file_size = new_size
 
         if 'cover_image' in request.files and request.files['cover_image'].filename:
             new_cover = save_upload(request.files['cover_image'], 'covers', ALLOWED_IMAGE)
@@ -531,12 +606,15 @@ def admin_edit_video(video_id):
         video.description = request.form.get('description', video.description or '').strip()
 
         if 'video_file' in request.files and request.files['video_file'].filename:
-            new_vid = save_upload(request.files['video_file'], 'videos', ALLOWED_VIDEO)
+            vf = request.files['video_file']
+            vf.stream.seek(0, 2)
+            new_size = vf.stream.tell()
+            vf.stream.seek(0)
+            new_vid = save_upload(vf, 'videos', ALLOWED_VIDEO)
             if new_vid:
                 delete_file('videos', video.file_path)
                 video.file_path = new_vid
-                video.file_size = os.path.getsize(
-                    os.path.join(UPLOAD_BASE, 'videos', new_vid))
+                video.file_size = new_size
 
         if 'thumbnail' in request.files and request.files['thumbnail'].filename:
             new_thumb = save_upload(request.files['thumbnail'], 'thumbnails', ALLOWED_IMAGE)
