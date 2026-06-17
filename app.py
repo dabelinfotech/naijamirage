@@ -1,10 +1,12 @@
 import os
 import mimetypes
 from datetime import datetime
+from functools import wraps
 from flask import (Flask, render_template, request, redirect, url_for,
-                   flash, Response, send_file, abort)
+                   flash, Response, send_file, abort, session)
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.utils import secure_filename
+from werkzeug.security import generate_password_hash, check_password_hash
 
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 
@@ -57,7 +59,21 @@ ALLOWED_VIDEO = {'mp4', 'webm', 'mkv', 'avi', 'mov'}
 ALLOWED_IMAGE = {'jpg', 'jpeg', 'png', 'gif', 'webp'}
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'naijamirage-secret-2024')
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'naijamirage-Xk9#mP2$vR7@qL5!')
+
+# ─── Admin credentials (set ADMIN_USERNAME / ADMIN_PASSWORD in env for prod) ──
+ADMIN_USERNAME = os.environ.get('ADMIN_USERNAME', 'naijadmin')
+_raw_pw        = os.environ.get('ADMIN_PASSWORD', 'NaijaMirage@2025!')
+ADMIN_PASSWORD_HASH = generate_password_hash(_raw_pw)
+
+
+def login_required(f):
+    @wraps(f)
+    def decorated(*args, **kwargs):
+        if not session.get('admin_logged_in'):
+            return redirect(url_for('admin_login', next=request.path))
+        return f(*args, **kwargs)
+    return decorated
 app.config['SQLALCHEMY_DATABASE_URI'] = f"sqlite:///{_DB_PATH}"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['MAX_CONTENT_LENGTH'] = 500 * 1024 * 1024  # 500 MB
@@ -299,11 +315,13 @@ def videos():
 
 
 @app.route('/upload', methods=['GET'])
+@login_required
 def upload():
     return render_template('upload.html')
 
 
 @app.route('/upload/news', methods=['POST'])
+@login_required
 def upload_news():
     title = request.form.get('title', '').strip()
     summary = request.form.get('summary', '').strip()
@@ -331,6 +349,7 @@ def upload_news():
 
 
 @app.route('/upload/audio', methods=['POST'])
+@login_required
 def upload_audio():
     title = request.form.get('title', '').strip()
     artist = request.form.get('artist', '').strip()
@@ -370,6 +389,7 @@ def upload_audio():
 
 
 @app.route('/upload/video', methods=['POST'])
+@login_required
 def upload_video():
     title = request.form.get('title', '').strip()
     artist = request.form.get('artist', '').strip()
@@ -500,9 +520,34 @@ def delete_file(subfolder, filename):
             pass
 
 
+# ─── Admin: login / logout ────────────────────────────────────────────────────
+
+@app.route('/admin/login', methods=['GET', 'POST'])
+def admin_login():
+    if session.get('admin_logged_in'):
+        return redirect(url_for('admin_dashboard'))
+    if request.method == 'POST':
+        username = request.form.get('username', '').strip()
+        password = request.form.get('password', '')
+        if username == ADMIN_USERNAME and check_password_hash(ADMIN_PASSWORD_HASH, password):
+            session['admin_logged_in'] = True
+            session.permanent = False
+            next_url = request.args.get('next') or url_for('admin_dashboard')
+            return redirect(next_url)
+        flash('Invalid username or password.', 'error')
+    return render_template('admin_login.html')
+
+
+@app.route('/admin/logout')
+def admin_logout():
+    session.pop('admin_logged_in', None)
+    return redirect(url_for('admin_login'))
+
+
 # ─── Admin: dashboard ─────────────────────────────────────────────────────────
 
 @app.route('/admin')
+@login_required
 def admin_dashboard():
     articles = NewsArticle.query.order_by(NewsArticle.created_at.desc()).all()
     tracks   = AudioTrack.query.order_by(AudioTrack.created_at.desc()).all()
@@ -514,6 +559,7 @@ def admin_dashboard():
 # ─── Admin: news ──────────────────────────────────────────────────────────────
 
 @app.route('/admin/news/<int:article_id>/edit', methods=['GET', 'POST'])
+@login_required
 def admin_edit_news(article_id):
     art = NewsArticle.query.get_or_404(article_id)
     if request.method == 'POST':
@@ -537,6 +583,7 @@ def admin_edit_news(article_id):
 
 
 @app.route('/admin/news/<int:article_id>/delete', methods=['POST'])
+@login_required
 def admin_delete_news(article_id):
     art = NewsArticle.query.get_or_404(article_id)
     title = art.title
@@ -550,6 +597,7 @@ def admin_delete_news(article_id):
 # ─── Admin: audio ─────────────────────────────────────────────────────────────
 
 @app.route('/admin/audio/<int:track_id>/edit', methods=['GET', 'POST'])
+@login_required
 def admin_edit_audio(track_id):
     track = AudioTrack.query.get_or_404(track_id)
     if request.method == 'POST':
@@ -583,6 +631,7 @@ def admin_edit_audio(track_id):
 
 
 @app.route('/admin/audio/<int:track_id>/delete', methods=['POST'])
+@login_required
 def admin_delete_audio(track_id):
     track = AudioTrack.query.get_or_404(track_id)
     title = track.title
@@ -597,6 +646,7 @@ def admin_delete_audio(track_id):
 # ─── Admin: video ─────────────────────────────────────────────────────────────
 
 @app.route('/admin/video/<int:video_id>/edit', methods=['GET', 'POST'])
+@login_required
 def admin_edit_video(video_id):
     video = MusicVideo.query.get_or_404(video_id)
     if request.method == 'POST':
@@ -630,6 +680,7 @@ def admin_edit_video(video_id):
 
 
 @app.route('/admin/video/<int:video_id>/delete', methods=['POST'])
+@login_required
 def admin_delete_video(video_id):
     video = MusicVideo.query.get_or_404(video_id)
     title = video.title

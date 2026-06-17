@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Login | NaijaMirage</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+  <style>
+    body { display:flex; align-items:center; justify-content:center; min-height:100vh; background:var(--bg); }
+    .login-card {
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      padding:48px 40px;
+      width:100%;
+      max-width:420px;
+      box-shadow:0 8px 32px rgba(0,0,0,.35);
+    }
+    .login-logo { text-align:center; margin-bottom:32px; }
+    .login-logo .brand-name { font-size:1.6rem; }
+    .login-title { text-align:center; font-size:1rem; color:var(--text-muted); margin-bottom:28px; }
+    .login-field { margin-bottom:18px; }
+    .login-field label { display:block; font-size:.82rem; font-weight:600; color:var(--text-muted); margin-bottom:6px; letter-spacing:.04em; text-transform:uppercase; }
+    .login-field input {
+      width:100%; padding:11px 14px; border-radius:var(--radius-sm);
+      border:1px solid var(--border); background:var(--card2);
+      color:var(--text); font-size:.95rem; outline:none;
+      transition:border-color var(--transition);
+      box-sizing:border-box;
+    }
+    .login-field input:focus { border-color:var(--green); }
+    .login-btn {
+      width:100%; padding:12px; border:none; border-radius:var(--radius-sm);
+      background:var(--logo-gradient); color:#fff; font-size:1rem;
+      font-weight:700; cursor:pointer; margin-top:8px;
+      transition:opacity var(--transition);
+    }
+    .login-btn:hover { opacity:.88; }
+    .login-error {
+      background:rgba(255,59,48,.12); border:1px solid rgba(255,59,48,.35);
+      color:#ff3b30; border-radius:var(--radius-sm); padding:10px 14px;
+      font-size:.88rem; margin-bottom:16px; text-align:center;
+    }
+    .login-back { text-align:center; margin-top:20px; font-size:.82rem; color:var(--text-muted); }
+    .login-back a { color:var(--green); text-decoration:none; }
+  </style>
+</head>
+<body>
+  <div class="login-card">
+    <div class="login-logo">
+      <img src="{{ url_for('static', filename='images/logo.jpg') }}" alt="NaijaMirage" style="height:56px;border-radius:8px;margin-bottom:10px;" /><br/>
+      <span class="brand-name">NaijaMirage</span>
+    </div>
+    <p class="login-title">Admin Panel &mdash; Sign in to continue</p>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% for category, message in messages %}
+        <div class="login-error">{{ message }}</div>
+      {% endfor %}
+    {% endwith %}
+
+    <form method="POST">
+      <div class="login-field">
+        <label>Username</label>
+        <input type="text" name="username" autocomplete="username" required autofocus />
+      </div>
+      <div class="login-field">
+        <label>Password</label>
+        <input type="password" name="password" autocomplete="current-password" required />
+      </div>
+      <button type="submit" class="login-btn">Sign In</button>
+    </form>
+
+    <div class="login-back"><a href="{{ url_for('index') }}">&larr; Back to NaijaMirage</a></div>
+  </div>
+</body>
+</html>

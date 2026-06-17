@@ -59,7 +59,10 @@
         <h1 style="font-size:2rem;font-weight:800;">Admin Dashboard</h1>
         <p style="color:var(--text-muted);margin-top:6px;">Edit, update or delete your published content.</p>
       </div>
-      <a href="{{ url_for('upload') }}" class="btn btn-green" style="white-space:nowrap;">+ Upload New Content</a>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;">
+        <a href="{{ url_for('upload') }}" class="btn btn-green" style="white-space:nowrap;">+ Upload New Content</a>
+        <a href="{{ url_for('admin_logout') }}" class="btn" style="white-space:nowrap;background:rgba(255,59,48,.15);color:#ff3b30;border:1px solid rgba(255,59,48,.3);">⏏ Logout</a>
+      </div>
     </div>
 
     <!-- Stats strip -->
