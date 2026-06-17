@@ -60,6 +60,9 @@ ALLOWED_IMAGE = {'jpg', 'jpeg', 'png', 'gif', 'webp'}
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'naijamirage-Xk9#mP2$vR7@qL5!')
+app.config['SESSION_COOKIE_HTTPONLY'] = True
+app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'
+app.config['SESSION_COOKIE_SECURE'] = _ON_VERCEL  # HTTPS only on Vercel
 
 # ─── Admin credentials (set ADMIN_USERNAME / ADMIN_PASSWORD in env for prod) ──
 ADMIN_USERNAME = os.environ.get('ADMIN_USERNAME', 'naijadmin')
@@ -74,6 +77,7 @@ def login_required(f):
             return redirect(url_for('admin_login', next=request.path))
         return f(*args, **kwargs)
     return decorated
+
 app.config['SQLALCHEMY_DATABASE_URI'] = f"sqlite:///{_DB_PATH}"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['MAX_CONTENT_LENGTH'] = 500 * 1024 * 1024  # 500 MB
@@ -530,10 +534,12 @@ def admin_login():
         username = request.form.get('username', '').strip()
         password = request.form.get('password', '')
         if username == ADMIN_USERNAME and check_password_hash(ADMIN_PASSWORD_HASH, password):
+            session.clear()
             session['admin_logged_in'] = True
-            session.permanent = False
+            session.modified = True
             next_url = request.args.get('next') or url_for('admin_dashboard')
-            return redirect(next_url)
+            resp = redirect(next_url)
+            return resp
         flash('Invalid username or password.', 'error')
     return render_template('admin_login.html')
 
