@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block title %}About Us{% endblock %}
+
+{% block content %}
+<section class="hero" style="padding:48px 20px 40px;">
+  <div class="hero-content">
+    <div class="hero-tagline" style="background:var(--logo-gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Who We Are</div>
+    <h1 class="hero-title">About <span class="logo-text">NaijaMirage</span></h1>
+    <p class="hero-sub">Nigeria's premier destination for news, entertainment, music and culture.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container" style="max-width:800px;">
+
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:40px;margin-bottom:28px;">
+      <h2 style="font-size:1.4rem;font-weight:800;margin-bottom:16px;">Our Story</h2>
+      <p style="color:var(--text-muted);line-height:1.9;margin-bottom:16px;">
+        NaijaMirage was founded with one mission — to be the most reliable and entertaining Nigerian media platform on the internet. We bring you the latest breaking news, hottest entertainment gist, freshest Afrobeats music, and trending music videos all in one place.
+      </p>
+      <p style="color:var(--text-muted);line-height:1.9;">
+        From Lagos to London, Abuja to Atlanta, NaijaMirage connects Nigerians at home and in the diaspora with the stories, sounds, and culture that matter most to them.
+      </p>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px;margin-bottom:28px;">
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:28px;text-align:center;">
+        <div style="font-size:2.4rem;margin-bottom:10px;">📰</div>
+        <div style="font-weight:800;font-size:1.1rem;margin-bottom:6px;">Breaking News</div>
+        <p style="color:var(--text-muted);font-size:.88rem;line-height:1.6;">Politics, business, sports, tech and health — we cover it all as it happens.</p>
+      </div>
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:28px;text-align:center;">
+        <div style="font-size:2.4rem;margin-bottom:10px;">🎵</div>
+        <div style="font-weight:800;font-size:1.1rem;margin-bottom:6px;">Naija Music</div>
+        <p style="color:var(--text-muted);font-size:.88rem;line-height:1.6;">Stream and download the latest Afrobeats, Highlife, Fuji and Gospel for free.</p>
+      </div>
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:28px;text-align:center;">
+        <div style="font-size:2.4rem;margin-bottom:10px;">🎬</div>
+        <div style="font-weight:800;font-size:1.1rem;margin-bottom:6px;">Music Videos</div>
+        <p style="color:var(--text-muted);font-size:.88rem;line-height:1.6;">Watch and download the hottest Nigerian music videos in HD quality.</p>
+      </div>
+    </div>
+
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:40px;margin-bottom:28px;">
+      <h2 style="font-size:1.4rem;font-weight:800;margin-bottom:16px;">Our Values</h2>
+      <ul style="color:var(--text-muted);line-height:2;list-style:none;padding:0;">
+        <li>✅ <strong style="color:var(--text);">Accuracy</strong> — We verify information before publishing.</li>
+        <li>✅ <strong style="color:var(--text);">Speed</strong> — Breaking news delivered in real time.</li>
+        <li>✅ <strong style="color:var(--text);">Community</strong> — Built for Nigerians, by Nigerians.</li>
+        <li>✅ <strong style="color:var(--text);">Culture</strong> — Celebrating everything that makes Nigeria great.</li>
+      </ul>
+    </div>
+
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:40px;">
+      <h2 style="font-size:1.4rem;font-weight:800;margin-bottom:16px;">Get in Touch</h2>
+      <p style="color:var(--text-muted);line-height:1.9;margin-bottom:20px;">
+        Have a story tip, music to submit, or business enquiry? We'd love to hear from you.
+      </p>
+      <a href="{{ url_for('contact') }}" class="btn btn-green">Contact Us</a>
+    </div>
+
+  </div>
+</section>
+{% endblock %}

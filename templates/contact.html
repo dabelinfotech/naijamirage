@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+{% block title %}Contact Us{% endblock %}
+
+{% block content %}
+<section class="hero" style="padding:48px 20px 40px;">
+  <div class="hero-content">
+    <div class="hero-tagline" style="background:var(--logo-gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Get in Touch</div>
+    <h1 class="hero-title">Contact <span class="logo-text">Us</span></h1>
+    <p class="hero-sub">Got a story tip, music submission or business enquiry? Send us a message.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container" style="max-width:860px;">
+    <div style="display:grid;grid-template-columns:1fr 1.6fr;gap:28px;align-items:start;">
+
+      <!-- Info panel -->
+      <div>
+        <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:32px;margin-bottom:20px;">
+          <h3 style="font-size:1.1rem;font-weight:800;margin-bottom:20px;">Contact Info</h3>
+          <div style="display:flex;flex-direction:column;gap:16px;color:var(--text-muted);font-size:.9rem;">
+            <div style="display:flex;gap:12px;align-items:flex-start;">
+              <span style="font-size:1.2rem;">📧</span>
+              <div>
+                <div style="font-weight:600;color:var(--text);margin-bottom:2px;">Email</div>
+                <span>info@naijamirage.com</span>
+              </div>
+            </div>
+            <div style="display:flex;gap:12px;align-items:flex-start;">
+              <span style="font-size:1.2rem;">📍</span>
+              <div>
+                <div style="font-weight:600;color:var(--text);margin-bottom:2px;">Location</div>
+                <span>Lagos, Nigeria</span>
+              </div>
+            </div>
+            <div style="display:flex;gap:12px;align-items:flex-start;">
+              <span style="font-size:1.2rem;">🕐</span>
+              <div>
+                <div style="font-weight:600;color:var(--text);margin-bottom:2px;">Response Time</div>
+                <span>Within 24–48 hours</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:28px;">
+          <h3 style="font-size:1rem;font-weight:800;margin-bottom:14px;">Follow Us</h3>
+          <div style="display:flex;gap:12px;font-size:1.4rem;">
+            <a href="#" title="X / Twitter" style="color:var(--text-muted);text-decoration:none;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='var(--text-muted)'">𝕏</a>
+            <a href="#" title="Facebook"    style="color:var(--text-muted);text-decoration:none;" onmouseover="this.style.color='#1877f2'" onmouseout="this.style.color='var(--text-muted)'">f</a>
+            <a href="#" title="Instagram"   style="color:var(--text-muted);text-decoration:none;" onmouseover="this.style.color='#e1306c'" onmouseout="this.style.color='var(--text-muted)'">📷</a>
+            <a href="#" title="YouTube"     style="color:var(--text-muted);text-decoration:none;" onmouseover="this.style.color='#ff0000'" onmouseout="this.style.color='var(--text-muted)'">▶</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Contact form -->
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:36px;">
+        <h2 style="font-size:1.3rem;font-weight:800;margin-bottom:24px;">Send a Message</h2>
+        <form method="POST" style="display:flex;flex-direction:column;gap:18px;">
+          <div>
+            <label style="display:block;font-size:.8rem;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;">Your Name</label>
+            <input type="text" name="name" required placeholder="e.g. Emeka Okafor"
+              style="width:100%;padding:11px 14px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--card2);color:var(--text);font-size:.95rem;outline:none;box-sizing:border-box;"
+              onfocus="this.style.borderColor='var(--green)'" onblur="this.style.borderColor='var(--border)'" />
+          </div>
+          <div>
+            <label style="display:block;font-size:.8rem;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;">Email Address</label>
+            <input type="email" name="email" required placeholder="you@example.com"
+              style="width:100%;padding:11px 14px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--card2);color:var(--text);font-size:.95rem;outline:none;box-sizing:border-box;"
+              onfocus="this.style.borderColor='var(--green)'" onblur="this.style.borderColor='var(--border)'" />
+          </div>
+          <div>
+            <label style="display:block;font-size:.8rem;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;">Subject</label>
+            <select name="subject" style="width:100%;padding:11px 14px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--card2);color:var(--text);font-size:.95rem;outline:none;box-sizing:border-box;">
+              <option value="General Enquiry">General Enquiry</option>
+              <option value="Story Tip">Story Tip</option>
+              <option value="Music Submission">Music Submission</option>
+              <option value="Advertising">Advertising</option>
+              <option value="Partnership">Partnership</option>
+              <option value="Copyright / Takedown">Copyright / Takedown</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+          <div>
+            <label style="display:block;font-size:.8rem;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;">Message</label>
+            <textarea name="message" required rows="6" placeholder="Write your message here…"
+              style="width:100%;padding:11px 14px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--card2);color:var(--text);font-size:.95rem;outline:none;resize:vertical;box-sizing:border-box;font-family:inherit;"
+              onfocus="this.style.borderColor='var(--green)'" onblur="this.style.borderColor='var(--border)'"></textarea>
+          </div>
+          <button type="submit" class="btn btn-green" style="font-size:1rem;padding:13px;">Send Message</button>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</section>
+{% endblock %}

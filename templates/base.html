@@ -7,6 +7,10 @@
   <title>{% block title %}Naijamirage{% endblock %} | Nigerian News &amp; Entertainment</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
   <link rel="icon" type="image/jpeg" href="{{ url_for('static', filename='images/logo.jpg') }}" />
+  <!-- ═══ GOOGLE ADSENSE — paste your script tag here after approval ═══
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX"
+       crossorigin="anonymous"></script>
+  ═══════════════════════════════════════════════════════════════════════ -->
   {% block extra_head %}{% endblock %}
 </head>
 <body>
@@ -94,6 +98,14 @@
         <li><a href="{{ url_for('entertainment') }}">Entertainment</a></li>
         <li><a href="{{ url_for('music') }}">Music</a></li>
         <li><a href="{{ url_for('videos') }}">Music Videos</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-heading">Company</div>
+      <ul class="footer-links">
+        <li><a href="{{ url_for('about') }}">About Us</a></li>
+        <li><a href="{{ url_for('contact') }}">Contact Us</a></li>
+        <li><a href="{{ url_for('privacy_policy') }}">Privacy Policy</a></li>
       </ul>
     </div>
     <div>

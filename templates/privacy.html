@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% block title %}Privacy Policy{% endblock %}
+
+{% block content %}
+<section class="hero" style="padding:48px 20px 40px;">
+  <div class="hero-content">
+    <h1 class="hero-title">Privacy <span class="logo-text">Policy</span></h1>
+    <p class="hero-sub">Last updated: June 2025</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container" style="max-width:800px;">
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:40px;line-height:1.9;color:var(--text-muted);">
+
+      <h2 style="color:var(--text);font-size:1.2rem;font-weight:700;margin:0 0 12px;">1. Introduction</h2>
+      <p style="margin-bottom:24px;">
+        Welcome to NaijaMirage ("we", "our", "us"). We are committed to protecting your personal information and your right to privacy. This Privacy Policy explains how we collect, use, and share information about you when you visit our website at naijamirage.com.
+      </p>
+
+      <h2 style="color:var(--text);font-size:1.2rem;font-weight:700;margin:0 0 12px;">2. Information We Collect</h2>
+      <p style="margin-bottom:12px;">We collect information you provide directly to us, such as when you:</p>
+      <ul style="margin-bottom:24px;padding-left:20px;">
+        <li>Fill out our contact form (name, email address, message)</li>
+        <li>Subscribe to our newsletter</li>
+        <li>Interact with our website features</li>
+      </ul>
+      <p style="margin-bottom:24px;">
+        We also automatically collect certain information when you visit our site, including your IP address, browser type, pages viewed, and time spent on pages. This is collected through cookies and analytics tools.
+      </p>
+
+      <h2 style="color:var(--text);font-size:1.2rem;font-weight:700;margin:0 0 12px;">3. How We Use Your Information</h2>
+      <ul style="margin-bottom:24px;padding-left:20px;">
+        <li>To respond to your enquiries and contact form submissions</li>
+        <li>To improve and personalise your experience on our website</li>
+        <li>To analyse website traffic and usage patterns</li>
+        <li>To display relevant advertisements via Google AdSense</li>
+        <li>To comply with legal obligations</li>
+      </ul>
+
+      <h2 style="color:var(--text);font-size:1.2rem;font-weight:700;margin:0 0 12px;">4. Google AdSense &amp; Cookies</h2>
+      <p style="margin-bottom:24px;">
+        We use Google AdSense to display advertisements on our website. Google uses cookies to serve ads based on your prior visits to our website and other websites on the internet. You may opt out of personalised advertising by visiting <a href="https://www.google.com/settings/ads" target="_blank" rel="noopener" style="color:var(--green);">Google Ads Settings</a>. We also use Google Analytics to understand how visitors use our site.
+      </p>
+
+      <h2 style="color:var(--text);font-size:1.2rem;font-weight:700;margin:0 0 12px;">5. Cookies</h2>
+      <p style="margin-bottom:24px;">
+        Our website uses cookies to enhance your browsing experience. Cookies are small text files stored on your device. You can control and delete cookies through your browser settings. Disabling cookies may affect the functionality of some parts of our website.
+      </p>
+
+      <h2 style="color:var(--text);font-size:1.2rem;font-weight:700;margin:0 0 12px;">6. Third-Party Links</h2>
+      <p style="margin-bottom:24px;">
+        Our website may contain links to third-party websites. We are not responsible for the privacy practices or content of those websites. We encourage you to read the privacy policies of any site you visit.
+      </p>
+
+      <h2 style="color:var(--text);font-size:1.2rem;font-weight:700;margin:0 0 12px;">7. Data Retention</h2>
+      <p style="margin-bottom:24px;">
+        We retain contact form messages and other submitted data only as long as necessary to respond to your enquiry or as required by law. You may request deletion of your data at any time by contacting us.
+      </p>
+
+      <h2 style="color:var(--text);font-size:1.2rem;font-weight:700;margin:0 0 12px;">8. Children's Privacy</h2>
+      <p style="margin-bottom:24px;">
+        NaijaMirage is not directed at children under the age of 13. We do not knowingly collect personal information from children. If you believe a child has provided us with personal information, please contact us immediately.
+      </p>
+
+      <h2 style="color:var(--text);font-size:1.2rem;font-weight:700;margin:0 0 12px;">9. Changes to This Policy</h2>
+      <p style="margin-bottom:24px;">
+        We may update this Privacy Policy from time to time. We will notify you of significant changes by posting the new policy on this page with an updated date. Continued use of our website after changes constitutes your acceptance of the revised policy.
+      </p>
+
+      <h2 style="color:var(--text);font-size:1.2rem;font-weight:700;margin:0 0 12px;">10. Contact Us</h2>
+      <p>
+        If you have any questions about this Privacy Policy, please contact us through our
+        <a href="{{ url_for('contact') }}" style="color:var(--green);">Contact page</a>.
+      </p>
+
+    </div>
+  </div>
+</section>
+{% endblock %}

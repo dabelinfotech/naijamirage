@@ -87,6 +87,17 @@ db = SQLAlchemy(app)
 
 # ─── Models ───────────────────────────────────────────────────────────────────
 
+class ContactMessage(db.Model):
+    __tablename__ = 'contact_messages'
+    id         = db.Column(db.Integer, primary_key=True)
+    name       = db.Column(db.String(200), nullable=False)
+    email      = db.Column(db.String(200), nullable=False)
+    subject    = db.Column(db.String(300), nullable=False)
+    message    = db.Column(db.Text, nullable=False)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    is_read    = db.Column(db.Boolean, default=False)
+
+
 class NewsArticle(db.Model):
     __tablename__ = 'news_articles'
     id = db.Column(db.Integer, primary_key=True)
@@ -698,6 +709,54 @@ def admin_delete_video(video_id):
     db.session.commit()
     flash(f'Video "{title}" deleted.', 'success')
     return redirect(url_for('admin_dashboard'))
+
+
+# ─── Static pages ─────────────────────────────────────────────────────────────
+
+@app.route('/about')
+def about():
+    return render_template('about.html')
+
+
+@app.route('/privacy-policy')
+def privacy_policy():
+    return render_template('privacy.html')
+
+
+@app.route('/contact', methods=['GET', 'POST'])
+def contact():
+    if request.method == 'POST':
+        name    = request.form.get('name', '').strip()
+        email   = request.form.get('email', '').strip()
+        subject = request.form.get('subject', '').strip()
+        message = request.form.get('message', '').strip()
+        if name and email and subject and message:
+            db.session.add(ContactMessage(
+                name=name, email=email, subject=subject, message=message))
+            db.session.commit()
+            flash('Your message has been sent! We will get back to you shortly.', 'success')
+            return redirect(url_for('contact'))
+        flash('Please fill in all fields.', 'error')
+    return render_template('contact.html')
+
+
+@app.route('/admin/messages')
+@login_required
+def admin_messages():
+    msgs = ContactMessage.query.order_by(ContactMessage.created_at.desc()).all()
+    ContactMessage.query.filter_by(is_read=False).update({'is_read': True})
+    db.session.commit()
+    return render_template('admin_messages.html', messages=msgs)
+
+
+@app.route('/admin/messages/<int:msg_id>/delete', methods=['POST'])
+@login_required
+def admin_delete_message(msg_id):
+    msg = ContactMessage.query.get_or_404(msg_id)
+    db.session.delete(msg)
+    db.session.commit()
+    flash('Message deleted.', 'success')
+    return redirect(url_for('admin_messages'))
 
 
 # ─── Admin: RSS import ────────────────────────────────────────────────────────
