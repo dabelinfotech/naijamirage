@@ -768,7 +768,7 @@ def admin_import_rss():
                 summary = title
             summary = summary[:500]
 
-            content = f"{summary}\n\nRead full story on {source['name']}: {link}"
+            content = summary
 
             published = datetime.utcnow()
             if entry.get('published_parsed'):
