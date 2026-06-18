@@ -711,6 +711,20 @@ def admin_delete_video(video_id):
     return redirect(url_for('admin_dashboard'))
 
 
+# ─── Admin: bulk delete all news ──────────────────────────────────────────────
+
+@app.route('/admin/news/delete-all', methods=['POST'])
+@login_required
+def admin_delete_all_news():
+    articles = NewsArticle.query.all()
+    for art in articles:
+        delete_file('news_images', art.image_path)
+    NewsArticle.query.delete()
+    db.session.commit()
+    flash(f'All news articles deleted successfully.', 'success')
+    return redirect(url_for('admin_dashboard'))
+
+
 # ─── Static pages ─────────────────────────────────────────────────────────────
 
 @app.route('/about')
