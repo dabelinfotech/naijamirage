@@ -790,7 +790,7 @@ def admin_import_rss():
     if request.method == 'GET':
         return render_template('import_rss.html', sources=RSS_SOURCES)
 
-    import feedparser, re, html as html_lib
+    import feedparser, re, html as html_lib, uuid, requests as req
     from time import mktime
 
     source_key = request.form.get('source', 'naijaloaded')
@@ -801,6 +801,58 @@ def admin_import_rss():
             flash('Unknown RSS source.', 'error')
             return redirect(url_for('admin_dashboard'))
         sources_to_import = [(source_key, src)]
+
+    IMG_HEADERS = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'}
+
+    def _extract_image_url(entry):
+        # 1. media:thumbnail
+        if entry.get('media_thumbnail'):
+            return entry.media_thumbnail[0].get('url')
+        # 2. media:content with image type
+        for mc in entry.get('media_content', []):
+            if mc.get('type', '').startswith('image'):
+                return mc.get('url')
+        # 3. enclosure
+        for enc in entry.get('enclosures', []):
+            if enc.get('type', '').startswith('image'):
+                return enc.get('href') or enc.get('url')
+        # 4. first <img> in summary/content HTML
+        for field in ('summary', 'description', 'content'):
+            val = entry.get(field, '')
+            if isinstance(val, list):
+                val = val[0].get('value', '') if val else ''
+            m = re.search(r'<img[^>]+src=["\']([^"\']+)["\']', val or '')
+            if m:
+                url = m.group(1)
+                if url.startswith('http'):
+                    return url
+        return None
+
+    def _download_image(img_url):
+        try:
+            resp = req.get(img_url, headers=IMG_HEADERS, timeout=10, stream=True)
+            if resp.status_code != 200:
+                return None
+            ct = resp.headers.get('Content-Type', '')
+            ext_map = {'jpeg': 'jpg', 'jpg': 'jpg', 'png': 'png', 'gif': 'gif', 'webp': 'webp'}
+            ext = None
+            for k, v in ext_map.items():
+                if k in ct:
+                    ext = v
+                    break
+            if not ext:
+                ext = img_url.split('?')[0].rsplit('.', 1)[-1].lower()
+                if ext not in ext_map.values():
+                    ext = 'jpg'
+            filename = f"rss_{uuid.uuid4().hex[:12]}.{ext}"
+            save_path = os.path.join(UPLOAD_BASE, 'news_images', filename)
+            os.makedirs(os.path.dirname(save_path), exist_ok=True)
+            with open(save_path, 'wb') as f:
+                for chunk in resp.iter_content(8192):
+                    f.write(chunk)
+            return filename
+        except Exception:
+            return None
 
     imported = 0
     skipped  = 0
@@ -839,6 +891,12 @@ def admin_import_rss():
             tags = [t.term for t in entry.get('tags', [])] if entry.get('tags') else []
             category = tags[0].title() if tags else 'General'
 
+            # Download headline image
+            image_path = None
+            img_url = _extract_image_url(entry)
+            if img_url:
+                image_path = _download_image(img_url)
+
             db.session.add(NewsArticle(
                 title=title[:300],
                 summary=summary,
@@ -847,6 +905,7 @@ def admin_import_rss():
                 author=source['name'],
                 source_url=link,
                 source_name=source['name'],
+                image_path=image_path,
                 created_at=published,
             ))
             imported += 1
