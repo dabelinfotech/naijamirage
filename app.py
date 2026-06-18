@@ -78,7 +78,13 @@ def login_required(f):
         return f(*args, **kwargs)
     return decorated
 
-app.config['SQLALCHEMY_DATABASE_URI'] = f"sqlite:///{_DB_PATH}"
+_DATABASE_URL = os.environ.get('DATABASE_URL', '')
+if _DATABASE_URL:
+    # Neon/PostgreSQL in production — ensure correct driver prefix
+    _DATABASE_URL = _DATABASE_URL.replace('postgres://', 'postgresql://', 1)
+    app.config['SQLALCHEMY_DATABASE_URI'] = _DATABASE_URL
+else:
+    app.config['SQLALCHEMY_DATABASE_URI'] = f"sqlite:///{_DB_PATH}"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['MAX_CONTENT_LENGTH'] = 500 * 1024 * 1024  # 500 MB
 
