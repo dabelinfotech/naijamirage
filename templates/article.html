@@ -40,6 +40,16 @@
     {{ article.content | replace('\n', '<br>') | safe }}
   </div>
 
+  {% if article.source_url %}
+  <div style="margin-top:24px;padding:16px 20px;background:var(--card2);border:1px solid var(--border);border-radius:var(--radius-sm);display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+    <span style="font-size:.85rem;color:var(--text-muted);">Source:</span>
+    <a href="{{ article.source_url }}" target="_blank" rel="noopener noreferrer"
+       style="color:var(--green);font-weight:600;font-size:.9rem;word-break:break-all;">
+      Read full story on {{ article.source_name or 'original source' }} &#8599;
+    </a>
+  </div>
+  {% endif %}
+
   <div class="article-divider" style="margin-top:40px;"></div>
 
   <!-- Share -->

@@ -96,6 +96,8 @@ class NewsArticle(db.Model):
     category = db.Column(db.String(100), default='General')
     image_path = db.Column(db.String(500))
     author = db.Column(db.String(150), default='Naijamirage Staff')
+    source_url = db.Column(db.String(1000))
+    source_name = db.Column(db.String(200))
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
 
@@ -695,6 +697,93 @@ def admin_delete_video(video_id):
     db.session.delete(video)
     db.session.commit()
     flash(f'Video "{title}" deleted.', 'success')
+    return redirect(url_for('admin_dashboard'))
+
+
+# ─── Admin: RSS import ────────────────────────────────────────────────────────
+
+RSS_SOURCES = {
+    'naijaloaded': {
+        'url':  'https://www.naijaloaded.com/feed',
+        'name': 'NaijaLoaded',
+    },
+}
+
+@app.route('/admin/import-rss', methods=['GET', 'POST'])
+@login_required
+def admin_import_rss():
+    if request.method == 'GET':
+        return render_template('import_rss.html', sources=RSS_SOURCES)
+
+    import feedparser, re, html as html_lib
+
+    source_key = request.form.get('source', 'naijaloaded')
+    source = RSS_SOURCES.get(source_key)
+    if not source:
+        flash('Unknown RSS source.', 'error')
+        return redirect(url_for('admin_dashboard'))
+
+    try:
+        feed = feedparser.parse(source['url'])
+    except Exception as e:
+        flash(f'Failed to fetch feed: {e}', 'error')
+        return redirect(url_for('admin_dashboard'))
+
+    imported = 0
+    skipped  = 0
+
+    for entry in feed.entries:
+        title = html_lib.unescape(entry.get('title', '')).strip()
+        link  = entry.get('link', '')
+        if not title or not link:
+            continue
+
+        # Skip if already imported
+        if NewsArticle.query.filter_by(source_url=link).first():
+            skipped += 1
+            continue
+
+        # Summary: strip HTML tags
+        raw_summary = entry.get('summary', entry.get('description', ''))
+        summary = re.sub(r'<[^>]+>', '', html_lib.unescape(raw_summary)).strip()
+        if not summary:
+            summary = title
+        summary = summary[:500]
+
+        # Content: link back to source
+        content = (
+            f"{summary}\n\n"
+            f"Read full story on {source['name']}: {link}"
+        )
+
+        # Published date
+        published = datetime.utcnow()
+        if hasattr(entry, 'published_parsed') and entry.published_parsed:
+            from time import mktime
+            try:
+                published = datetime.utcfromtimestamp(mktime(entry.published_parsed))
+            except Exception:
+                pass
+
+        # Guess category from tags
+        tags = [t.term for t in entry.get('tags', [])] if entry.get('tags') else []
+        category = tags[0].title() if tags else 'General'
+
+        article = NewsArticle(
+            title=title[:300],
+            summary=summary[:500],
+            content=content,
+            category=category,
+            author=source['name'],
+            source_url=link,
+            source_name=source['name'],
+            created_at=published,
+        )
+        db.session.add(article)
+        imported += 1
+
+    db.session.commit()
+    flash(f'Imported {imported} new articles from {source["name"]} ({skipped} already existed).', 'success')
     return redirect(url_for('admin_dashboard'))
 
 
