@@ -707,6 +707,22 @@ RSS_SOURCES = {
         'url':  'https://www.naijaloaded.com/feed',
         'name': 'NaijaLoaded',
     },
+    'lindaikeji': {
+        'url':  'https://www.lindaikejisblog.com/feeds/posts/default?alt=rss',
+        'name': 'Linda Ikeji Blog',
+    },
+    'pulse': {
+        'url':  'https://www.pulse.ng/feed',
+        'name': 'Pulse Nigeria',
+    },
+    'legit': {
+        'url':  'https://www.legit.ng/rss/all.rss',
+        'name': 'Legit.ng',
+    },
+    'instablog9ja': {
+        'url':  'https://www.instablog9ja.com/feed',
+        'name': 'Instablog9ja',
+    },
 }
 
 @app.route('/admin/import-rss', methods=['GET', 'POST'])
@@ -716,74 +732,69 @@ def admin_import_rss():
         return render_template('import_rss.html', sources=RSS_SOURCES)
 
     import feedparser, re, html as html_lib
+    from time import mktime
 
     source_key = request.form.get('source', 'naijaloaded')
-    source = RSS_SOURCES.get(source_key)
-    if not source:
-        flash('Unknown RSS source.', 'error')
-        return redirect(url_for('admin_dashboard'))
-
-    try:
-        feed = feedparser.parse(source['url'])
-    except Exception as e:
-        flash(f'Failed to fetch feed: {e}', 'error')
-        return redirect(url_for('admin_dashboard'))
+    sources_to_import = list(RSS_SOURCES.items()) if source_key == 'all' else []
+    if not sources_to_import:
+        src = RSS_SOURCES.get(source_key)
+        if not src:
+            flash('Unknown RSS source.', 'error')
+            return redirect(url_for('admin_dashboard'))
+        sources_to_import = [(source_key, src)]
 
     imported = 0
     skipped  = 0
 
-    for entry in feed.entries:
-        title = html_lib.unescape(entry.get('title', '')).strip()
-        link  = entry.get('link', '')
-        if not title or not link:
+    for _key, source in sources_to_import:
+        try:
+            feed = feedparser.parse(source['url'])
+        except Exception:
             continue
 
-        # Skip if already imported
-        if NewsArticle.query.filter_by(source_url=link).first():
-            skipped += 1
-            continue
+        for entry in feed.entries:
+            title = html_lib.unescape(entry.get('title', '')).strip()
+            link  = entry.get('link', '')
+            if not title or not link:
+                continue
 
-        # Summary: strip HTML tags
-        raw_summary = entry.get('summary', entry.get('description', ''))
-        summary = re.sub(r'<[^>]+>', '', html_lib.unescape(raw_summary)).strip()
-        if not summary:
-            summary = title
-        summary = summary[:500]
+            if NewsArticle.query.filter_by(source_url=link).first():
+                skipped += 1
+                continue
 
-        # Content: link back to source
-        content = (
-            f"{summary}\n\n"
-            f"Read full story on {source['name']}: {link}"
-        )
+            raw_summary = entry.get('summary', entry.get('description', ''))
+            summary = re.sub(r'<[^>]+>', '', html_lib.unescape(raw_summary)).strip()
+            if not summary:
+                summary = title
+            summary = summary[:500]
 
-        # Published date
-        published = datetime.utcnow()
-        if hasattr(entry, 'published_parsed') and entry.published_parsed:
-            from time import mktime
-            try:
-                published = datetime.utcfromtimestamp(mktime(entry.published_parsed))
-            except Exception:
-                pass
+            content = f"{summary}\n\nRead full story on {source['name']}: {link}"
 
-        # Guess category from tags
-        tags = [t.term for t in entry.get('tags', [])] if entry.get('tags') else []
-        category = tags[0].title() if tags else 'General'
+            published = datetime.utcnow()
+            if entry.get('published_parsed'):
+                try:
+                    published = datetime.utcfromtimestamp(mktime(entry.published_parsed))
+                except Exception:
+                    pass
 
-        article = NewsArticle(
-            title=title[:300],
-            summary=summary[:500],
-            content=content,
-            category=category,
-            author=source['name'],
-            source_url=link,
-            source_name=source['name'],
-            created_at=published,
-        )
-        db.session.add(article)
-        imported += 1
+            tags = [t.term for t in entry.get('tags', [])] if entry.get('tags') else []
+            category = tags[0].title() if tags else 'General'
+
+            db.session.add(NewsArticle(
+                title=title[:300],
+                summary=summary,
+                content=content,
+                category=category,
+                author=source['name'],
+                source_url=link,
+                source_name=source['name'],
+                created_at=published,
+            ))
+            imported += 1
 
     db.session.commit()
-    flash(f'Imported {imported} new articles from {source["name"]} ({skipped} already existed).', 'success')
+    names = ', '.join(s['name'] for _, s in sources_to_import)
+    flash(f'Imported {imported} new articles from {names} ({skipped} already existed).', 'success')
     return redirect(url_for('admin_dashboard'))
 
 
